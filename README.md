@@ -1,8 +1,8 @@
 # Uweb Tampermonkey
 
-Setup minimale per sviluppare uno script Tampermonkey mentre la pagina target e gia aperta, con un loader locale che evita di reinstallare lo userscript a ogni modifica.
+Setup per sviluppare e distribuire uno script Tampermonkey per U-Web Missioni. Il progetto genera sia un loader locale per iterare rapidamente sia uno userscript standalone pronto da installare dagli utenti finali.
 
-## Come si usa
+## Sviluppo locale
 
 1. Avvia il server locale:
 
@@ -25,9 +25,27 @@ npm run dev
 
 Il file [tampermonkey.config.json](/Users/spagnolo/github/UwebTampermonkey/tampermonkey.config.json) ti permette di cambiare:
 
-- nome dello script
+- metadata dev e produzione
 - `@match`
 - porta del server locale
+
+## Distribuzione
+
+Per generare anche la versione distribuibile:
+
+```bash
+npm run build:dist
+```
+
+Output principali in `dist/`:
+
+- `tampermonkey-loader.user.js`: loader per sviluppo locale
+- `dev-payload.js`: payload servito dal dev server
+- `uweb-export-missioni.user.js`: script standalone pronto per Tampermonkey
+
+Per distribuire agli altri utenti, fai installare direttamente:
+
+- [`dist/uweb-export-missioni.user.js`](/Users/spagnolo/github/UwebTampermonkey/dist/uweb-export-missioni.user.js)
 
 ## File principali
 

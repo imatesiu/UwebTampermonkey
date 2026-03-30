@@ -15,22 +15,49 @@ function assertStringArray(value, fieldName) {
   }
 }
 
-function buildLoaderSource(config) {
-  const metadata = [
+function assertString(value, fieldName) {
+  if (typeof value !== "string" || value.trim() === "") {
+    throw new Error(`${fieldName} deve essere una stringa non vuota`);
+  }
+}
+
+function buildMetadata({
+  name,
+  description,
+  namespace,
+  version,
+  matches,
+  grants,
+  connect = []
+}) {
+  return [
     "// ==UserScript==",
-    `// @name        ${config.name}`,
-    `// @description ${config.description}`,
-    "// @namespace   codex/uweb-tampermonkey",
-    "// @version     0.1.0",
-    ...config.matches.map((match) => `// @match       ${match}`),
-    "// @grant       GM_xmlhttpRequest",
-    "// @grant       GM_registerMenuCommand",
-    "// @grant       GM_notification",
-    "// @connect     127.0.0.1",
-    "// @connect     localhost",
+    `// @name        ${name}`,
+    `// @description ${description}`,
+    `// @namespace   ${namespace}`,
+    `// @version     ${version}`,
+    ...matches.map((match) => `// @match       ${match}`),
+    ...grants.map((grant) => `// @grant       ${grant}`),
+    ...connect.map((host) => `// @connect     ${host}`),
     "// @run-at      document-idle",
     "// ==/UserScript=="
   ].join("\n");
+}
+
+function buildLoaderSource(config) {
+  const metadata = buildMetadata({
+    name: config.dev.name,
+    description: config.dev.description,
+    namespace: config.namespace,
+    version: config.version,
+    matches: config.matches,
+    grants: [
+      "GM_xmlhttpRequest",
+      "GM_registerMenuCommand",
+      "GM_notification"
+    ],
+    connect: ["127.0.0.1", "localhost"]
+  });
 
   const devOrigin = `http://127.0.0.1:${config.port}`;
 
@@ -104,6 +131,26 @@ function buildLoaderSource(config) {
 `;
 }
 
+function buildStandaloneSource(config, payloadSource) {
+  return [
+    buildMetadata({
+      name: config.production.name,
+      description: config.production.description,
+      namespace: config.namespace,
+      version: config.version,
+      matches: config.matches,
+      grants: ["none"]
+    }),
+    "",
+    "(function () {",
+    '  "use strict";',
+    "",
+    ...payloadSource.split("\n"),
+    "})();",
+    ""
+  ].join("\n");
+}
+
 export async function buildArtifacts() {
   const [configRaw, payloadSource] = await Promise.all([
     fs.readFile(configPath, "utf8"),
@@ -112,15 +159,23 @@ export async function buildArtifacts() {
 
   const config = JSON.parse(configRaw);
 
-  if (typeof config.name !== "string" || typeof config.description !== "string") {
-    throw new Error("tampermonkey.config.json deve contenere name e description come stringhe");
-  }
-
+  assertString(config.namespace, "namespace");
+  assertString(config.version, "version");
   assertStringArray(config.matches, "matches");
-
   if (typeof config.port !== "number") {
     throw new Error("tampermonkey.config.json deve contenere port come numero");
   }
+  if (!config.dev || typeof config.dev !== "object") {
+    throw new Error("tampermonkey.config.json deve contenere dev come oggetto");
+  }
+  if (!config.production || typeof config.production !== "object") {
+    throw new Error("tampermonkey.config.json deve contenere production come oggetto");
+  }
+  assertString(config.dev.name, "dev.name");
+  assertString(config.dev.description, "dev.description");
+  assertString(config.production.name, "production.name");
+  assertString(config.production.description, "production.description");
+  assertString(config.production.filename, "production.filename");
 
   await fs.mkdir(distDir, { recursive: true });
 
@@ -131,18 +186,29 @@ export async function buildArtifacts() {
     " */",
     ""
   ].join("\n");
+  const standaloneBanner = [
+    "/*",
+    ` * Built at: ${new Date().toISOString()}`,
+    " * Standalone distribution build for Tampermonkey.",
+    " */",
+    ""
+  ].join("\n");
 
   const payloadOutput = `const { window, document, console } = context;\n${banner}${payloadSource}\n`;
   const loaderOutput = buildLoaderSource(config);
+  const standaloneOutput = buildStandaloneSource(config, `${standaloneBanner}${payloadSource}\n`);
+  const standalonePath = path.join(distDir, config.production.filename);
 
   await Promise.all([
     fs.writeFile(path.join(distDir, "dev-payload.js"), payloadOutput, "utf8"),
-    fs.writeFile(path.join(distDir, "tampermonkey-loader.user.js"), loaderOutput, "utf8")
+    fs.writeFile(path.join(distDir, "tampermonkey-loader.user.js"), loaderOutput, "utf8"),
+    fs.writeFile(standalonePath, standaloneOutput, "utf8")
   ]);
 
   return {
     loaderPath: path.join(distDir, "tampermonkey-loader.user.js"),
     payloadPath: path.join(distDir, "dev-payload.js"),
+    standalonePath,
     port: config.port
   };
 }
@@ -151,4 +217,5 @@ if (process.argv[1] === __filename) {
   const result = await buildArtifacts();
   console.log(`Loader pronto: ${result.loaderPath}`);
   console.log(`Payload pronto: ${result.payloadPath}`);
+  console.log(`Standalone pronto: ${result.standalonePath}`);
 }

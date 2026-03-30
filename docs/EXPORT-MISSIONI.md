@@ -44,11 +44,43 @@ Prima dell'uso servono:
 
 - Chrome o Edge con Tampermonkey installato
 - accesso autenticato a U-Web Missioni
-- Node.js installato
-- il repo locale con questo progetto
-- il server locale di sviluppo avviato con `npm run dev`
+- per uso finale: Tampermonkey e accesso autenticato a U-Web
+- per chi prepara il pacchetto: Node.js e questo repo locale
 
 ## Installazione passo passo
+
+Esistono due modalita.
+
+### Modalita consigliata per utenti finali
+
+Questa e la modalita da usare per distribuire lo script ad altri utenti senza richiedere Node.js o server locale.
+
+1. Chi prepara il pacchetto genera il file standalone:
+
+```bash
+cd /Users/spagnolo/github/UwebTampermonkey
+npm run build:dist
+```
+
+2. Il file da distribuire e:
+
+`dist/uweb-export-missioni.user.js`
+
+3. L'utente finale apre quel file nel browser oppure lo trascina in Tampermonkey.
+
+4. Tampermonkey mostra la schermata di installazione.
+
+5. Cliccare `Install`.
+
+6. Aprire:
+
+[https://cnr.u-web.cineca.it/appautmis/listaautmis#!/listaautmis](https://cnr.u-web.cineca.it/appautmis/listaautmis#!/listaautmis)
+
+7. Effettuare il login se necessario e usare il pannello di export.
+
+### Modalita sviluppo locale
+
+Questa modalita resta utile se chi installa deve anche modificare lo script.
 
 1. Aprire il terminale nella cartella del progetto:
 
@@ -155,31 +187,16 @@ Basta:
 
 ## Distribuzione ad altri utenti
 
-Per distribuire questo script ad altri colleghi ci sono due possibilita.
+La distribuzione consigliata e usare il file standalone:
 
-### Modalita sviluppo locale
+- [`dist/uweb-export-missioni.user.js`](/Users/spagnolo/github/UwebTampermonkey/dist/uweb-export-missioni.user.js)
 
-Utile se anche l'altro utente deve modificarlo.
+Vantaggi:
 
-Passi:
-
-1. clonare il repo
-2. avviare `npm run dev`
-3. installare `http://127.0.0.1:8123/tampermonkey-loader.user.js`
-4. usare la pagina normalmente
-
-### Modalita pacchettizzata
-
-Utile se vuoi consegnare una versione stabile.
-
-Passi suggeriti:
-
-1. generare una versione finale dello script
-2. pubblicare un `.user.js` statico
-3. far installare quel file direttamente in Tampermonkey
-
-Nota:
-al momento il repo e impostato soprattutto per il workflow locale di sviluppo rapido.
+- nessun server locale da tenere acceso
+- nessuna dipendenza da `npm run dev`
+- installazione piu semplice per utenti non tecnici
+- comportamento piu prevedibile in ambiente finale
 
 ## Limitazioni note
 
@@ -195,10 +212,12 @@ al momento il repo e impostato soprattutto per il workflow locale di sviluppo ra
 
 Controllare che:
 
-- `npm run dev` sia attivo
 - Tampermonkey sia abilitato
-- lo script loader sia installato
+- lo script corretto sia installato
 - la pagina sia stata ricaricata
+- l'utente sia nella vista `Le Mie Missioni`
+
+Se si usa la modalita sviluppo locale, controllare anche che `npm run dev` sia attivo.
 
 ### Errore sul base64 o su `atob`
 
@@ -218,6 +237,7 @@ Controllare:
 - [scripts/build.mjs](/Users/spagnolo/github/UwebTampermonkey/scripts/build.mjs)
 - [scripts/dev.mjs](/Users/spagnolo/github/UwebTampermonkey/scripts/dev.mjs)
 - [tampermonkey.config.json](/Users/spagnolo/github/UwebTampermonkey/tampermonkey.config.json)
+- [dist/uweb-export-missioni.user.js](/Users/spagnolo/github/UwebTampermonkey/dist/uweb-export-missioni.user.js)
 
 ## Nota sicurezza
 
