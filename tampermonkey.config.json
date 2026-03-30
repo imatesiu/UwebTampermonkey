@@ -1,0 +1,8 @@
+{
+  "name": "Uweb Tampermonkey Dev Loader",
+  "description": "Loader locale per sviluppare uno userscript Tampermonkey mentre la pagina e aperta",
+  "matches": [
+    "https://cnr.u-web.cineca.it/appautmis/*"
+  ],
+  "port": 8123
+}
