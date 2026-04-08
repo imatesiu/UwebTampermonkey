@@ -288,6 +288,11 @@ async function fetchMissionAttachments(idAutMiss) {
   return Array.isArray(data) ? data : [];
 }
 
+async function fetchMissionDetails(idAutMiss) {
+  const response = await apiFetch(`${API_BASE}/listaautmis/${encodeURIComponent(idAutMiss)}`);
+  return response.json();
+}
+
 async function fetchAttachmentBytes(idAutMiss, idDgAllegato) {
   const response = await apiFetch(`${API_BASE}/allegati/${encodeURIComponent(idAutMiss)}/${encodeURIComponent(idDgAllegato)}`);
   return base64ToBytes(await response.text());
@@ -455,7 +460,80 @@ function triggerDownload(blob, fileName) {
   window.setTimeout(() => window.URL.revokeObjectURL(url), 2000);
 }
 
-function buildMissionSummary(mission, attachments) {
+function normalizeArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function simplifyExpense(expense, source) {
+  return {
+    origine: source,
+    idSpesa: expense.idXSpesa ?? expense.idXPrevSpesa ?? null,
+    nrRiga: expense.nrRiga ?? null,
+    codiceSpesa: expense.cdSpesa ?? null,
+    tipoSpesa: expense.dsTipoSpesa ?? null,
+    descrizioneLibera: expense.dsSpesa ?? null,
+    dataSostenimento: expense.dtSostenimento ?? null,
+    importoEuro: expense.importoEuro ?? null,
+    importoValuta: expense.importoValuta ?? null,
+    valuta: expense.cdValuta ?? null,
+    nomeValuta: expense.nomeValuta ?? null,
+    chiaveAllegato: expense.cdAllegato ?? null
+  };
+}
+
+function indexExpensesByAttachmentKey(detail) {
+  const dg = detail?.dg02Dg ?? {};
+  const expensesByAttachmentKey = new Map();
+  const sources = [
+    { list: normalizeArray(dg.dg16XSpesa), source: "spesa_rimborso" },
+    { list: normalizeArray(dg.dg16XPrevSpesa), source: "spesa_presunta" }
+  ];
+
+  for (const { list, source } of sources) {
+    for (const expense of list) {
+      const key = String(expense?.cdAllegato ?? "").trim();
+      if (!key) {
+        continue;
+      }
+
+      if (!expensesByAttachmentKey.has(key)) {
+        expensesByAttachmentKey.set(key, []);
+      }
+
+      expensesByAttachmentKey.get(key).push(simplifyExpense(expense, source));
+    }
+  }
+
+  return expensesByAttachmentKey;
+}
+
+function summarizeAttachmentDownload(attachment, filePath, detail, expensesByAttachmentKey) {
+  const attachmentKey = String(attachment.cdAltKey ?? "").trim();
+  const associatedExpenses = attachmentKey ? (expensesByAttachmentKey.get(attachmentKey) ?? []) : [];
+
+  return {
+    scaricato: true,
+    percorsoZip: filePath,
+    idDgAllegato: attachment.idDgAllegato,
+    nomeFile: attachment.nomeFile,
+    descrizione: attachment.dsAllegato ?? null,
+    tipo: attachment.cdTipoAllegato ?? null,
+    cdAltKey: attachment.cdAltKey ?? null,
+    associazione: {
+      livello: associatedExpenses.length ? "spesa" : "missione",
+      chiave: attachmentKey || null,
+      spese: associatedExpenses
+    },
+    sorgenteDettaglio: {
+      presenteNelDettaglioMissione: normalizeArray(detail?.dg02Dg?.dg02DgAllegati)
+        .some((detailAttachment) => detailAttachment?.idDgAllegato === attachment.idDgAllegato)
+    }
+  };
+}
+
+function buildMissionSummary(mission, attachments, detail, downloadedAttachments) {
+  const dg = detail?.dg02Dg ?? {};
+
   return {
     idAutMiss: mission.idAutMiss,
     titolo: mission.dsAutMis,
@@ -465,13 +543,15 @@ function buildMissionSummary(mission, attachments) {
     dataFine: mission.dtFineMis,
     costoPresunto: mission.costoPresunto ?? null,
     luoghi: mission.luoghi ?? [],
-    allegati: attachments.map((attachment) => ({
-      idDgAllegato: attachment.idDgAllegato,
-      nomeFile: attachment.nomeFile,
-      descrizione: attachment.dsAllegato,
-      tipo: attachment.cdTipoAllegato,
-      cdAltKey: attachment.cdAltKey
-    }))
+    dettaglioMissione: {
+      disponibile: Boolean(detail),
+      numeroAllegatiDettaglio: normalizeArray(dg.dg02DgAllegati).length,
+      numeroSpeseRimborso: normalizeArray(dg.dg16XSpesa).length,
+      numeroSpesePresunte: normalizeArray(dg.dg16XPrevSpesa).length
+    },
+    allegatiTotaliTrovati: attachments.length,
+    allegatiScaricati: downloadedAttachments.length,
+    allegati: downloadedAttachments
   };
 }
 
@@ -503,15 +583,24 @@ async function exportMissionZip() {
       setProgress(currentStep, totalSteps);
 
       setStatus(`Leggo allegati missione ${mission.idAutMiss}...`);
+      const missionDetail = await fetchMissionDetails(mission.idAutMiss);
       const attachments = await fetchMissionAttachments(mission.idAutMiss);
-
-      zip.addFile(`${folder}/missione.json`, jsonToBytes(buildMissionSummary(mission, attachments)));
+      const expensesByAttachmentKey = indexExpensesByAttachmentKey(missionDetail);
+      const downloadedAttachments = [];
 
       for (const attachment of attachments) {
         const filePath = uniqueFilePath(folder, attachment.nomeFile, usedNames);
         const attachmentBytes = await fetchAttachmentBytes(mission.idAutMiss, attachment.idDgAllegato);
         zip.addFile(filePath, attachmentBytes);
+        downloadedAttachments.push(
+          summarizeAttachmentDownload(attachment, filePath, missionDetail, expensesByAttachmentKey)
+        );
       }
+
+      zip.addFile(
+        `${folder}/missione.json`,
+        jsonToBytes(buildMissionSummary(mission, attachments, missionDetail, downloadedAttachments))
+      );
 
       currentStep += 1;
       setProgress(currentStep, totalSteps);
