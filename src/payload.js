@@ -24,7 +24,7 @@ style.textContent = `
     left: 16px;
     bottom: 16px;
     z-index: 2147483647;
-    width: min(360px, calc(100vw - 32px));
+    width: min(270px, calc(100vw - 32px));
     border-radius: 18px;
     background: rgba(15, 23, 42, 0.96);
     color: #f8fafc;
