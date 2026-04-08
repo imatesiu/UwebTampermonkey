@@ -3,6 +3,7 @@ const LIST_ENDPOINT_FRAGMENT = "/estrailistaautmissionipercipienteconstatopagame
 const TOKEN_KEY = "appU-Web-token";
 const ROOT_ID = "__tm-dev-exporter";
 const STYLE_ID = "__tm-dev-exporter-style";
+const INCLUDE_RAW_DETAIL_KEY = "__tm-export-include-raw-detail";
 
 if (!window.location.pathname.startsWith("/appautmis/listaautmis")) {
   return {
@@ -20,7 +21,7 @@ style.id = STYLE_ID;
 style.textContent = `
   #${ROOT_ID} {
     position: fixed;
-    right: 16px;
+    left: 16px;
     bottom: 16px;
     z-index: 2147483647;
     width: min(360px, calc(100vw - 32px));
@@ -48,6 +49,17 @@ style.textContent = `
     margin: 0;
   }
 
+  #${ROOT_ID} .tm-version {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(56, 189, 248, 0.18);
+    color: #bae6fd;
+    font-size: 11px;
+    vertical-align: middle;
+  }
+
   #${ROOT_ID} .tm-subtitle {
     margin: 6px 0 0;
     color: #cbd5e1;
@@ -63,6 +75,26 @@ style.textContent = `
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+  }
+
+  #${ROOT_ID} .tm-option {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 10px;
+    align-items: start;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.55);
+    color: #cbd5e1;
+  }
+
+  #${ROOT_ID} .tm-option input {
+    margin: 2px 0 0;
+  }
+
+  #${ROOT_ID} .tm-option strong {
+    display: block;
+    color: #f8fafc;
   }
 
   #${ROOT_ID} button {
@@ -118,7 +150,7 @@ const root = document.createElement("section");
 root.id = ROOT_ID;
 root.innerHTML = `
   <div class="tm-head">
-    <p class="tm-title">Export missioni in ZIP</p>
+    <p class="tm-title">Export missioni in ZIP <span class="tm-version">v${getScriptVersion()}</span></p>
     <p class="tm-subtitle">Usa i filtri correnti della pagina e scarica richiesta + allegati per ogni missione.</p>
   </div>
   <div class="tm-body">
@@ -126,6 +158,13 @@ root.innerHTML = `
       <button class="tm-primary" type="button">Scarica ZIP missioni</button>
       <button class="tm-secondary" type="button">Aggiorna stato</button>
     </div>
+    <label class="tm-option">
+      <input class="tm-include-raw-detail" type="checkbox" />
+      <span>
+        <strong>Includi dettaglio API originale</strong>
+        Aggiunge a ogni <code>missione.json</code> il raw API con il path usato per estrarlo.
+      </span>
+    </label>
     <div class="tm-progress" aria-hidden="true">
       <div class="tm-progress-bar"></div>
     </div>
@@ -137,8 +176,14 @@ document.documentElement.append(style, root);
 
 const downloadButton = root.querySelector(".tm-primary");
 const refreshButton = root.querySelector(".tm-secondary");
+const includeRawDetailCheckbox = root.querySelector(".tm-include-raw-detail");
 const statusBox = root.querySelector(".tm-status");
 const progressBar = root.querySelector(".tm-progress-bar");
+
+includeRawDetailCheckbox.checked = window.localStorage.getItem(INCLUDE_RAW_DETAIL_KEY) === "1";
+includeRawDetailCheckbox.addEventListener("change", () => {
+  window.localStorage.setItem(INCLUDE_RAW_DETAIL_KEY, includeRawDetailCheckbox.checked ? "1" : "0");
+});
 
 function setStatus(message) {
   statusBox.textContent = message;
@@ -224,6 +269,10 @@ function jsonToBytes(value) {
   return encoder.encode(JSON.stringify(value, null, 2));
 }
 
+function getScriptVersion() {
+  return typeof SCRIPT_VERSION !== "undefined" ? SCRIPT_VERSION : "dev";
+}
+
 function getToken() {
   const token = window.localStorage.getItem(TOKEN_KEY);
   if (!token) {
@@ -288,8 +337,12 @@ async function fetchMissionAttachments(idAutMiss) {
   return Array.isArray(data) ? data : [];
 }
 
+function buildMissionDetailUrl(idAutMiss) {
+  return `${API_BASE}/listaautmis/${encodeURIComponent(idAutMiss)}`;
+}
+
 async function fetchMissionDetails(idAutMiss) {
-  const response = await apiFetch(`${API_BASE}/listaautmis/${encodeURIComponent(idAutMiss)}`);
+  const response = await apiFetch(buildMissionDetailUrl(idAutMiss));
   return response.json();
 }
 
@@ -460,24 +513,69 @@ function triggerDownload(blob, fileName) {
   window.setTimeout(() => window.URL.revokeObjectURL(url), 2000);
 }
 
-function normalizeArray(value) {
-  return Array.isArray(value) ? value : [];
+function asArray(value) {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (value == null) {
+    return [];
+  }
+
+  return [value];
 }
 
-function simplifyExpense(expense, source) {
+function simplifyAttachmentReference(attachment) {
+  return {
+    idDgAllegato: attachment.idDgAllegato ?? null,
+    nomeFile: attachment.nomeFile ?? null,
+    percorsoZip: attachment.percorsoZip ?? null,
+    tipo: attachment.tipo ?? null,
+    notaFile: attachment.notaFile ?? null,
+    cdAltKey: attachment.cdAltKey ?? null
+  };
+}
+
+function buildAttachmentsByKey(downloadedAttachments) {
+  const attachmentsByKey = new Map();
+
+  for (const attachment of downloadedAttachments) {
+    const key = String(attachment.cdAltKey ?? "").trim();
+    if (!key) {
+      continue;
+    }
+
+    if (!attachmentsByKey.has(key)) {
+      attachmentsByKey.set(key, []);
+    }
+
+    attachmentsByKey.get(key).push(simplifyAttachmentReference(attachment));
+  }
+
+  return attachmentsByKey;
+}
+
+function simplifyExpense(expense, source, attachmentsByKey = new Map()) {
+  const attachmentKey = String(expense.cdAllegato ?? "").trim();
+  const linkedAttachments = attachmentKey ? (attachmentsByKey.get(attachmentKey) ?? []) : [];
+
   return {
     origine: source,
     idSpesa: expense.idXSpesa ?? expense.idXPrevSpesa ?? null,
     nrRiga: expense.nrRiga ?? null,
     codiceSpesa: expense.cdSpesa ?? null,
     tipoSpesa: expense.dsTipoSpesa ?? null,
-    descrizioneLibera: expense.dsSpesa ?? null,
+    notaSpesa: expense.dsSpesa ?? null,
+    motivazioneMezzo: expense.dsMotivazMezzo ?? null,
+    codiceMotivazioneMezzo: expense.cdMotivazMezzo ?? null,
+    mezzoTrasporto: expense.cdMezzoTrasp ?? null,
     dataSostenimento: expense.dtSostenimento ?? null,
     importoEuro: expense.importoEuro ?? null,
     importoValuta: expense.importoValuta ?? null,
     valuta: expense.cdValuta ?? null,
     nomeValuta: expense.nomeValuta ?? null,
-    chiaveAllegato: expense.cdAllegato ?? null
+    chiaveAllegato: expense.cdAllegato ?? null,
+    allegatiAssociati: linkedAttachments
   };
 }
 
@@ -485,8 +583,8 @@ function indexExpensesByAttachmentKey(detail) {
   const dg = detail?.dg02Dg ?? {};
   const expensesByAttachmentKey = new Map();
   const sources = [
-    { list: normalizeArray(dg.dg16XSpesa), source: "spesa_rimborso" },
-    { list: normalizeArray(dg.dg16XPrevSpesa), source: "spesa_presunta" }
+    { list: asArray(dg.dg16XSpesa), source: "spesa_rimborso" },
+    { list: asArray(dg.dg16XPrevSpesa), source: "spesa_presunta" }
   ];
 
   for (const { list, source } of sources) {
@@ -516,7 +614,7 @@ function summarizeAttachmentDownload(attachment, filePath, detail, expensesByAtt
     percorsoZip: filePath,
     idDgAllegato: attachment.idDgAllegato,
     nomeFile: attachment.nomeFile,
-    descrizione: attachment.dsAllegato ?? null,
+    notaFile: attachment.dsAllegato ?? null,
     tipo: attachment.cdTipoAllegato ?? null,
     cdAltKey: attachment.cdAltKey ?? null,
     associazione: {
@@ -525,34 +623,152 @@ function summarizeAttachmentDownload(attachment, filePath, detail, expensesByAtt
       spese: associatedExpenses
     },
     sorgenteDettaglio: {
-      presenteNelDettaglioMissione: normalizeArray(detail?.dg02Dg?.dg02DgAllegati)
+      presenteNelDettaglioMissione: asArray(detail?.dg02Dg?.dg02DgAllegati)
         .some((detailAttachment) => detailAttachment?.idDgAllegato === attachment.idDgAllegato)
     }
   };
 }
 
-function buildMissionSummary(mission, attachments, detail, downloadedAttachments) {
-  const dg = detail?.dg02Dg ?? {};
+function buildRouteSummary(route) {
+  return {
+    nrRiga: route.nrRiga ?? null,
+    dataInizio: route.dataInizioTratta ?? null,
+    dataFine: route.dataFineTratta ?? null,
+    tipoTratta: route.cdTipoTratta ?? null,
+    luogo: route.dsLuogo ?? null,
+    luogoCompleto: route.dsLuogoCountryName ?? null,
+    areaGeografica: route.dsAreaGeog ?? null,
+    paese: route.countryCode ?? null
+  };
+}
+
+function buildActorSummary(actor) {
+  return {
+    idDgAttore: actor.idDgAttore ?? null,
+    utente: actor.userName ?? null,
+    tipoAttore: actor.tipoAttoreName ?? null,
+    descrizione: actor.descrizione ?? null,
+    label: actor.label ?? null
+  };
+}
+
+function buildAuthorizationSummary(detailRow) {
+  const authorization = detailRow?.dg16XAutorizzazione ?? {};
 
   return {
+    nrRiga: detailRow?.nrRiga ?? null,
+    progetto: detailRow?.dsProgetto ?? null,
+    codiceProgetto: detailRow?.cdProgetto ?? null,
+    cup: detailRow?.cdCup ?? null,
+    autorizzazione: {
+      data: authorization.dtAutoriz ?? null,
+      autorizzato: authorization.flAutorizzato ?? null,
+      tipo: authorization.dsTipoAutoriz ?? null,
+      codiceTipo: authorization.cdTipoAutoriz ?? null,
+      nome: authorization.nome ?? null,
+      cognome: authorization.cognome ?? null
+    }
+  };
+}
+
+function buildMissionSummary(mission, attachments, detail, downloadedAttachments, options = {}) {
+  const dg = detail?.dg02Dg ?? {};
+  const attachmentsByKey = buildAttachmentsByKey(downloadedAttachments);
+  const missionLevelAttachments = downloadedAttachments.filter(
+    (attachment) => attachment.associazione?.livello === "missione"
+  );
+
+  const missionSections = {
+    intestazione: {
+      idAutMiss: mission.idAutMiss,
+      titolo: mission.dsAutMis,
+      stato: mission.stato,
+      statoPagamento: mission.statoPagamento ?? null,
+      dataInizio: mission.dtIniMis,
+      dataFine: mission.dtFineMis,
+      costoPresunto: mission.costoPresunto ?? null,
+      luoghi: mission.luoghi ?? []
+    },
+    missione: {
+      idDg: dg.idDg ?? null,
+      annoRiferimento: dg.annoRif ?? null,
+      numeroRegistrazione: dg.numeroRegistrazione ?? null,
+      dataRegistrazione: dg.dtRegistrazione ?? null,
+      titoloDettaglio: dg.dsDg ?? null,
+      notaMissione: dg.note ?? null,
+      statoDg: dg.statoDg ?? null,
+      progetto: {
+        codice: dg.cdProgetto ?? null,
+        descrizione: dg.dsProgetto ?? null,
+        cup: dg.cup ?? null,
+        descrizioneCup: dg.dsCup ?? null
+      }
+    },
+    percipiente: {
+      matricola: dg.dg09XPercipiente?.matricola ?? null,
+      nome: dg.dg09XPercipiente?.nome ?? null,
+      cognome: dg.dg09XPercipiente?.cognome ?? null,
+      ruolo: dg.dg09XPercipiente?.ruolo ?? null,
+      descrizioneRuolo: dg.dg09XPercipiente?.descrRuolo ?? null
+    },
+    richiestaAutorizzazione: {
+      tipo: dg.dg16XRichiestaAut?.dsTipoRichiesta ?? null,
+      codiceTipo: dg.dg16XRichiestaAut?.cdTipoRichiesta ?? null,
+      macroTipo: dg.dg16XRichiestaAut?.macroTipoRichiesta ?? null,
+      dataInizio: dg.dg16XRichiestaAut?.dtInizio ?? null,
+      dataFine: dg.dg16XRichiestaAut?.dtFine ?? null,
+      costoPresunto: dg.dg16XRichiestaAut?.costoPresunto ?? null,
+      costoPresuntoSpese: dg.dg16XRichiestaAut?.costoPresSpese ?? null,
+      responsabileProgetto: [
+        dg.dg16XRichiestaAut?.nomeRespPj,
+        dg.dg16XRichiestaAut?.cognomeRespPj
+      ].filter(Boolean).join(" ") || null
+    },
+    dettaglioMissione: {
+      dataInizio: dg.dg16XMissione?.dtInizioMis ?? null,
+      dataFine: dg.dg16XMissione?.dtFineMis ?? null,
+      durataGiorni: dg.dg16XMissione?.durataGg ?? null,
+      destinazione: dg.dg16XMissione?.dsLuogoDestinazione ?? null,
+      partenza: dg.dg16XMissione?.dsLuogoPartenza ?? null,
+      oggetto: dg.dg16XMissione?.dsOggetto ?? null,
+      regolamento: dg.dg16XMissione?.dsRegolamento ?? null,
+      tipoMissione: dg.dg16XMissione?.dsTipoMis ?? null,
+      capitolo: dg.dg16XMissione?.descrCapitolo ?? null,
+      gruppo: dg.dg16XMissione?.dsGruppo ?? null
+    },
+    tratte: asArray(dg.dg16XTratta).map(buildRouteSummary),
+    autorizzazioni: asArray(dg.dg02DgDett).map(buildAuthorizationSummary),
+    speseRimborso: asArray(dg.dg16XSpesa).map((expense) =>
+      simplifyExpense(expense, "spesa_rimborso", attachmentsByKey)
+    )
+  };
+
+  const summary = {
     idAutMiss: mission.idAutMiss,
-    titolo: mission.dsAutMis,
-    stato: mission.stato,
-    statoPagamento: mission.statoPagamento ?? null,
-    dataInizio: mission.dtIniMis,
-    dataFine: mission.dtFineMis,
-    costoPresunto: mission.costoPresunto ?? null,
-    luoghi: mission.luoghi ?? [],
     dettaglioMissione: {
       disponibile: Boolean(detail),
-      numeroAllegatiDettaglio: normalizeArray(dg.dg02DgAllegati).length,
-      numeroSpeseRimborso: normalizeArray(dg.dg16XSpesa).length,
-      numeroSpesePresunte: normalizeArray(dg.dg16XPrevSpesa).length
+      numeroAllegatiDettaglio: asArray(dg.dg02DgAllegati).length,
+      numeroSpeseRimborso: asArray(dg.dg16XSpesa).length,
+      numeroSpesePresunte: asArray(dg.dg16XPrevSpesa).length
     },
     allegatiTotaliTrovati: attachments.length,
     allegatiScaricati: downloadedAttachments.length,
-    allegati: downloadedAttachments
+    note: {
+      missione: dg.note ?? null
+    },
+    allegatiMissione: missionLevelAttachments,
+    allegati: downloadedAttachments,
+    sezioni: missionSections
   };
+
+  if (options.includeRawDetailApiOriginale) {
+    summary.dettaglioApiOriginale = {
+      path: options.detailApiPath ?? null,
+      data: detail
+    };
+  }
+
+  return summary;
 }
 
 async function exportMissionZip() {
@@ -560,6 +776,7 @@ async function exportMissionZip() {
   refreshButton.disabled = true;
 
   try {
+    const includeRawDetailApiOriginale = includeRawDetailCheckbox.checked;
     setProgress(0, 1);
     setStatus("Recupero lista missioni dai filtri correnti...");
 
@@ -583,6 +800,7 @@ async function exportMissionZip() {
       setProgress(currentStep, totalSteps);
 
       setStatus(`Leggo allegati missione ${mission.idAutMiss}...`);
+      const detailApiPath = buildMissionDetailUrl(mission.idAutMiss);
       const missionDetail = await fetchMissionDetails(mission.idAutMiss);
       const attachments = await fetchMissionAttachments(mission.idAutMiss);
       const expensesByAttachmentKey = indexExpensesByAttachmentKey(missionDetail);
@@ -599,7 +817,10 @@ async function exportMissionZip() {
 
       zip.addFile(
         `${folder}/missione.json`,
-        jsonToBytes(buildMissionSummary(mission, attachments, missionDetail, downloadedAttachments))
+        jsonToBytes(buildMissionSummary(mission, attachments, missionDetail, downloadedAttachments, {
+          includeRawDetailApiOriginale,
+          detailApiPath
+        }))
       );
 
       currentStep += 1;
@@ -609,8 +830,10 @@ async function exportMissionZip() {
 
     zip.addFile("export-info.json", jsonToBytes({
       exportedAt: new Date().toISOString(),
+      scriptVersion: getScriptVersion(),
       sourceUrl: window.location.href,
       listUrl: getLatestListUrl(),
+      includeRawDetailApiOriginale,
       totalMissions: missions.length
     }));
 

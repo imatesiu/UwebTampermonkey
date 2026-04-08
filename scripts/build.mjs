@@ -194,9 +194,12 @@ export async function buildArtifacts() {
     ""
   ].join("\n");
 
-  const payloadOutput = `const { window, document, console } = context;\n${banner}${payloadSource}\n`;
+  const payloadOutput = `const { window, document, console } = context;\nconst SCRIPT_VERSION = ${JSON.stringify(config.version)};\n${banner}${payloadSource}\n`;
   const loaderOutput = buildLoaderSource(config);
-  const standaloneOutput = buildStandaloneSource(config, `${standaloneBanner}${payloadSource}\n`);
+  const standaloneOutput = buildStandaloneSource(
+    config,
+    `${standaloneBanner}const SCRIPT_VERSION = ${JSON.stringify(config.version)};\n${payloadSource}\n`
+  );
   const standalonePath = path.join(distDir, config.production.filename);
 
   await Promise.all([
