@@ -3,7 +3,6 @@ const LIST_ENDPOINT_FRAGMENT = "/estrailistaautmissionipercipienteconstatopagame
 const TOKEN_KEY = "appU-Web-token";
 const ROOT_ID = "__tm-dev-exporter";
 const STYLE_ID = "__tm-dev-exporter-style";
-const INCLUDE_RAW_DETAIL_KEY = "__tm-export-include-raw-detail";
 
 if (!window.location.pathname.startsWith("/appautmis/listaautmis")) {
   return {
@@ -180,10 +179,7 @@ const includeRawDetailCheckbox = root.querySelector(".tm-include-raw-detail");
 const statusBox = root.querySelector(".tm-status");
 const progressBar = root.querySelector(".tm-progress-bar");
 
-includeRawDetailCheckbox.checked = window.localStorage.getItem(INCLUDE_RAW_DETAIL_KEY) === "1";
-includeRawDetailCheckbox.addEventListener("change", () => {
-  window.localStorage.setItem(INCLUDE_RAW_DETAIL_KEY, includeRawDetailCheckbox.checked ? "1" : "0");
-});
+includeRawDetailCheckbox.checked = false;
 
 function setStatus(message) {
   statusBox.textContent = message;
@@ -362,12 +358,13 @@ function uniqueFilePath(folder, originalName, usedNames) {
   const dotIndex = safeName.lastIndexOf(".");
   const baseName = dotIndex > 0 ? safeName.slice(0, dotIndex) : safeName;
   const extension = dotIndex > 0 ? safeName.slice(dotIndex) : "";
+  const prefix = folder ? `${folder}/` : "";
 
-  let candidate = `${folder}/${safeName}`;
+  let candidate = `${prefix}${safeName}`;
   let counter = 2;
 
   while (usedNames.has(candidate.toLowerCase())) {
-    candidate = `${folder}/${baseName} (${counter})${extension}`;
+    candidate = `${prefix}${baseName} (${counter})${extension}`;
     counter += 1;
   }
 
@@ -511,6 +508,10 @@ function triggerDownload(blob, fileName) {
   link.download = fileName;
   link.click();
   window.setTimeout(() => window.URL.revokeObjectURL(url), 2000);
+}
+
+async function blobToBytes(blob) {
+  return new Uint8Array(await blob.arrayBuffer());
 }
 
 function asArray(value) {
@@ -786,16 +787,18 @@ async function exportMissionZip() {
     }
 
     const zip = new ZipBuilder();
-    const usedNames = new Set();
+    const usedArchiveNames = new Set();
     const totalSteps = missions.length * 2 + 1;
     let currentStep = 0;
 
     for (const mission of missions) {
       const folder = missionFolderName(mission);
+      const missionZip = new ZipBuilder();
+      const usedMissionNames = new Set();
 
       setStatus(`Scarico richiesta PDF per missione ${mission.idAutMiss}...`);
       const requestBytes = await fetchMissionRequestPdf(mission.idAutMiss);
-      zip.addFile(`${folder}/Stampa_Richiesta_Missione_${sanitizeSegment(mission.idAutMiss, "missione")}.pdf`, requestBytes);
+      missionZip.addFile(`${folder}/Stampa_Richiesta_Missione_${sanitizeSegment(mission.idAutMiss, "missione")}.pdf`, requestBytes);
       currentStep += 1;
       setProgress(currentStep, totalSteps);
 
@@ -807,15 +810,15 @@ async function exportMissionZip() {
       const downloadedAttachments = [];
 
       for (const attachment of attachments) {
-        const filePath = uniqueFilePath(folder, attachment.nomeFile, usedNames);
+        const filePath = uniqueFilePath(folder, attachment.nomeFile, usedMissionNames);
         const attachmentBytes = await fetchAttachmentBytes(mission.idAutMiss, attachment.idDgAllegato);
-        zip.addFile(filePath, attachmentBytes);
+        missionZip.addFile(filePath, attachmentBytes);
         downloadedAttachments.push(
           summarizeAttachmentDownload(attachment, filePath, missionDetail, expensesByAttachmentKey)
         );
       }
 
-      zip.addFile(
+      missionZip.addFile(
         `${folder}/missione.json`,
         jsonToBytes(buildMissionSummary(mission, attachments, missionDetail, downloadedAttachments, {
           includeRawDetailApiOriginale,
@@ -823,9 +826,12 @@ async function exportMissionZip() {
         }))
       );
 
+      const missionArchiveName = uniqueFilePath("", `${folder}.zip`, usedArchiveNames);
+      zip.addFile(missionArchiveName, await blobToBytes(missionZip.build()));
+
       currentStep += 1;
       setProgress(currentStep, totalSteps);
-      setStatus(`Missione ${mission.idAutMiss} completata: ${attachments.length} allegati.`);
+      setStatus(`Missione ${mission.idAutMiss} completata: ${attachments.length} allegati in ${missionArchiveName}.`);
     }
 
     zip.addFile("export-info.json", jsonToBytes({
@@ -834,6 +840,7 @@ async function exportMissionZip() {
       sourceUrl: window.location.href,
       listUrl: getLatestListUrl(),
       includeRawDetailApiOriginale,
+      formatoExport: "zip-principale-con-zip-per-missione",
       totalMissions: missions.length
     }));
 
