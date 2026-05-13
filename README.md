@@ -68,11 +68,62 @@ File Docker principali:
 - [Dockerfile](/Users/spagnolo/github/UwebTampermonkey/Dockerfile)
 - [docker-compose.yml](/Users/spagnolo/github/UwebTampermonkey/docker-compose.yml)
 
+Porte:
+
+- dentro il container il servizio ascolta sempre su `8123`
+- in locale `docker-compose.yml` espone `8123:8123`
+- quindi apri `http://127.0.0.1:8123`
+
 Per fermare il servizio:
 
 ```bash
 docker compose down
 ```
+
+## Deploy su server con dominio e HTTPS
+
+Il progetto supporta anche un deployment su server con dominio pubblico e HTTPS, usando i certificati Let's Encrypt gia presenti sulla macchina.
+
+Configurazione prevista:
+
+- il loader Tampermonkey punta a un origin pubblico configurabile, ad esempio `https://tm.example.com`
+- il server Node dentro Docker puo servire direttamente HTTPS
+- i certificati vengono letti dalla macchina host, in un path del tipo:
+  `/etc/letsencrypt/live/${LETSENCRYPT_SITE}/`
+
+File utili:
+
+- [docker-compose.server.yml](/Users/spagnolo/github/UwebTampermonkey/docker-compose.server.yml)
+- [.env.server.example](/Users/spagnolo/github/UwebTampermonkey/.env.server.example)
+
+Passi tipici:
+
+1. Crea un file `.env.server` partendo da `.env.server.example`
+2. imposta:
+   - `PUBLIC_HOST=tm.example.com`
+   - `LETSENCRYPT_SITE=tm.example.com`
+3. avvia:
+
+```bash
+docker compose --env-file .env.server -f docker-compose.server.yml up --build -d
+```
+
+In questo scenario:
+
+- il container monta `/etc/letsencrypt` in sola lettura
+- il server usa automaticamente:
+  - `/etc/letsencrypt/live/${LETSENCRYPT_SITE}/fullchain.pem`
+  - `/etc/letsencrypt/live/${LETSENCRYPT_SITE}/privkey.pem`
+- il loader viene generato con origin pubblico `https://${PUBLIC_HOST}`
+
+Porte:
+
+- dentro il container il servizio ascolta su `8123`
+- `docker-compose.server.yml` espone `443:8123`
+- dall'esterno usi quindi direttamente `https://${PUBLIC_HOST}`
+
+Nota:
+per evitare problemi con i link simbolici di Let's Encrypt, il compose server monta tutta la directory `/etc/letsencrypt`, non solo `live/`.
 
 ## Distribuzione
 

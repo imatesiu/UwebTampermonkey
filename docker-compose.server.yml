@@ -1,0 +1,20 @@
+services:
+  tampermonkey-dev:
+    build:
+      context: .
+    container_name: uweb-tampermonkey-dev-server
+    working_dir: /app
+    environment:
+      HOST: 0.0.0.0
+      HTTPS: "1"
+      PUBLIC_HOST: ${PUBLIC_HOST}
+      DEV_PUBLIC_ORIGIN: https://${PUBLIC_HOST}
+      LETSENCRYPT_SITE: ${LETSENCRYPT_SITE}
+      LETSENCRYPT_ROOT: /etc/letsencrypt/live
+    ports:
+      - "443:8123"
+    volumes:
+      - .:/app
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    restart: unless-stopped
+    command: npm run dev:docker

@@ -21,6 +21,22 @@ function assertString(value, fieldName) {
   }
 }
 
+function unique(values) {
+  return [...new Set(values.filter(Boolean))];
+}
+
+function getDevOrigin(config) {
+  const explicitOrigin = process.env.DEV_PUBLIC_ORIGIN?.trim();
+  if (explicitOrigin) {
+    return explicitOrigin.replace(/\/$/, "");
+  }
+
+  const scheme = process.env.DEV_PUBLIC_SCHEME?.trim() || "http";
+  const host = process.env.DEV_PUBLIC_HOST?.trim() || "127.0.0.1";
+  const port = process.env.DEV_PUBLIC_PORT?.trim() || String(config.port);
+  return `${scheme}://${host}:${port}`;
+}
+
 function buildMetadata({
   name,
   description,
@@ -45,6 +61,8 @@ function buildMetadata({
 }
 
 function buildLoaderSource(config) {
+  const devOrigin = getDevOrigin(config);
+  const devUrl = new URL(devOrigin);
   const metadata = buildMetadata({
     name: config.dev.name,
     description: config.dev.description,
@@ -56,10 +74,8 @@ function buildLoaderSource(config) {
       "GM_registerMenuCommand",
       "GM_notification"
     ],
-    connect: ["127.0.0.1", "localhost"]
+    connect: unique([devUrl.hostname, "127.0.0.1", "localhost"])
   });
-
-  const devOrigin = `http://127.0.0.1:${config.port}`;
 
   return `${metadata}
 
@@ -214,7 +230,8 @@ export async function buildArtifacts() {
     standalonePath,
     port: config.port,
     version: config.version,
-    standaloneFileName: config.production.filename
+    standaloneFileName: config.production.filename,
+    devOrigin: getDevOrigin(config)
   };
 }
 

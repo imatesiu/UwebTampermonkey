@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import http from "node:http";
+import https from "node:https";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildArtifacts } from "./build.mjs";
@@ -12,6 +13,37 @@ const srcDir = path.join(rootDir, "src");
 const distDir = path.join(rootDir, "dist");
 const serverHost = process.env.HOST || "127.0.0.1";
 const publicHost = process.env.PUBLIC_HOST || "127.0.0.1";
+const tlsEnabled = process.env.HTTPS === "1";
+const letsencryptRoot = process.env.LETSENCRYPT_ROOT || "/etc/letsencrypt/live";
+
+function getTlsPaths() {
+  const keyPath = process.env.TLS_KEY_PATH;
+  const certPath = process.env.TLS_CERT_PATH;
+
+  if (keyPath && certPath) {
+    return { keyPath, certPath };
+  }
+
+  const site = process.env.LETSENCRYPT_SITE;
+  if (!site) {
+    return null;
+  }
+
+  const siteDir = path.join(letsencryptRoot, site);
+  return {
+    keyPath: path.join(siteDir, "privkey.pem"),
+    certPath: path.join(siteDir, "fullchain.pem")
+  };
+}
+
+function getPublicOrigin() {
+  if (lastBuild?.devOrigin) {
+    return lastBuild.devOrigin;
+  }
+
+  const scheme = tlsEnabled ? "https" : "http";
+  return `${scheme}://${publicHost}:8123`;
+}
 
 let lastBuild = null;
 let buildTimer = null;
@@ -46,29 +78,38 @@ function contentTypeFor(filePath) {
 }
 
 function renderIndex() {
-  const port = lastBuild?.port ?? 8123;
-  const origin = `http://${publicHost}:${port}`;
+  const origin = getPublicOrigin();
   const version = lastBuild?.version ?? "dev";
   const standaloneFileName = lastBuild?.standaloneFileName ?? "uweb-export-missioni.user.js";
+  const publicPort = tlsEnabled ? "443" : String(lastBuild?.port ?? 8123);
   return `<!doctype html>
 <html lang="it">
   <head>
     <meta charset="utf-8">
-    <title>Tampermonkey Dev Server</title>
+    <title>Installazione Script U-Web Missioni</title>
     <style>
       body {
         margin: 0;
         padding: 32px;
         font: 16px/1.5 ui-sans-serif, system-ui, sans-serif;
-        background: #f8fafc;
+        background: linear-gradient(180deg, #f8fafc 0%, #eef6ff 100%);
         color: #0f172a;
       }
       main {
-        max-width: 720px;
+        max-width: 820px;
+      }
+      h1 {
+        margin: 0 0 10px;
+        font-size: 34px;
+      }
+      .lead {
+        margin: 0 0 20px;
+        max-width: 68ch;
+        color: #334155;
       }
       .card {
         margin: 20px 0;
-        padding: 18px 20px;
+        padding: 22px 24px;
         border-radius: 16px;
         background: white;
         box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
@@ -76,6 +117,9 @@ function renderIndex() {
       .card h2 {
         margin: 0 0 8px;
         font-size: 20px;
+      }
+      .card p {
+        margin: 8px 0;
       }
       .badge {
         display: inline-block;
@@ -91,6 +135,27 @@ function renderIndex() {
         padding: 2px 6px;
         border-radius: 6px;
       }
+      .button {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        background: #0f766e;
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+      }
+      .button.secondary {
+        background: #1d4ed8;
+      }
+      .hint {
+        color: #475569;
+        font-size: 14px;
+      }
+      .steps {
+        margin: 12px 0 0;
+        padding-left: 20px;
+      }
       a {
         color: #0f766e;
       }
@@ -98,30 +163,54 @@ function renderIndex() {
   </head>
   <body>
     <main>
-      <h1>Tampermonkey Dev Server <span class="badge">v${version}</span></h1>
-      <p><strong>Chrome:</strong> in <code>chrome://extensions/</code> abilita <code>User Scripts</code> per Tampermonkey, altrimenti il loader puo essere installato ma non eseguito sulla pagina.</p>
+      <h1>Installazione Script U-Web Missioni <span class="badge">v${version}</span></h1>
+      <p class="lead">Questa pagina ti permette di installare lo script Tampermonkey per U-Web Missioni. Se vuoi usare semplicemente lo script, scegli la versione standalone. Se invece vuoi svilupparlo e aggiornarlo spesso, usa la versione sviluppo.</p>
+      <div class="card">
+        <h2>Prima di iniziare</h2>
+        <p><strong>Chrome:</strong> apri <code>chrome://extensions/</code>, entra nei dettagli di Tampermonkey e abilita <code>User Scripts</code>.</p>
+        <p class="hint">Se questa opzione non e abilitata, lo script puo risultare installato ma non partire sulla pagina U-Web.</p>
+      </div>
+      <div class="card">
+        <h2>Installazione consigliata</h2>
+        <p><strong>Versione standalone:</strong> tutto lo script viene installato direttamente in Tampermonkey e continua a funzionare anche senza server locale.</p>
+        <a class="button" href="/${standaloneFileName}">Installa versione standalone</a>
+        <p class="hint">Ideale per uso normale o per distribuirlo ad altri utenti.</p>
+      </div>
       <div class="card">
         <h2>Installazione sviluppo</h2>
-        <p>Installa il loader da <a href="/tampermonkey-loader.user.js">/tampermonkey-loader.user.js</a>.</p>
-        <p><strong>Quando usarlo:</strong> se vuoi modificare spesso <code>src/payload.js</code> e vedere subito le modifiche.</p>
-        <p><strong>Come funziona:</strong> Tampermonkey installa un loader leggero che scarica il codice aggiornato da <a href="/dev-payload.js">/dev-payload.js</a>.</p>
-        <p><strong>Richiede:</strong> dev server attivo con <code>npm run dev</code> o Docker attivo.</p>
+        <p><strong>Versione sviluppo:</strong> installa un loader leggero che scarica il codice aggiornato dal server.</p>
+        <a class="button secondary" href="/tampermonkey-loader.user.js">Installa versione sviluppo</a>
+        <p class="hint">Usala solo se vuoi modificare spesso <code>src/payload.js</code> e vedere subito i cambiamenti.</p>
+        <p><strong>Origin pubblico usato dal loader:</strong> <code>${origin}</code></p>
+        <p><strong>Payload servito da:</strong> <code>${origin}/dev-payload.js</code></p>
       </div>
       <div class="card">
-        <h2>Installazione standalone</h2>
-        <p>Installa direttamente lo script finale da <a href="/${standaloneFileName}">/${standaloneFileName}</a>.</p>
-        <p><strong>Quando usarlo:</strong> se vuoi usare lo script normalmente senza dev server locale.</p>
-        <p><strong>Come funziona:</strong> Tampermonkey installa tutto il codice in uno userscript unico e indipendente.</p>
-        <p><strong>Richiede:</strong> nessun server locale dopo l'installazione.</p>
+        <h2>Differenza tra le due versioni</h2>
+        <p><strong>Standalone:</strong> piu semplice, nessun server richiesto dopo l'installazione.</p>
+        <p><strong>Sviluppo:</strong> richiede questo servizio web attivo, ma ti permette di aggiornare il JavaScript molto velocemente.</p>
       </div>
-      <p>Tieni aperto <code>npm run dev</code>, modifica <code>src/payload.js</code> e poi ricarica la pagina oppure usa il menu Tampermonkey <code>Reload local dev script</code>.</p>
-      <p>Server in ascolto su <code>${origin}</code>.</p>
+      <div class="card">
+        <h2>Porte usate</h2>
+        <p><strong>Dentro il container:</strong> il server Node ascolta sempre sulla porta <code>8123</code>.</p>
+        <p><strong>Docker locale:</strong> la macchina espone <code>8123 -&gt; 8123</code>, quindi usi <code>http://127.0.0.1:8123</code>.</p>
+        <p><strong>Docker server con HTTPS:</strong> la macchina espone <code>443 -&gt; 8123</code>, quindi usi il dominio in <code>https</code> senza specificare la porta.</p>
+        <p><strong>Porta pubblica attuale:</strong> <code>${publicPort}</code></p>
+      </div>
+      <div class="card">
+        <h2>Passi rapidi</h2>
+        <ol class="steps">
+          <li>Installa la versione che ti serve.</li>
+          <li>Apri <code>https://cnr.u-web.cineca.it/appautmis/listaautmis</code>.</li>
+          <li>Ricarica la pagina se necessario.</li>
+          <li>Se usi la versione sviluppo, lascia attivo questo servizio web.</li>
+        </ol>
+      </div>
     </main>
   </body>
 </html>`;
 }
 
-const server = http.createServer((request, response) => {
+const requestHandler = (request, response) => {
   const url = new URL(request.url ?? "/", "http://127.0.0.1");
   const route = url.pathname === "/" ? "/index.html" : url.pathname;
   const filePath = path.join(distDir, route === "/index.html" ? "index.html" : route.slice(1));
@@ -142,15 +231,36 @@ const server = http.createServer((request, response) => {
     response.writeHead(200, { "content-type": contentTypeFor(filePath), "cache-control": "no-store" });
     response.end(buffer);
   });
-});
+};
+
+function createServer() {
+  if (!tlsEnabled) {
+    return http.createServer(requestHandler);
+  }
+
+  const tlsPaths = getTlsPaths();
+  if (!tlsPaths) {
+    throw new Error("HTTPS abilitato ma non trovo TLS_KEY_PATH/TLS_CERT_PATH ne LETSENCRYPT_SITE.");
+  }
+
+  const key = fs.readFileSync(tlsPaths.keyPath);
+  const cert = fs.readFileSync(tlsPaths.certPath);
+  return https.createServer({ key, cert }, requestHandler);
+}
+
+const server = createServer();
 
 await rebuild("startup");
 
 const port = lastBuild?.port ?? 8123;
 
 server.listen(port, serverHost, () => {
-  console.log(`[dev] server pronto su http://${serverHost}:${port}`);
-  console.log(`[dev] installa http://${publicHost}:${port}/tampermonkey-loader.user.js`);
+  console.log(`[dev] server pronto su ${getPublicOrigin()}`);
+  console.log(`[dev] installa ${getPublicOrigin()}/tampermonkey-loader.user.js`);
+  if (tlsEnabled) {
+    const tlsPaths = getTlsPaths();
+    console.log(`[dev] HTTPS attivo con certificati: ${tlsPaths.certPath}`);
+  }
 });
 
 fs.watch(srcDir, { recursive: true }, (_eventType, filename) => {
