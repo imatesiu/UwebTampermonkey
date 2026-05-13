@@ -81,7 +81,6 @@ function renderIndex() {
   const origin = getPublicOrigin();
   const version = lastBuild?.version ?? "dev";
   const standaloneFileName = lastBuild?.standaloneFileName ?? "uweb-export-missioni.user.js";
-  const publicPort = tlsEnabled ? "443" : String(lastBuild?.port ?? 8123);
   return `<!doctype html>
 <html lang="it">
   <head>
@@ -178,23 +177,16 @@ function renderIndex() {
       </div>
       <div class="card">
         <h2>Installazione sviluppo</h2>
-        <p><strong>Versione sviluppo:</strong> installa un loader leggero che scarica il codice aggiornato dal server.</p>
+        <p><strong>Versione sviluppo:</strong> installa un loader leggero che scarica il codice aggiornato dal server, anche se il servizio e pubblicato su un dominio remoto in HTTPS.</p>
         <a class="button secondary" href="/tampermonkey-loader.user.js">Installa versione sviluppo</a>
-        <p class="hint">Usala solo se vuoi modificare spesso <code>src/payload.js</code> e vedere subito i cambiamenti.</p>
+        <p class="hint">Usala se vuoi aggiornare spesso <code>src/payload.js</code> e vedere subito i cambiamenti, sia in locale sia da un server remoto.</p>
         <p><strong>Origin pubblico usato dal loader:</strong> <code>${origin}</code></p>
         <p><strong>Payload servito da:</strong> <code>${origin}/dev-payload.js</code></p>
       </div>
       <div class="card">
         <h2>Differenza tra le due versioni</h2>
         <p><strong>Standalone:</strong> piu semplice, nessun server richiesto dopo l'installazione.</p>
-        <p><strong>Sviluppo:</strong> richiede questo servizio web attivo, ma ti permette di aggiornare il JavaScript molto velocemente.</p>
-      </div>
-      <div class="card">
-        <h2>Porte usate</h2>
-        <p><strong>Dentro il container:</strong> il server Node ascolta sempre sulla porta <code>8123</code>.</p>
-        <p><strong>Docker locale:</strong> la macchina espone <code>8123 -&gt; 8123</code>, quindi usi <code>http://127.0.0.1:8123</code>.</p>
-        <p><strong>Docker server con HTTPS:</strong> la macchina espone <code>443 -&gt; 8123</code>, quindi usi il dominio in <code>https</code> senza specificare la porta.</p>
-        <p><strong>Porta pubblica attuale:</strong> <code>${publicPort}</code></p>
+        <p><strong>Sviluppo:</strong> richiede che questo servizio web resti attivo, ma ti permette di aggiornare il JavaScript molto velocemente anche da remoto.</p>
       </div>
       <div class="card">
         <h2>Passi rapidi</h2>

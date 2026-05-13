@@ -12,7 +12,7 @@ services:
       LETSENCRYPT_SITE: ${LETSENCRYPT_SITE}
       LETSENCRYPT_ROOT: /etc/letsencrypt/live
     ports:
-      - "443:8123"
+      - "8123:8123"
     volumes:
       - .:/app
       - /etc/letsencrypt:/etc/letsencrypt:ro
