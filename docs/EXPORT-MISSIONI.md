@@ -72,11 +72,13 @@ npm run build:dist
 
 5. Cliccare `Install`.
 
-6. Aprire:
+6. In Chrome aprire `chrome://extensions/`, entrare nei dettagli di Tampermonkey e abilitare `User Scripts`.
+
+7. Aprire:
 
 [https://cnr.u-web.cineca.it/appautmis/listaautmis#!/listaautmis](https://cnr.u-web.cineca.it/appautmis/listaautmis#!/listaautmis)
 
-7. Effettuare il login se necessario e usare il pannello di export.
+8. Effettuare il login se necessario e usare il pannello di export.
 
 ### Modalita sviluppo locale
 
@@ -102,13 +104,15 @@ npm run dev
 
 5. Quando Tampermonkey apre la schermata di installazione, cliccare `Install`.
 
-6. Aprire la pagina U-Web Missioni:
+6. In Chrome aprire `chrome://extensions/`, entrare nei dettagli di Tampermonkey e abilitare `User Scripts`.
+
+7. Aprire la pagina U-Web Missioni:
 
 [https://cnr.u-web.cineca.it/appautmis/listaautmis#!/listaautmis](https://cnr.u-web.cineca.it/appautmis/listaautmis#!/listaautmis)
 
-7. Effettuare il login se necessario.
+8. Effettuare il login se necessario.
 
-8. Ricaricare la pagina.
+9. Ricaricare la pagina.
 
 Nota:
 lo script e limitato alle pagine `https://cnr.u-web.cineca.it/appautmis/*` e il pannello di export viene creato solo nella vista lista missioni.
@@ -213,6 +217,7 @@ Vantaggi:
 Controllare che:
 
 - Tampermonkey sia abilitato
+- in Chrome, nei dettagli di Tampermonkey, sia abilitato `User Scripts`
 - lo script corretto sia installato
 - la pagina sia stata ricaricata
 - l'utente sia nella vista `Le Mie Missioni`

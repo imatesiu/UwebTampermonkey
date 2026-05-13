@@ -14,11 +14,22 @@ npm run dev
 
 [http://127.0.0.1:8123/tampermonkey-loader.user.js](http://127.0.0.1:8123/tampermonkey-loader.user.js)
 
-3. Lascia aperta la pagina su cui vuoi lavorare.
+In alternativa, dalla stessa pagina del dev server puoi installare anche:
 
-4. Modifica il file [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js).
+[http://127.0.0.1:8123/uweb-export-missioni.user.js](http://127.0.0.1:8123/uweb-export-missioni.user.js)
 
-5. Per ricaricare il codice:
+Differenza:
+
+- `tampermonkey-loader.user.js`: versione sviluppo, ricarica il payload locale e richiede il dev server attivo
+- `uweb-export-missioni.user.js`: versione standalone, indipendente dal dev server dopo l'installazione
+
+3. In Chrome apri `chrome://extensions/`, entra nei dettagli di Tampermonkey e abilita `User Scripts`.
+
+4. Lascia aperta la pagina su cui vuoi lavorare.
+
+5. Modifica il file [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js).
+
+6. Per ricaricare il codice:
 
 - ricarica la pagina, oppure
 - usa il menu Tampermonkey `Reload local dev script`
@@ -29,12 +40,60 @@ Il file [tampermonkey.config.json](/Users/spagnolo/github/UwebTampermonkey/tampe
 - `@match`
 - porta del server locale
 
+## Sviluppo con Docker
+
+Se preferisci non installare o usare Node direttamente sul Mac, puoi avviare lo stesso dev server dentro Docker.
+
+1. Avvia il servizio:
+
+```bash
+docker compose up --build
+```
+
+2. Lascia il container attivo e installa una sola volta in Tampermonkey:
+
+[http://127.0.0.1:8123/tampermonkey-loader.user.js](http://127.0.0.1:8123/tampermonkey-loader.user.js)
+
+3. In Chrome apri `chrome://extensions/`, entra nei dettagli di Tampermonkey e abilita `User Scripts`.
+
+4. Modifica [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js) nel repo locale.
+
+5. Il container monta la cartella del progetto e il watcher ricompila automaticamente. Per vedere il nuovo codice:
+
+- ricarica la pagina, oppure
+- usa il menu Tampermonkey `Reload local dev script`
+
+File Docker principali:
+
+- [Dockerfile](/Users/spagnolo/github/UwebTampermonkey/Dockerfile)
+- [docker-compose.yml](/Users/spagnolo/github/UwebTampermonkey/docker-compose.yml)
+
+Per fermare il servizio:
+
+```bash
+docker compose down
+```
+
 ## Distribuzione
 
 Per generare anche la versione distribuibile:
 
 ```bash
 npm run build:dist
+```
+
+Il comando di build ora esegue prima alcuni controlli minimi:
+
+- verifica che Node sia disponibile in una versione supportata
+- verifica che i file richiesti per la build esistano
+- verifica che `package.json` e `tampermonkey.config.json` abbiano la stessa versione
+- verifica che `dist/` sia scrivibile
+- segnala se non ci sono dipendenze npm esterne richieste
+
+Se vuoi lanciare esplicitamente questa pipeline di compilazione, puoi usare anche:
+
+```bash
+npm run compile
 ```
 
 Output principali in `dist/`:

@@ -1,0 +1,15 @@
+services:
+  tampermonkey-dev:
+    build:
+      context: .
+    container_name: uweb-tampermonkey-dev
+    working_dir: /app
+    environment:
+      HOST: 0.0.0.0
+      PUBLIC_HOST: 127.0.0.1
+    ports:
+      - "8123:8123"
+    volumes:
+      - .:/app
+    restart: unless-stopped
+    command: npm run dev:docker

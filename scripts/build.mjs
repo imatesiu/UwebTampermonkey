@@ -212,7 +212,9 @@ export async function buildArtifacts() {
     loaderPath: path.join(distDir, "tampermonkey-loader.user.js"),
     payloadPath: path.join(distDir, "dev-payload.js"),
     standalonePath,
-    port: config.port
+    port: config.port,
+    version: config.version,
+    standaloneFileName: config.production.filename
   };
 }
 
