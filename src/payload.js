@@ -342,6 +342,15 @@ async function fetchMissionDetails(idAutMiss) {
   return response.json();
 }
 
+function buildPaidMissionDetailUrl(idAutMiss) {
+  return `${API_BASE}/getmisfromautmis?idDg=${encodeURIComponent(idAutMiss)}`;
+}
+
+async function fetchPaidMissionDetails(idAutMiss) {
+  const response = await apiFetch(buildPaidMissionDetailUrl(idAutMiss));
+  return response.json();
+}
+
 async function fetchAttachmentBytes(idAutMiss, idDgAllegato) {
   const response = await apiFetch(`${API_BASE}/allegati/${encodeURIComponent(idAutMiss)}/${encodeURIComponent(idDgAllegato)}`);
   return base64ToBytes(await response.text());
@@ -563,19 +572,50 @@ function simplifyExpense(expense, source, attachmentsByKey = new Map()) {
   return {
     origine: source,
     idSpesa: expense.idXSpesa ?? expense.idXPrevSpesa ?? null,
+    idDgRef: expense.idDgRef ?? null,
     nrRiga: expense.nrRiga ?? null,
+    nrRigaRef: expense.nrRigaRef ?? null,
     codiceSpesa: expense.cdSpesa ?? null,
     tipoSpesa: expense.dsTipoSpesa ?? null,
     notaSpesa: expense.dsSpesa ?? null,
+    quantita: expense.quantita ?? null,
     motivazioneMezzo: expense.dsMotivazMezzo ?? null,
     codiceMotivazioneMezzo: expense.cdMotivazMezzo ?? null,
     mezzoTrasporto: expense.cdMezzoTrasp ?? null,
     dataSostenimento: expense.dtSostenimento ?? null,
+    dataCambio: expense.dtCambio ?? null,
+    rapportoCambio: expense.rapportoCambio ?? null,
     importoEuro: expense.importoEuro ?? null,
     importoValuta: expense.importoValuta ?? null,
+    importoImponibile: expense.importoImponibile ?? null,
+    importoRegolamento: expense.importoRegolamento ?? null,
     valuta: expense.cdValuta ?? null,
     nomeValuta: expense.nomeValuta ?? null,
+    rimborsoEffettivo: expense.rimborsoEffettivo ?? null,
+    rimborsoAutorizzato: expense.rimborsoAutorizzato ?? null,
+    rimborsoEffettivoManuale: expense.rimborsoEffManuale ?? null,
+    notaUfficioRimborso: expense.noteUffRimborso ?? null,
+    flags: {
+      alloggio: expense.flAlloggio ?? null,
+      trasporto: expense.flTrasporto ?? null,
+      piuIntervalli: expense.flPiuIntervalli ?? null,
+      vitto: expense.flVitto ?? null,
+      convegno: expense.flConvegno ?? null,
+      altroNoTassazione: expense.flAltroNoTassaz ?? null,
+      prenotazioneViaggi: expense.flPrenotViaggi ?? null,
+      nonDocumentabile: expense.flNonDocumentabile ?? null,
+      daAutorizzare: expense.flDaAutorizzare ?? null,
+      autorizzata: expense.flAutorizzata ?? null,
+      integrazioneSpese: expense.flIntegrazioneSpese ?? null,
+      cartaCredito: expense.flCartaCredito ?? null,
+      fattura: expense.flFattura ?? null,
+      prepagata: expense.flPrepagata ?? null,
+      tassata: expense.flTassata ?? null,
+      rimborsoManuale: expense.flRimbEffManuale ?? null,
+      pagamentoNonTracciabile: expense.flPagNonTracciabile ?? null
+    },
     chiaveAllegato: expense.cdAllegato ?? null,
+    numeroAllegatiAssociati: linkedAttachments.length,
     allegatiAssociati: linkedAttachments
   };
 }
@@ -672,9 +712,35 @@ function buildAuthorizationSummary(detailRow) {
   };
 }
 
+function buildRefundAuthorizationSummary(detailRow) {
+  const summary = buildAuthorizationSummary(detailRow);
+
+  return {
+    ...summary,
+    autorizzazioneRimborso: {
+      data: summary.autorizzazione.data,
+      autorizzato: summary.autorizzazione.autorizzato,
+      tipo: summary.autorizzazione.tipo,
+      codiceTipo: summary.autorizzazione.codiceTipo,
+      nome: summary.autorizzazione.nome,
+      cognome: summary.autorizzazione.cognome
+    }
+  };
+}
+
 function buildMissionSummary(mission, attachments, detail, downloadedAttachments, options = {}) {
   const dg = detail?.dg02Dg ?? {};
+  const paidDg = options.paidDetail?.dg02Dg ?? {};
   const attachmentsByKey = buildAttachmentsByKey(downloadedAttachments);
+  const refundExpenses = asArray(dg.dg16XSpesa).map((expense) =>
+    simplifyExpense(expense, "spesa_rimborso", attachmentsByKey)
+  );
+  const reimbursedExpenses = asArray(paidDg.dg16XSpesa).map((expense) =>
+    simplifyExpense(expense, "spesa_rimborsata", attachmentsByKey)
+  );
+  const refundAuthorizations = asArray(dg.dg02DgDett)
+    .filter((detailRow) => detailRow?.dg16XAutorizzazione?.cdTipoAutoriz === "RIMB")
+    .map(buildRefundAuthorizationSummary);
   const missionLevelAttachments = downloadedAttachments.filter(
     (attachment) => attachment.associazione?.livello === "missione"
   );
@@ -739,24 +805,29 @@ function buildMissionSummary(mission, attachments, detail, downloadedAttachments
     },
     tratte: asArray(dg.dg16XTratta).map(buildRouteSummary),
     autorizzazioni: asArray(dg.dg02DgDett).map(buildAuthorizationSummary),
-    speseRimborso: asArray(dg.dg16XSpesa).map((expense) =>
-      simplifyExpense(expense, "spesa_rimborso", attachmentsByKey)
-    )
+    speseRimborso: refundExpenses,
+    speseRimborsate: reimbursedExpenses,
+    autorizzazioniRimborso: refundAuthorizations
   };
 
   const summary = {
     idAutMiss: mission.idAutMiss,
     dettaglioMissione: {
       disponibile: Boolean(detail),
+      dettaglioMissionePagataDisponibile: Boolean(options.paidDetail),
       numeroAllegatiDettaglio: asArray(dg.dg02DgAllegati).length,
       numeroSpeseRimborso: asArray(dg.dg16XSpesa).length,
-      numeroSpesePresunte: asArray(dg.dg16XPrevSpesa).length
+      numeroSpesePresunte: asArray(dg.dg16XPrevSpesa).length,
+      numeroSpeseRimborsate: reimbursedExpenses.length
     },
     allegatiTotaliTrovati: attachments.length,
     allegatiScaricati: downloadedAttachments.length,
     note: {
       missione: dg.note ?? null
     },
+    speseRimborso: refundExpenses,
+    speseRimborsate: reimbursedExpenses,
+    autorizzazioniRimborso: refundAuthorizations,
     allegatiMissione: missionLevelAttachments,
     allegati: downloadedAttachments,
     sezioni: missionSections
@@ -765,7 +836,9 @@ function buildMissionSummary(mission, attachments, detail, downloadedAttachments
   if (options.includeRawDetailApiOriginale) {
     summary.dettaglioApiOriginale = {
       path: options.detailApiPath ?? null,
-      data: detail
+      data: detail,
+      pagataPath: options.paidDetailApiPath ?? null,
+      pagataData: options.paidDetail ?? null
     };
   }
 
@@ -804,7 +877,14 @@ async function exportMissionZip() {
 
       setStatus(`Leggo allegati missione ${mission.idAutMiss}...`);
       const detailApiPath = buildMissionDetailUrl(mission.idAutMiss);
+      const paidDetailApiPath = buildPaidMissionDetailUrl(mission.idAutMiss);
       const missionDetail = await fetchMissionDetails(mission.idAutMiss);
+      let paidMissionDetail = null;
+      try {
+        paidMissionDetail = await fetchPaidMissionDetails(mission.idAutMiss);
+      } catch (_error) {
+        paidMissionDetail = null;
+      }
       const attachments = await fetchMissionAttachments(mission.idAutMiss);
       const expensesByAttachmentKey = indexExpensesByAttachmentKey(missionDetail);
       const downloadedAttachments = [];
@@ -820,10 +900,18 @@ async function exportMissionZip() {
 
       missionZip.addFile(
         `${folder}/missione.json`,
-        jsonToBytes(buildMissionSummary(mission, attachments, missionDetail, downloadedAttachments, {
-          includeRawDetailApiOriginale,
-          detailApiPath
-        }))
+        jsonToBytes(buildMissionSummary(
+          mission,
+          attachments,
+          missionDetail,
+          downloadedAttachments,
+          {
+            includeRawDetailApiOriginale,
+            detailApiPath,
+            paidDetailApiPath,
+            paidDetail: paidMissionDetail
+          }
+        ))
       );
 
       const missionArchiveName = uniqueFilePath("", `${folder}.zip`, usedArchiveNames);
