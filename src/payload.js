@@ -158,6 +158,13 @@ root.innerHTML = `
       <button class="tm-secondary" type="button">Aggiorna stato</button>
     </div>
     <label class="tm-option">
+      <input class="tm-export-all-missions" type="checkbox" />
+      <span>
+        <strong>Scarica tutte le missioni</strong>
+        Se disattivato, esporta solo le missioni visibili nella tabella corrente del browser.
+      </span>
+    </label>
+    <label class="tm-option">
       <input class="tm-include-raw-detail" type="checkbox" />
       <span>
         <strong>Includi dettaglio API originale</strong>
@@ -175,10 +182,12 @@ document.documentElement.append(style, root);
 
 const downloadButton = root.querySelector(".tm-primary");
 const refreshButton = root.querySelector(".tm-secondary");
+const exportAllMissionsCheckbox = root.querySelector(".tm-export-all-missions");
 const includeRawDetailCheckbox = root.querySelector(".tm-include-raw-detail");
 const statusBox = root.querySelector(".tm-status");
 const progressBar = root.querySelector(".tm-progress-bar");
 
+exportAllMissionsCheckbox.checked = false;
 includeRawDetailCheckbox.checked = false;
 
 function setStatus(message) {
@@ -320,6 +329,59 @@ async function fetchMissionList() {
   }
 
   return data;
+}
+
+function findMissionListTable() {
+  return Array.from(document.querySelectorAll("table[nz-table-content]")).find((table) => {
+    const headerText = table.querySelector("thead")?.innerText ?? "";
+    return /Numero richiesta/i.test(headerText) && /Motivazione/i.test(headerText);
+  }) ?? null;
+}
+
+function getVisibleMissionIds() {
+  const table = findMissionListTable();
+  if (!table) {
+    throw new Error("Non trovo la tabella missioni visibile nella pagina.");
+  }
+
+  const rows = Array.from(table.querySelectorAll("tbody tr"));
+  const ids = rows
+    .map((row) => row.querySelector("td")?.innerText ?? "")
+    .map((value) => value.replace(/\s+/g, " ").trim())
+    .map((value) => value.match(/\d+/)?.[0] ?? "")
+    .filter(Boolean);
+
+  return [...new Set(ids)];
+}
+
+async function resolveMissionsForExport(includeAllMissions) {
+  const missions = await fetchMissionList();
+
+  if (includeAllMissions) {
+    return {
+      missions,
+      source: "all",
+      visibleMissionIds: getVisibleMissionIds()
+    };
+  }
+
+  const visibleMissionIds = getVisibleMissionIds();
+  if (!visibleMissionIds.length) {
+    throw new Error("Non trovo missioni visibili nella tabella corrente.");
+  }
+
+  const visibleMissionIdSet = new Set(visibleMissionIds);
+  const filteredMissions = missions.filter((mission) => visibleMissionIdSet.has(String(mission.idAutMiss ?? "")));
+
+  if (!filteredMissions.length) {
+    throw new Error("Le missioni visibili nella tabella non coincidono con la lista API corrente.");
+  }
+
+  return {
+    missions: filteredMissions,
+    source: "visible",
+    visibleMissionIds
+  };
 }
 
 async function fetchMissionRequestPdf(idAutMiss) {
@@ -850,14 +912,21 @@ async function exportMissionZip() {
   refreshButton.disabled = true;
 
   try {
+    const includeAllMissions = exportAllMissionsCheckbox.checked;
     const includeRawDetailApiOriginale = includeRawDetailCheckbox.checked;
     setProgress(0, 1);
     setStatus("Recupero lista missioni dai filtri correnti...");
 
-    const missions = await fetchMissionList();
+    const { missions, source, visibleMissionIds } = await resolveMissionsForExport(includeAllMissions);
     if (!missions.length) {
       throw new Error("Nessuna missione trovata con i filtri correnti.");
     }
+
+    setStatus(
+      source === "all"
+        ? `Esporto tutte le missioni dei filtri: ${missions.length}.`
+        : `Esporto solo le missioni visibili: ${missions.length} su ${visibleMissionIds.length} righe in tabella.`
+    );
 
     const zip = new ZipBuilder();
     const usedArchiveNames = new Set();
@@ -927,7 +996,9 @@ async function exportMissionZip() {
       scriptVersion: getScriptVersion(),
       sourceUrl: window.location.href,
       listUrl: getLatestListUrl(),
+      includeAllMissions,
       includeRawDetailApiOriginale,
+      totalVisibleMissions: visibleMissionIds.length,
       formatoExport: "zip-principale-con-zip-per-missione",
       totalMissions: missions.length
     }));
@@ -950,7 +1021,8 @@ async function exportMissionZip() {
 function refreshStatus() {
   try {
     const listUrl = getLatestListUrl();
-    setStatus(`API lista pronta.\n${listUrl}`);
+    const visibleMissionIds = getVisibleMissionIds();
+    setStatus(`API lista pronta.\nMissioni visibili: ${visibleMissionIds.length}\n${listUrl}`);
   } catch (error) {
     setStatus(String(error.message || error));
   }
