@@ -1,0 +1,55 @@
+{
+  "attachments": 5,
+  "expenses": [
+    {
+      "cdSpesa": "VIAGG",
+      "dsSpesa": "CNR-Stazione Big. urbano  A/R",
+      "importoEuro": 34,
+      "cdAllegato": "7ab90707-5702-4e18-9208-9dfde4d0f963",
+      "file": "big_urbano.png"
+    },
+    {
+      "cdSpesa": "MEZEQ",
+      "dsSpesa": "Pistoia-Pisa Treno",
+      "importoEuro": 108,
+      "cdAllegato": "6765b872-ea36-412f-be79-566bd5bb589b",
+      "file": "Screenshot 2026-05-079.png"
+    },
+    {
+      "cdSpesa": "MEZEQ",
+      "dsSpesa": "Pisa-Pistoia Treno",
+      "importoEuro": 76,
+      "cdAllegato": "e2417da7-5c6a-4f1f-9ffb-24b63b3e2957",
+      "file": "Screenshot 2026-05-072.png"
+    },
+    {
+      "cdSpesa": "VIAGG",
+      "dsSpesa": "Stazione Pistoia sede Ditecfer big. urbano A/R",
+      "importoEuro": 34,
+      "cdAllegato": "8d29f0ec-a0d8-418e-b344-a43564925879",
+      "file": "big_urbano_pistoia.png"
+    }
+  ],
+  "rowChecks": [
+    {
+      "rowIndex": 0,
+      "row": "VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R",
+      "checks": []
+    },
+    {
+      "rowIndex": 1,
+      "row": "VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R",
+      "checks": []
+    },
+    {
+      "rowIndex": 2,
+      "row": "MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno",
+      "checks": []
+    },
+    {
+      "rowIndex": 3,
+      "row": "MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno",
+      "checks": []
+    }
+  ]
+}

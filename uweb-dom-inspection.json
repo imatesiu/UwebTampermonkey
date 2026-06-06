@@ -1,0 +1,1658 @@
+{
+  "url": "https://cnr.u-web.cineca.it/appautmis/listaautmis/773112?statoAut=Effettuata&conservata=false&conservataIntegrazione=false",
+  "title": "U-Web Missioni",
+  "headings": [
+    {
+      "tag": "span",
+      "cls": "",
+      "id": "",
+      "role": "tab",
+      "text": "INVIATA",
+      "children": 2
+    },
+    {
+      "tag": "span",
+      "cls": "",
+      "id": "",
+      "role": "tab",
+      "text": "AUTORIZZATA",
+      "children": 2
+    },
+    {
+      "tag": "span",
+      "cls": "",
+      "id": "",
+      "role": "tab",
+      "text": "EFFETTUATA",
+      "children": 2
+    },
+    {
+      "tag": "span",
+      "cls": "",
+      "id": "",
+      "role": "tab",
+      "text": "RICHIEDI RIMBORSO",
+      "children": 2
+    },
+    {
+      "tag": "div",
+      "cls": "ant-collapse-header ng-tns-c277028894-21",
+      "id": "",
+      "role": "button",
+      "text": "Missione",
+      "children": 2
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Motivazione variazione orari",
+      "children": 2
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Qualifica * RCRT - Ricercatori/tecnologi CPDEL - t.indet.",
+      "children": 3
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Luogo Partenza",
+      "children": 2
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Tipo Richiesta * FPROG - Fondi di Progetto",
+      "children": 3
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Responsabile Progetto *",
+      "children": 3
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Progetto DIT.AD001.221.001 - Cofinanziamento - SOC-SAI - Sustainability of cyber-physical systems and AI technologies",
+      "children": 2
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Struttura afferenza * Istituto di Scienza e Tecnologie dell'Informazione \"Alessandro Faedo\" - ISTI",
+      "children": 3
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Struttura pagante * Istituto di Scienza e Tecnologie dell'Informazione \"Alessandro Faedo\" - ISTI",
+      "children": 3
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Regolamento * CNR - REGOLAMENTO DELL'ENTE",
+      "children": 3
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Motivazione *",
+      "children": 3
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Note",
+      "children": 2
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Modalità Rimborso",
+      "children": 1
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Elenco spese sostenute (Piè di lista)",
+      "children": 1
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Costo presunto indennità forfettaria",
+      "children": 1
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Missione al seguito",
+      "children": 2
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Missione senza spese",
+      "children": 2
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Missione cofinanziata",
+      "children": 2
+    },
+    {
+      "tag": "div",
+      "cls": "ant-collapse-header ng-tns-c277028894-63",
+      "id": "",
+      "role": "button",
+      "text": "Mezzi Straordinari",
+      "children": 2
+    },
+    {
+      "tag": "div",
+      "cls": "ant-collapse-header ng-tns-c277028894-64",
+      "id": "",
+      "role": "button",
+      "text": "Spese a preventivo",
+      "children": 2
+    },
+    {
+      "tag": "label",
+      "cls": "control-label padding-left padding-right-15",
+      "id": "",
+      "role": "",
+      "text": "Totale spese richiedente",
+      "children": 1
+    },
+    {
+      "tag": "label",
+      "cls": "control-label padding-left padding-right-15",
+      "id": "",
+      "role": "",
+      "text": "Totale spese prepagate",
+      "children": 1
+    },
+    {
+      "tag": "label",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Richiesta anticipo",
+      "children": 3
+    },
+    {
+      "tag": "div",
+      "cls": "ant-collapse-header ng-tns-c277028894-35",
+      "id": "",
+      "role": "button",
+      "text": "Spese a consuntivo",
+      "children": 2
+    },
+    {
+      "tag": "label",
+      "cls": "padding-left text-nowrap",
+      "id": "",
+      "role": "",
+      "text": "Totale da rimborsare: 25,20 €",
+      "children": 0
+    },
+    {
+      "tag": "label",
+      "cls": "padding-left text-nowrap",
+      "id": "",
+      "role": "",
+      "text": "Totale prepagate ente: 0,00 €",
+      "children": 0
+    },
+    {
+      "tag": "label",
+      "cls": "control-label",
+      "id": "",
+      "role": "",
+      "text": "Note per l’ufficio",
+      "children": 2
+    },
+    {
+      "tag": "div",
+      "cls": "ant-collapse-header ng-tns-c277028894-36",
+      "id": "",
+      "role": "button",
+      "text": "Autorizzazioni",
+      "children": 2
+    },
+    {
+      "tag": "label",
+      "cls": "b-tg",
+      "id": "",
+      "role": "",
+      "text": "Cookie strettamente necessari",
+      "children": 3
+    },
+    {
+      "tag": "label",
+      "cls": "b-tg",
+      "id": "",
+      "role": "",
+      "text": "Cookie di performance e analytics",
+      "children": 3
+    },
+    {
+      "tag": "label",
+      "cls": "b-tg",
+      "id": "",
+      "role": "",
+      "text": "Istruzioni per i vari browser:",
+      "children": 3
+    },
+    {
+      "tag": "label",
+      "cls": "tm-option",
+      "id": "",
+      "role": "",
+      "text": "Scarica tutte le missioni dei filtri Se disattivato, esporta solo le missioni visibili nella tabella corrente del browser.",
+      "children": 2
+    },
+    {
+      "tag": "label",
+      "cls": "tm-option",
+      "id": "",
+      "role": "",
+      "text": "Includi dettaglio API originale Aggiunge a ogni missione.json il raw API con il path usato per estrarlo.",
+      "children": 2
+    }
+  ],
+  "tables": [
+    {
+      "index": 0,
+      "tag": "table",
+      "cls": "table table-striped responsive",
+      "id": "",
+      "role": "",
+      "text": "Numero Richiesta 773112",
+      "children": 2,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Numero Richiesta",
+          "children": 1,
+          "cells": [
+            "Numero Richiesta"
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "",
+          "id": "",
+          "role": "",
+          "text": "773112",
+          "children": 1,
+          "cells": [
+            "773112"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "tag": "table",
+      "cls": "table table-striped responsive",
+      "id": "",
+      "role": "",
+      "text": "Luogo Dal Al Sospensione Pistoia, Italia 07/05/2026 08:00 07/05/2026 18:00 No",
+      "children": 2,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Luogo Dal Al Sospensione",
+          "children": 5,
+          "cells": [
+            "Luogo",
+            "Dal",
+            "Al",
+            "Sospensione",
+            ""
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Pistoia, Italia 07/05/2026 08:00 07/05/2026 18:00 No",
+          "children": 5,
+          "cells": [
+            "Pistoia, Italia",
+            "07/05/2026 08:00",
+            "07/05/2026 18:00",
+            "No",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "tag": "nz-table",
+      "cls": "ant-table-wrapper table table-striped responsive",
+      "id": "",
+      "role": "",
+      "text": "Mezzo Descrizione Motivazione Costo presunto Autorizzato MEZEQ MEZZO PROPRIO (BIGLIETTO TRENO EQUIVALENTE) Necessità di raggiungere rapidamente il luogo di missione 40,00 € Sì 1 10 / pagina",
+      "children": 1,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Mezzo Descrizione Motivazione Costo presunto Autorizzato",
+          "children": 6,
+          "cells": [
+            "Mezzo",
+            "Descrizione",
+            "Motivazione",
+            "Costo presunto",
+            "Autorizzato",
+            ""
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "MEZEQ MEZZO PROPRIO (BIGLIETTO TRENO EQUIVALENTE) Necessità di raggiungere rapidamente il luogo di missione 40,00 € Sì",
+          "children": 6,
+          "cells": [
+            "MEZEQ",
+            "MEZZO PROPRIO (BIGLIETTO TRENO EQUIVALENTE)",
+            "Necessità di raggiungere rapidamente il luogo di missione",
+            "40,00 €",
+            "Sì",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "tag": "div",
+      "cls": "ant-table",
+      "id": "",
+      "role": "",
+      "text": "Mezzo Descrizione Motivazione Costo presunto Autorizzato MEZEQ MEZZO PROPRIO (BIGLIETTO TRENO EQUIVALENTE) Necessità di raggiungere rapidamente il luogo di missione 40,00 € Sì",
+      "children": 1,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Mezzo Descrizione Motivazione Costo presunto Autorizzato",
+          "children": 6,
+          "cells": [
+            "Mezzo",
+            "Descrizione",
+            "Motivazione",
+            "Costo presunto",
+            "Autorizzato",
+            ""
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "MEZEQ MEZZO PROPRIO (BIGLIETTO TRENO EQUIVALENTE) Necessità di raggiungere rapidamente il luogo di missione 40,00 € Sì",
+          "children": 6,
+          "cells": [
+            "MEZEQ",
+            "MEZZO PROPRIO (BIGLIETTO TRENO EQUIVALENTE)",
+            "Necessità di raggiungere rapidamente il luogo di missione",
+            "40,00 €",
+            "Sì",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "tag": "table",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Mezzo Descrizione Motivazione Costo presunto Autorizzato MEZEQ MEZZO PROPRIO (BIGLIETTO TRENO EQUIVALENTE) Necessità di raggiungere rapidamente il luogo di missione 40,00 € Sì",
+      "children": 3,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Mezzo Descrizione Motivazione Costo presunto Autorizzato",
+          "children": 6,
+          "cells": [
+            "Mezzo",
+            "Descrizione",
+            "Motivazione",
+            "Costo presunto",
+            "Autorizzato",
+            ""
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "MEZEQ MEZZO PROPRIO (BIGLIETTO TRENO EQUIVALENTE) Necessità di raggiungere rapidamente il luogo di missione 40,00 € Sì",
+          "children": 6,
+          "cells": [
+            "MEZEQ",
+            "MEZZO PROPRIO (BIGLIETTO TRENO EQUIVALENTE)",
+            "Necessità di raggiungere rapidamente il luogo di missione",
+            "40,00 €",
+            "Sì",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "tag": "nz-table",
+      "cls": "ant-table-wrapper table table-striped responsive",
+      "id": "",
+      "role": "",
+      "text": "Tipo Valuta Importo Euro Sostenuta Da Note PASTS EUR 60,00 € 60,00 € Richiedente 1",
+      "children": 1,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Tipo Valuta Importo Euro Sostenuta Da Note",
+          "children": 7,
+          "cells": [
+            "Tipo",
+            "Valuta",
+            "Importo",
+            "Euro",
+            "Sostenuta Da",
+            "Note",
+            ""
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "PASTS EUR 60,00 € 60,00 € Richiedente",
+          "children": 7,
+          "cells": [
+            "PASTS",
+            "EUR",
+            "60,00 €",
+            "60,00 €",
+            "Richiedente",
+            "",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "tag": "div",
+      "cls": "ant-table",
+      "id": "",
+      "role": "",
+      "text": "Tipo Valuta Importo Euro Sostenuta Da Note PASTS EUR 60,00 € 60,00 € Richiedente",
+      "children": 1,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Tipo Valuta Importo Euro Sostenuta Da Note",
+          "children": 7,
+          "cells": [
+            "Tipo",
+            "Valuta",
+            "Importo",
+            "Euro",
+            "Sostenuta Da",
+            "Note",
+            ""
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "PASTS EUR 60,00 € 60,00 € Richiedente",
+          "children": 7,
+          "cells": [
+            "PASTS",
+            "EUR",
+            "60,00 €",
+            "60,00 €",
+            "Richiedente",
+            "",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "tag": "table",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Tipo Valuta Importo Euro Sostenuta Da Note PASTS EUR 60,00 € 60,00 € Richiedente",
+      "children": 3,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Tipo Valuta Importo Euro Sostenuta Da Note",
+          "children": 7,
+          "cells": [
+            "Tipo",
+            "Valuta",
+            "Importo",
+            "Euro",
+            "Sostenuta Da",
+            "Note",
+            ""
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "PASTS EUR 60,00 € 60,00 € Richiedente",
+          "children": 7,
+          "cells": [
+            "PASTS",
+            "EUR",
+            "60,00 €",
+            "60,00 €",
+            "Richiedente",
+            "",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "tag": "nz-table",
+      "cls": "ant-table-wrapper table table-striped responsive",
+      "id": "",
+      "role": "",
+      "text": "Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno 1 20 / pagina",
+      "children": 1,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note",
+          "children": 9,
+          "cells": [
+            "Tipo",
+            "Sost. Il",
+            "Valuta",
+            "Importo",
+            "Euro",
+            "Pagamento in contanti",
+            "Allegati",
+            "Note",
+            ""
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R",
+          "children": 9,
+          "cells": [
+            "VIAGG",
+            "07/05/2026",
+            "EUR",
+            "3,40 €",
+            "3,40 €",
+            "",
+            "1",
+            "Stazione Pistoia sede Ditecfer big. urbano A/R",
+            ""
+          ]
+        },
+        {
+          "index": 2,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R",
+          "children": 9,
+          "cells": [
+            "VIAGG",
+            "07/05/2026",
+            "EUR",
+            "3,40 €",
+            "3,40 €",
+            "",
+            "1",
+            "CNR-Stazione Big. urbano A/R",
+            ""
+          ]
+        },
+        {
+          "index": 3,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno",
+          "children": 9,
+          "cells": [
+            "MEZEQ",
+            "07/05/2026",
+            "EUR",
+            "10,80 €",
+            "10,80 €",
+            "",
+            "1",
+            "Pistoia-Pisa Treno",
+            ""
+          ]
+        },
+        {
+          "index": 4,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno",
+          "children": 9,
+          "cells": [
+            "MEZEQ",
+            "07/05/2026",
+            "EUR",
+            "7,60 €",
+            "7,60 €",
+            "",
+            "1",
+            "Pisa-Pistoia Treno",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "tag": "div",
+      "cls": "ant-table",
+      "id": "",
+      "role": "",
+      "text": "Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno",
+      "children": 1,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note",
+          "children": 9,
+          "cells": [
+            "Tipo",
+            "Sost. Il",
+            "Valuta",
+            "Importo",
+            "Euro",
+            "Pagamento in contanti",
+            "Allegati",
+            "Note",
+            ""
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R",
+          "children": 9,
+          "cells": [
+            "VIAGG",
+            "07/05/2026",
+            "EUR",
+            "3,40 €",
+            "3,40 €",
+            "",
+            "1",
+            "Stazione Pistoia sede Ditecfer big. urbano A/R",
+            ""
+          ]
+        },
+        {
+          "index": 2,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R",
+          "children": 9,
+          "cells": [
+            "VIAGG",
+            "07/05/2026",
+            "EUR",
+            "3,40 €",
+            "3,40 €",
+            "",
+            "1",
+            "CNR-Stazione Big. urbano A/R",
+            ""
+          ]
+        },
+        {
+          "index": 3,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno",
+          "children": 9,
+          "cells": [
+            "MEZEQ",
+            "07/05/2026",
+            "EUR",
+            "10,80 €",
+            "10,80 €",
+            "",
+            "1",
+            "Pistoia-Pisa Treno",
+            ""
+          ]
+        },
+        {
+          "index": 4,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno",
+          "children": 9,
+          "cells": [
+            "MEZEQ",
+            "07/05/2026",
+            "EUR",
+            "7,60 €",
+            "7,60 €",
+            "",
+            "1",
+            "Pisa-Pistoia Treno",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "tag": "table",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno",
+      "children": 3,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note",
+          "children": 9,
+          "cells": [
+            "Tipo",
+            "Sost. Il",
+            "Valuta",
+            "Importo",
+            "Euro",
+            "Pagamento in contanti",
+            "Allegati",
+            "Note",
+            ""
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R",
+          "children": 9,
+          "cells": [
+            "VIAGG",
+            "07/05/2026",
+            "EUR",
+            "3,40 €",
+            "3,40 €",
+            "",
+            "1",
+            "Stazione Pistoia sede Ditecfer big. urbano A/R",
+            ""
+          ]
+        },
+        {
+          "index": 2,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R",
+          "children": 9,
+          "cells": [
+            "VIAGG",
+            "07/05/2026",
+            "EUR",
+            "3,40 €",
+            "3,40 €",
+            "",
+            "1",
+            "CNR-Stazione Big. urbano A/R",
+            ""
+          ]
+        },
+        {
+          "index": 3,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno",
+          "children": 9,
+          "cells": [
+            "MEZEQ",
+            "07/05/2026",
+            "EUR",
+            "10,80 €",
+            "10,80 €",
+            "",
+            "1",
+            "Pistoia-Pisa Treno",
+            ""
+          ]
+        },
+        {
+          "index": 4,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno",
+          "children": 9,
+          "cells": [
+            "MEZEQ",
+            "07/05/2026",
+            "EUR",
+            "7,60 €",
+            "7,60 €",
+            "",
+            "1",
+            "Pisa-Pistoia Treno",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "tag": "nz-table",
+      "cls": "ant-table-wrapper table table-striped responsive",
+      "id": "",
+      "role": "",
+      "text": "Tipo Autorizzante Stato Data Note Fondi Progetto LAMI GIUSEPPE Autorizzata 28/04/2026 Svolgimento SCOPIGNO ROBERTO Autorizzata 27/04/2026 Uso Mezzi SCOPIGNO ROBERTO Autorizzata 27/04/2026 1",
+      "children": 1,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Tipo Autorizzante Stato Data Note",
+          "children": 5,
+          "cells": [
+            "Tipo",
+            "Autorizzante",
+            "Stato",
+            "Data",
+            "Note"
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Fondi Progetto LAMI GIUSEPPE Autorizzata 28/04/2026",
+          "children": 5,
+          "cells": [
+            "Fondi Progetto",
+            "LAMI GIUSEPPE",
+            "Autorizzata",
+            "28/04/2026",
+            ""
+          ]
+        },
+        {
+          "index": 2,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Svolgimento SCOPIGNO ROBERTO Autorizzata 27/04/2026",
+          "children": 5,
+          "cells": [
+            "Svolgimento",
+            "SCOPIGNO ROBERTO",
+            "Autorizzata",
+            "27/04/2026",
+            ""
+          ]
+        },
+        {
+          "index": 3,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Uso Mezzi SCOPIGNO ROBERTO Autorizzata 27/04/2026",
+          "children": 5,
+          "cells": [
+            "Uso Mezzi",
+            "SCOPIGNO ROBERTO",
+            "Autorizzata",
+            "27/04/2026",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "tag": "div",
+      "cls": "ant-table",
+      "id": "",
+      "role": "",
+      "text": "Tipo Autorizzante Stato Data Note Fondi Progetto LAMI GIUSEPPE Autorizzata 28/04/2026 Svolgimento SCOPIGNO ROBERTO Autorizzata 27/04/2026 Uso Mezzi SCOPIGNO ROBERTO Autorizzata 27/04/2026",
+      "children": 1,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Tipo Autorizzante Stato Data Note",
+          "children": 5,
+          "cells": [
+            "Tipo",
+            "Autorizzante",
+            "Stato",
+            "Data",
+            "Note"
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Fondi Progetto LAMI GIUSEPPE Autorizzata 28/04/2026",
+          "children": 5,
+          "cells": [
+            "Fondi Progetto",
+            "LAMI GIUSEPPE",
+            "Autorizzata",
+            "28/04/2026",
+            ""
+          ]
+        },
+        {
+          "index": 2,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Svolgimento SCOPIGNO ROBERTO Autorizzata 27/04/2026",
+          "children": 5,
+          "cells": [
+            "Svolgimento",
+            "SCOPIGNO ROBERTO",
+            "Autorizzata",
+            "27/04/2026",
+            ""
+          ]
+        },
+        {
+          "index": 3,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Uso Mezzi SCOPIGNO ROBERTO Autorizzata 27/04/2026",
+          "children": 5,
+          "cells": [
+            "Uso Mezzi",
+            "SCOPIGNO ROBERTO",
+            "Autorizzata",
+            "27/04/2026",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "tag": "table",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Tipo Autorizzante Stato Data Note Fondi Progetto LAMI GIUSEPPE Autorizzata 28/04/2026 Svolgimento SCOPIGNO ROBERTO Autorizzata 27/04/2026 Uso Mezzi SCOPIGNO ROBERTO Autorizzata 27/04/2026",
+      "children": 3,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Tipo Autorizzante Stato Data Note",
+          "children": 5,
+          "cells": [
+            "Tipo",
+            "Autorizzante",
+            "Stato",
+            "Data",
+            "Note"
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Fondi Progetto LAMI GIUSEPPE Autorizzata 28/04/2026",
+          "children": 5,
+          "cells": [
+            "Fondi Progetto",
+            "LAMI GIUSEPPE",
+            "Autorizzata",
+            "28/04/2026",
+            ""
+          ]
+        },
+        {
+          "index": 2,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Svolgimento SCOPIGNO ROBERTO Autorizzata 27/04/2026",
+          "children": 5,
+          "cells": [
+            "Svolgimento",
+            "SCOPIGNO ROBERTO",
+            "Autorizzata",
+            "27/04/2026",
+            ""
+          ]
+        },
+        {
+          "index": 3,
+          "tag": "tr",
+          "cls": "ant-table-row ng-star-inserted",
+          "id": "",
+          "role": "",
+          "text": "Uso Mezzi SCOPIGNO ROBERTO Autorizzata 27/04/2026",
+          "children": 5,
+          "cells": [
+            "Uso Mezzi",
+            "SCOPIGNO ROBERTO",
+            "Autorizzata",
+            "27/04/2026",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "tag": "table",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "NomeDominioDurataDescrizione^_gagoogle.com2 yearsdescription ..._gidgoogle.com1 daydescription ...",
+      "children": 2,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "",
+          "id": "",
+          "role": "",
+          "text": "NomeDominioDurataDescrizione",
+          "children": 4,
+          "cells": [
+            "Nome",
+            "Dominio",
+            "Durata",
+            "Descrizione"
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "",
+          "id": "",
+          "role": "",
+          "text": "^_gagoogle.com2 yearsdescription ...",
+          "children": 4,
+          "cells": [
+            "^_ga",
+            "google.com",
+            "2 years",
+            "description ..."
+          ]
+        },
+        {
+          "index": 2,
+          "tag": "tr",
+          "cls": "",
+          "id": "",
+          "role": "",
+          "text": "_gidgoogle.com1 daydescription ...",
+          "children": 4,
+          "cells": [
+            "_gid",
+            "google.com",
+            "1 day",
+            "description ..."
+          ]
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "tag": "table",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "NomeDominioDurataDescriziones_.*plu.mxsessionerecupero grafico citazioni sociali da plumxA_.*core.ac.uk7 giornirecupero pubblicazioni consigliate per il pannello core-recommanderGS_.*gstatic.comrichiesta httpvisualizza grafico citazioniCC_.*creativecommons.orgrichiesta httpvisualizza licenza bitstream",
+      "children": 2,
+      "rows": [
+        {
+          "index": 0,
+          "tag": "tr",
+          "cls": "",
+          "id": "",
+          "role": "",
+          "text": "NomeDominioDurataDescrizione",
+          "children": 4,
+          "cells": [
+            "Nome",
+            "Dominio",
+            "Durata",
+            "Descrizione"
+          ]
+        },
+        {
+          "index": 1,
+          "tag": "tr",
+          "cls": "",
+          "id": "",
+          "role": "",
+          "text": "s_.*plu.mxsessionerecupero grafico citazioni sociali da plumx",
+          "children": 4,
+          "cells": [
+            "s_.*",
+            "plu.mx",
+            "sessione",
+            "recupero grafico citazioni sociali da plumx"
+          ]
+        },
+        {
+          "index": 2,
+          "tag": "tr",
+          "cls": "",
+          "id": "",
+          "role": "",
+          "text": "A_.*core.ac.uk7 giornirecupero pubblicazioni consigliate per il pannello core-recommander",
+          "children": 4,
+          "cells": [
+            "A_.*",
+            "core.ac.uk",
+            "7 giorni",
+            "recupero pubblicazioni consigliate per il pannello core-recommander"
+          ]
+        },
+        {
+          "index": 3,
+          "tag": "tr",
+          "cls": "",
+          "id": "",
+          "role": "",
+          "text": "GS_.*gstatic.comrichiesta httpvisualizza grafico citazioni",
+          "children": 4,
+          "cells": [
+            "GS_.*",
+            "gstatic.com",
+            "richiesta http",
+            "visualizza grafico citazioni"
+          ]
+        },
+        {
+          "index": 4,
+          "tag": "tr",
+          "cls": "",
+          "id": "",
+          "role": "",
+          "text": "CC_.*creativecommons.orgrichiesta httpvisualizza licenza bitstream",
+          "children": 4,
+          "cells": [
+            "CC_.*",
+            "creativecommons.org",
+            "richiesta http",
+            "visualizza licenza bitstream"
+          ]
+        }
+      ]
+    }
+  ],
+  "preview": [],
+  "candidates": [
+    {
+      "tag": "div",
+      "cls": "container-fluid",
+      "id": "",
+      "role": "",
+      "text": "Lista Missioni  Nuova richiesta  RIPORTA RICHIESTA IN STATO AUTORIZZATA COMPILA RIMBORSO MODIFICA DUPLICA ALLEGATI ESPORTA STAMPA INVIATA AUTORIZZATA EFFETTUATA RICHIEDI RIMBORSO Missione Dati Missione Numero Richiesta 773112 Destinazione AGGIUNGI Luogo Dal Al Sospensione Pistoia, Italia 07/05/2026 08:00 07/05/2026 18:00 No Motivazione variazione orari Qualifica * RCRT - Ricercatori/tecnologi CPDEL - t.indet. Luogo Partenza Tipo Richiesta * FPROG - Fondi di Progetto Responsabile Progetto * Pro",
+      "children": 3,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "RIPORTA RICHIESTA IN STATO AUTORIZZATA COMPILA RIMBORSO MODIFICA DUPLICA ALLEGATI ESPORTA STAMPA INVIATA AUTORIZZATA EFFETTUATA RICHIEDI RIMBORSO Missione Dati Missione Numero Richiesta 773112 Destinazione AGGIUNGI Luogo Dal Al Sospensione Pistoia, Italia 07/05/2026 08:00 07/05/2026 18:00 No Motivazione variazione orari Qualifica * RCRT - Ricercatori/tecnologi CPDEL - t.indet. Luogo Partenza Tipo Richiesta * FPROG - Fondi di Progetto Responsabile Progetto * Progetto DIT.AD001.221.001 - Cofinanzi",
+      "children": 1,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "RIPORTA RICHIESTA IN STATO AUTORIZZATA COMPILA RIMBORSO MODIFICA DUPLICA ALLEGATI ESPORTA STAMPA INVIATA AUTORIZZATA EFFETTUATA RICHIEDI RIMBORSO Missione Dati Missione Numero Richiesta 773112 Destinazione AGGIUNGI Luogo Dal Al Sospensione Pistoia, Italia 07/05/2026 08:00 07/05/2026 18:00 No Motivazione variazione orari Qualifica * RCRT - Ricercatori/tecnologi CPDEL - t.indet. Luogo Partenza Tipo Richiesta * FPROG - Fondi di Progetto Responsabile Progetto * Progetto DIT.AD001.221.001 - Cofinanzi",
+      "children": 4,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "bottoni inner ng-star-inserted",
+      "id": "",
+      "role": "",
+      "text": "RIPORTA RICHIESTA IN STATO AUTORIZZATA COMPILA RIMBORSO MODIFICA DUPLICA ALLEGATI ESPORTA STAMPA",
+      "children": 1,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "container",
+      "id": "",
+      "role": "",
+      "text": "RIPORTA RICHIESTA IN STATO AUTORIZZATA COMPILA RIMBORSO MODIFICA DUPLICA ALLEGATI ESPORTA STAMPA",
+      "children": 8,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "button",
+      "cls": "ant-btn btn btn-default ng-star-inserted",
+      "id": "button-open-allegati",
+      "role": "region",
+      "text": "ALLEGATI",
+      "children": 3,
+      "title": "Allegati",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "span",
+      "cls": "ng-star-inserted",
+      "id": "",
+      "role": "",
+      "text": "ALLEGATI",
+      "children": 0,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "ant-collapse-content ng-tns-c277028894-35 ng-trigger ng-trigger-collapseMotion ant-collapse-content-active",
+      "id": "",
+      "role": "",
+      "text": "AGGIUNGI Totale da rimborsare: 25,20 € Totale prepagate ente: 0,00 € Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno 1 20 / pagina Note per l’ufficio",
+      "children": 1,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "ant-collapse-content-box ng-tns-c277028894-35",
+      "id": "",
+      "role": "",
+      "text": "AGGIUNGI Totale da rimborsare: 25,20 € Totale prepagate ente: 0,00 € Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno 1 20 / pagina Note per l’ufficio",
+      "children": 4,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "ng-star-inserted",
+      "id": "",
+      "role": "",
+      "text": "Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno 1 20 / pagina",
+      "children": 1,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "ant-spin-container ng-star-inserted",
+      "id": "",
+      "role": "",
+      "text": "Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno 1 20 / pagina",
+      "children": 2,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "ant-table",
+      "id": "",
+      "role": "",
+      "text": "Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno",
+      "children": 1,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "ant-table-content",
+      "id": "",
+      "role": "",
+      "text": "Tipo Sost. Il Valuta Importo Euro Pagamento in contanti Allegati Note VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno",
+      "children": 1,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "span",
+      "cls": "ant-table-column-title",
+      "id": "",
+      "role": "",
+      "text": "Allegati",
+      "children": 0,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "td",
+      "cls": "ant-table-cell",
+      "id": "",
+      "role": "",
+      "text": "1",
+      "children": 1,
+      "title": "Allegati",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "button",
+      "cls": "ant-btn btn btn-sm btn-default",
+      "id": "",
+      "role": "",
+      "text": "",
+      "children": 3,
+      "title": "Allegati",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "td",
+      "cls": "ant-table-cell",
+      "id": "",
+      "role": "",
+      "text": "1",
+      "children": 1,
+      "title": "Allegati",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "button",
+      "cls": "ant-btn btn btn-sm btn-default",
+      "id": "",
+      "role": "",
+      "text": "",
+      "children": 3,
+      "title": "Allegati",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "td",
+      "cls": "ant-table-cell",
+      "id": "",
+      "role": "",
+      "text": "1",
+      "children": 1,
+      "title": "Allegati",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "button",
+      "cls": "ant-btn btn btn-sm btn-default",
+      "id": "",
+      "role": "",
+      "text": "",
+      "children": 3,
+      "title": "Allegati",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "td",
+      "cls": "ant-table-cell",
+      "id": "",
+      "role": "",
+      "text": "1",
+      "children": 1,
+      "title": "Allegati",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "button",
+      "cls": "ant-btn btn btn-sm btn-default",
+      "id": "",
+      "role": "",
+      "text": "",
+      "children": 3,
+      "title": "Allegati",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "tm-head",
+      "id": "",
+      "role": "",
+      "text": "Export missioni in ZIP v1.2.6 Usa i filtri correnti della pagina e scarica richiesta + allegati per ogni missione.",
+      "children": 2,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "tm-body",
+      "id": "",
+      "role": "",
+      "text": "Scarica ZIP missioni Aggiorna stato Scarica tutte le missioni dei filtri Se disattivato, esporta solo le missioni visibili nella tabella corrente del browser. Includi dettaglio API originale Aggiunge a ogni missione.json il raw API con il path usato per estrarlo. Non trovo la chiamata di lista missioni nelle richieste della pagina.",
+      "children": 5,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "div",
+      "cls": "tm-actions",
+      "id": "",
+      "role": "",
+      "text": "Scarica ZIP missioni Aggiorna stato",
+      "children": 2,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "button",
+      "cls": "tm-primary",
+      "id": "",
+      "role": "",
+      "text": "Scarica ZIP missioni",
+      "children": 0,
+      "title": "",
+      "aria": "",
+      "href": ""
+    },
+    {
+      "tag": "span",
+      "cls": "",
+      "id": "",
+      "role": "",
+      "text": "Scarica tutte le missioni dei filtri Se disattivato, esporta solo le missioni visibili nella tabella corrente del browser.",
+      "children": 1,
+      "title": "",
+      "aria": "",
+      "href": ""
+    }
+  ]
+}

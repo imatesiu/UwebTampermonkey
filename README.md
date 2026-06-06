@@ -1,6 +1,11 @@
 # Uweb Tampermonkey
 
-Setup per sviluppare e distribuire uno script Tampermonkey per U-Web Missioni. Il progetto genera sia un loader locale per iterare rapidamente sia uno userscript standalone pronto da installare dagli utenti finali.
+Setup per sviluppare e distribuire script Tampermonkey per U-Web Missioni. Il progetto genera sia loader locali per iterare rapidamente sia userscript standalone pronti da installare dagli utenti finali.
+
+Script attuali:
+
+- `U-Web Export Missioni`: esporta le missioni in uno ZIP
+- `U-Web Anteprima Allegati Missione`: si attiva solo nella pagina della singola missione, ad esempio `/appautmis/listaautmis/773112`, e apre l'anteprima sotto la riga dell'allegato selezionato
 
 ## Sviluppo locale
 
@@ -18,16 +23,23 @@ In alternativa, dalla stessa pagina del dev server puoi installare anche:
 
 [http://127.0.0.1:8123/uweb-export-missioni.user.js](http://127.0.0.1:8123/uweb-export-missioni.user.js)
 
+Per lo script di anteprima allegati:
+
+- sviluppo: [http://127.0.0.1:8123/tampermonkey-loader-anteprima-allegati.user.js](http://127.0.0.1:8123/tampermonkey-loader-anteprima-allegati.user.js)
+- standalone: [http://127.0.0.1:8123/uweb-anteprima-allegati-missione.user.js](http://127.0.0.1:8123/uweb-anteprima-allegati-missione.user.js)
+
 Differenza:
 
-- `tampermonkey-loader.user.js`: versione sviluppo, ricarica il payload locale e richiede il dev server attivo
+- `tampermonkey-loader.user.js`: versione sviluppo export, ricarica il payload locale e richiede il dev server attivo
+- `tampermonkey-loader-anteprima-allegati.user.js`: versione sviluppo anteprima allegati
 - `uweb-export-missioni.user.js`: versione standalone, indipendente dal dev server dopo l'installazione
+- `uweb-anteprima-allegati-missione.user.js`: versione standalone anteprima allegati
 
 3. In Chrome apri `chrome://extensions/`, entra nei dettagli di Tampermonkey e abilita `User Scripts`.
 
 4. Lascia aperta la pagina su cui vuoi lavorare.
 
-5. Modifica il file [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js).
+5. Modifica il file [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js) per l'export missioni o [src/anteprima-allegati-missione.js](/Users/spagnolo/github/UwebTampermonkey/src/anteprima-allegati-missione.js) per l'anteprima allegati.
 
 6. Per ricaricare il codice:
 
@@ -56,7 +68,7 @@ docker compose up --build
 
 3. In Chrome apri `chrome://extensions/`, entra nei dettagli di Tampermonkey e abilita `User Scripts`.
 
-4. Modifica [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js) nel repo locale.
+4. Modifica [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js) o [src/anteprima-allegati-missione.js](/Users/spagnolo/github/UwebTampermonkey/src/anteprima-allegati-missione.js) nel repo locale.
 
 5. Il container monta la cartella del progetto e il watcher ricompila automaticamente. Per vedere il nuovo codice:
 
@@ -150,19 +162,25 @@ npm run compile
 Output principali in `dist/`:
 
 - `tampermonkey-loader.user.js`: loader per sviluppo locale
+- `tampermonkey-loader-anteprima-allegati.user.js`: loader per sviluppo locale dello script anteprima allegati
 - `dev-payload.js`: payload servito dal dev server
+- `dev-payload-anteprima-allegati.js`: payload anteprima allegati servito dal dev server
 - `uweb-export-missioni.user.js`: script standalone pronto per Tampermonkey
+- `uweb-anteprima-allegati-missione.user.js`: script standalone per anteprima allegati
 
 Per distribuire agli altri utenti, fai installare direttamente:
 
 - [`dist/uweb-export-missioni.user.js`](/Users/spagnolo/github/UwebTampermonkey/dist/uweb-export-missioni.user.js)
+- [`dist/uweb-anteprima-allegati-missione.user.js`](/Users/spagnolo/github/UwebTampermonkey/dist/uweb-anteprima-allegati-missione.user.js)
 
 ## File principali
 
 - [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js): logica dello script che vuoi iterare
+- [src/anteprima-allegati-missione.js](/Users/spagnolo/github/UwebTampermonkey/src/anteprima-allegati-missione.js): logica dello script di anteprima allegati nella singola missione
 - [scripts/dev.mjs](/Users/spagnolo/github/UwebTampermonkey/scripts/dev.mjs): build + watch + server locale
 - [scripts/build.mjs](/Users/spagnolo/github/UwebTampermonkey/scripts/build.mjs): genera loader e payload serviti da `dist/`
 - [EXPORT-MISSIONI.md](/Users/spagnolo/github/UwebTampermonkey/docs/EXPORT-MISSIONI.md): guida completa per installare, usare e distribuire lo script di export missioni
+- [DISCLAIMER-USO-PRIVACY.md](/Users/spagnolo/github/UwebTampermonkey/docs/DISCLAIMER-USO-PRIVACY.md): bozza di disclaimer per uso dati, condivisione, privacy e limiti di utilizzo
 
 ## Playwright MCP con browser extension
 

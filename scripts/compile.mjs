@@ -8,7 +8,6 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 const packageJsonPath = path.join(rootDir, "package.json");
 const configPath = path.join(rootDir, "tampermonkey.config.json");
-const payloadPath = path.join(rootDir, "src", "payload.js");
 const buildScriptPath = path.join(rootDir, "scripts", "build.mjs");
 const distDir = path.join(rootDir, "dist");
 
@@ -50,11 +49,27 @@ function assertNodeVersion() {
   }
 }
 
+function normalizeScriptConfigs(config) {
+  if (Array.isArray(config.scripts) && config.scripts.length) {
+    return config.scripts;
+  }
+
+  return [
+    {
+      source: "src/payload.js",
+      matches: config.matches,
+      dev: config.dev,
+      production: config.production
+    }
+  ];
+}
+
 async function assertConfigLooksValid() {
   const packageJsonRaw = await fs.readFile(packageJsonPath, "utf8");
   const packageJson = JSON.parse(packageJsonRaw);
   const configRaw = await fs.readFile(configPath, "utf8");
   const config = JSON.parse(configRaw);
+  const scriptConfigs = normalizeScriptConfigs(config);
 
   if (typeof packageJson.version !== "string" || packageJson.version.trim() === "") {
     fail("package.json deve contenere una version valida.");
@@ -68,8 +83,28 @@ async function assertConfigLooksValid() {
     fail(`Versione non allineata: package.json=${packageJson.version}, tampermonkey.config.json=${config.version}`);
   }
 
-  if (!Array.isArray(config.matches) || config.matches.length === 0) {
-    fail("tampermonkey.config.json deve contenere almeno un @match.");
+  if (!scriptConfigs.length) {
+    fail("tampermonkey.config.json deve contenere almeno uno script.");
+  }
+
+  for (const [index, scriptConfig] of scriptConfigs.entries()) {
+    if (typeof scriptConfig.source !== "string" || scriptConfig.source.trim() === "") {
+      fail(`scripts[${index}].source deve essere una stringa non vuota.`);
+    }
+
+    if (!Array.isArray(scriptConfig.matches) || scriptConfig.matches.length === 0) {
+      fail(`scripts[${index}].matches deve contenere almeno un @match.`);
+    }
+
+    if (!scriptConfig.dev?.filename || !scriptConfig.dev?.payloadFilename) {
+      fail(`scripts[${index}].dev deve contenere filename e payloadFilename.`);
+    }
+
+    if (!scriptConfig.production?.filename) {
+      fail(`scripts[${index}].production deve contenere filename.`);
+    }
+
+    await assertFileExists(path.join(rootDir, scriptConfig.source));
   }
 
   if (typeof config.port !== "number") {
@@ -93,7 +128,6 @@ async function runChecks() {
 
   await assertFileExists(packageJsonPath);
   await assertFileExists(configPath);
-  await assertFileExists(payloadPath);
   await assertFileExists(buildScriptPath);
   logCheck("File sorgente richiesti presenti.");
 
@@ -105,9 +139,11 @@ async function runChecks() {
 try {
   await runChecks();
   const result = await buildArtifacts();
-  logCheck(`Loader pronto: ${result.loaderPath}`);
-  logCheck(`Payload pronto: ${result.payloadPath}`);
-  logCheck(`Standalone pronto: ${result.standalonePath}`);
+  for (const script of result.scripts) {
+    logCheck(`Loader pronto (${script.id}): ${script.loaderPath}`);
+    logCheck(`Payload pronto (${script.id}): ${script.payloadPath}`);
+    logCheck(`Standalone pronto (${script.id}): ${script.standalonePath}`);
+  }
 } catch (error) {
   console.error(`[compile] errore: ${error.message || error}`);
   process.exitCode = 1;

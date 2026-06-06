@@ -1,17 +1,46 @@
 {
   "namespace": "codex/uweb-tampermonkey",
-  "version": "1.2.6",
+  "version": "1.2.12",
   "matches": [
     "https://cnr.u-web.cineca.it/appautmis/*"
   ],
   "port": 8123,
-  "dev": {
-    "name": "Uweb Tampermonkey Dev Loader",
-    "description": "Loader locale per sviluppare uno userscript Tampermonkey mentre la pagina e aperta"
-  },
-  "production": {
-    "name": "U-Web Export Missioni",
-    "description": "Esporta le missioni U-Web in uno ZIP con richiesta PDF, allegati e riepilogo JSON",
-    "filename": "uweb-export-missioni.user.js"
-  }
+  "scripts": [
+    {
+      "id": "export-missioni",
+      "source": "src/payload.js",
+      "matches": [
+        "https://cnr.u-web.cineca.it/appautmis/*"
+      ],
+      "dev": {
+        "name": "Uweb Export Missioni Dev Loader",
+        "description": "Loader locale per sviluppare lo script di export missioni mentre la pagina e aperta",
+        "filename": "tampermonkey-loader.user.js",
+        "payloadFilename": "dev-payload.js"
+      },
+      "production": {
+        "name": "U-Web Export Missioni",
+        "description": "Esporta le missioni U-Web in uno ZIP con richiesta PDF, allegati e riepilogo JSON",
+        "filename": "uweb-export-missioni.user.js"
+      }
+    },
+    {
+      "id": "anteprima-allegati-missione",
+      "source": "src/anteprima-allegati-missione.js",
+      "matches": [
+        "https://cnr.u-web.cineca.it/appautmis/listaautmis/*"
+      ],
+      "dev": {
+        "name": "Uweb Anteprima Allegati Dev Loader",
+        "description": "Loader locale per sviluppare lo script di anteprima allegati nella singola missione",
+        "filename": "tampermonkey-loader-anteprima-allegati.user.js",
+        "payloadFilename": "dev-payload-anteprima-allegati.js"
+      },
+      "production": {
+        "name": "U-Web Anteprima Allegati Missione",
+        "description": "Mostra anteprime dei file caricati nella pagina di dettaglio della singola missione",
+        "filename": "uweb-anteprima-allegati-missione.user.js"
+      }
+    }
+  ]
 }

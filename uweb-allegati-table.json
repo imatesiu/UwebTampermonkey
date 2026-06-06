@@ -1,0 +1,791 @@
+[
+  {
+    "tableIndex": 0,
+    "tag": "nz-table",
+    "cls": "ant-table-wrapper table table-striped responsive",
+    "html": "<nz-table _ngcontent-ng-c3782117578=\"\" wt-responsive-table=\"\" nzshowsizechanger=\"\" class=\"ant-table-wrapper table table-striped responsive\"><nz-spin class=\"ant-spin-nested-loading\"><!----><!----><div class=\"ant-spin-container ng-star-inserted\"><!----><div class=\"ant-table\"><!----><!----><nz-table-inner-default class=\"ant-table-container ng-star-inserted\"><div class=\"ant-table-content\"><table nz-table-content=\"\" style=\"table-layout: auto;\"><colgroup class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><!----></colgroup><!----><thead class=\"ant-table-thead ng-star-inserted\">\n                <tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Tipo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" nzsortorder=\"ascend\" class=\"ant-table-column-has-sorters ant-table-column-sort ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Sost. Il\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up active anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Valuta\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Importo\n",
+    "rows": [
+      {
+        "rowIndex": 0,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Tipo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" nzsortorder=\"ascend\" class=\"ant-table-column-has-sorters ant-table-column-sort ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Sost. Il\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "Tipo",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Tipo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"antico"
+          },
+          {
+            "cellIndex": 1,
+            "text": "Sost. Il",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" nzsortorder=\"ascend\" class=\"ant-table-column-has-sorters ant-table-column-sort ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Sost. Il\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up active anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-"
+          },
+          {
+            "cellIndex": 2,
+            "text": "Valuta",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Valuta\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anti"
+          },
+          {
+            "cellIndex": 3,
+            "text": "Importo",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Importo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"ant"
+          },
+          {
+            "cellIndex": 4,
+            "text": "Euro",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Euro\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"antico"
+          },
+          {
+            "cellIndex": 5,
+            "text": "Pagamento in contanti",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell ng-star-inserted\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Pagamento in contanti\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon"
+          },
+          {
+            "cellIndex": 6,
+            "text": "Allegati",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Allegati\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"an"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Note",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Note\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"antico"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-cell\"></th>"
+          }
+        ]
+      },
+      {
+        "rowIndex": 1,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Stazione Pistoia sede Ditecfer big. urbano A/R\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-n",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "VIAGG",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Stazione Pistoia sede Ditecfer big. urbano A/R",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Stazione Pistoia sede Ditecfer big. urbano A/R\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      },
+      {
+        "rowIndex": 2,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    CNR-Stazione Big. urbano  A/R\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" ",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "VIAGG",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "CNR-Stazione Big. urbano A/R",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    CNR-Stazione Big. urbano  A/R\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      },
+      {
+        "rowIndex": 3,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pistoia-Pisa Treno\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "MEZEQ",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "10,80 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "10,80 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Pistoia-Pisa Treno",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pistoia-Pisa Treno\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      },
+      {
+        "rowIndex": 4,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pisa-Pistoia Treno\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "MEZEQ",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "7,60 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "7,60 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Pisa-Pistoia Treno",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pisa-Pistoia Treno\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tableIndex": 1,
+    "tag": "div",
+    "cls": "ant-table",
+    "html": "<div class=\"ant-table\"><!----><!----><nz-table-inner-default class=\"ant-table-container ng-star-inserted\"><div class=\"ant-table-content\"><table nz-table-content=\"\" style=\"table-layout: auto;\"><colgroup class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><!----></colgroup><!----><thead class=\"ant-table-thead ng-star-inserted\">\n                <tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Tipo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" nzsortorder=\"ascend\" class=\"ant-table-column-has-sorters ant-table-column-sort ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Sost. Il\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up active anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Valuta\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Importo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg",
+    "rows": [
+      {
+        "rowIndex": 0,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Tipo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" nzsortorder=\"ascend\" class=\"ant-table-column-has-sorters ant-table-column-sort ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Sost. Il\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "Tipo",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Tipo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"antico"
+          },
+          {
+            "cellIndex": 1,
+            "text": "Sost. Il",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" nzsortorder=\"ascend\" class=\"ant-table-column-has-sorters ant-table-column-sort ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Sost. Il\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up active anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-"
+          },
+          {
+            "cellIndex": 2,
+            "text": "Valuta",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Valuta\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anti"
+          },
+          {
+            "cellIndex": 3,
+            "text": "Importo",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Importo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"ant"
+          },
+          {
+            "cellIndex": 4,
+            "text": "Euro",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Euro\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"antico"
+          },
+          {
+            "cellIndex": 5,
+            "text": "Pagamento in contanti",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell ng-star-inserted\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Pagamento in contanti\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon"
+          },
+          {
+            "cellIndex": 6,
+            "text": "Allegati",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Allegati\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"an"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Note",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Note\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"antico"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-cell\"></th>"
+          }
+        ]
+      },
+      {
+        "rowIndex": 1,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Stazione Pistoia sede Ditecfer big. urbano A/R\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-n",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "VIAGG",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Stazione Pistoia sede Ditecfer big. urbano A/R",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Stazione Pistoia sede Ditecfer big. urbano A/R\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      },
+      {
+        "rowIndex": 2,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    CNR-Stazione Big. urbano  A/R\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" ",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "VIAGG",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "CNR-Stazione Big. urbano A/R",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    CNR-Stazione Big. urbano  A/R\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      },
+      {
+        "rowIndex": 3,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pistoia-Pisa Treno\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "MEZEQ",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "10,80 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "10,80 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Pistoia-Pisa Treno",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pistoia-Pisa Treno\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      },
+      {
+        "rowIndex": 4,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pisa-Pistoia Treno\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "MEZEQ",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "7,60 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "7,60 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Pisa-Pistoia Treno",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pisa-Pistoia Treno\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tableIndex": 2,
+    "tag": "table",
+    "cls": "",
+    "html": "<table nz-table-content=\"\" style=\"table-layout: auto;\"><colgroup class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><col class=\"ng-star-inserted\"><!----></colgroup><!----><thead class=\"ant-table-thead ng-star-inserted\">\n                <tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Tipo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" nzsortorder=\"ascend\" class=\"ant-table-column-has-sorters ant-table-column-sort ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Sost. Il\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up active anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Valuta\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Importo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"",
+    "rows": [
+      {
+        "rowIndex": 0,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Tipo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anticon ant-table-column-sorter-down anticon-caret-down ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-down\" aria-hidden=\"true\"><path d=\"M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z\"></path></svg></nz-icon><!----></span></span></nz-table-sorters><!----><!----><!----><!----><!----><!----><!----></th>\n                  <th _ngcontent-ng-c3782117578=\"\" nzsortorder=\"ascend\" class=\"ant-table-column-has-sorters ant-table-column-sort ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Sost. Il\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "Tipo",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Tipo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"antico"
+          },
+          {
+            "cellIndex": 1,
+            "text": "Sost. Il",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" nzsortorder=\"ascend\" class=\"ant-table-column-has-sorters ant-table-column-sort ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Sost. Il\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up active anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-"
+          },
+          {
+            "cellIndex": 2,
+            "text": "Valuta",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Valuta\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"anti"
+          },
+          {
+            "cellIndex": 3,
+            "text": "Importo",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Importo\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"ant"
+          },
+          {
+            "cellIndex": 4,
+            "text": "Euro",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Euro\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"antico"
+          },
+          {
+            "cellIndex": 5,
+            "text": "Pagamento in contanti",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell ng-star-inserted\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Pagamento in contanti\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon"
+          },
+          {
+            "cellIndex": 6,
+            "text": "Allegati",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Allegati\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"an"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Note",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-column-has-sorters ant-table-cell\"><!----><nz-table-sorters class=\"ant-table-column-sorters ng-star-inserted\"><span class=\"ant-table-column-title\">\n                    Note\n                  <!----></span><span class=\"ant-table-column-sorter ant-table-column-sorter-full\"><span class=\"ant-table-column-sorter-inner\"><nz-icon nztype=\"caret-up\" class=\"anticon ant-table-column-sorter-up anticon-caret-up ng-star-inserted\"><svg viewBox=\"0 0 1024 1024\" focusable=\"false\" fill=\"currentColor\" width=\"1em\" height=\"1em\" data-icon=\"caret-up\" aria-hidden=\"true\"><path d=\"M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z\"></path></svg></nz-icon><!----><nz-icon nztype=\"caret-down\" class=\"antico"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<th _ngcontent-ng-c3782117578=\"\" class=\"ant-table-cell\"></th>"
+          }
+        ]
+      },
+      {
+        "rowIndex": 1,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Stazione Pistoia sede Ditecfer big. urbano A/R\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-n",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "VIAGG",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Stazione Pistoia sede Ditecfer big. urbano A/R",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Stazione Pistoia sede Ditecfer big. urbano A/R\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      },
+      {
+        "rowIndex": 2,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    CNR-Stazione Big. urbano  A/R\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" ",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "VIAGG",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">VIAGG</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "3,40 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    3,40&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "CNR-Stazione Big. urbano A/R",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    CNR-Stazione Big. urbano  A/R\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      },
+      {
+        "rowIndex": 3,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pistoia-Pisa Treno\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "MEZEQ",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "10,80 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "10,80 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    10,80&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Pistoia-Pisa Treno",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pistoia-Pisa Treno\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      },
+      {
+        "rowIndex": 4,
+        "html": "<tr _ngcontent-ng-c3782117578=\"\" class=\"ant-table-row ng-star-inserted\">\n                  <td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td><!---->\n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>\n                  \n                  <td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pisa-Pistoia Treno\n                  </td>\n                  <td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"",
+        "cells": [
+          {
+            "cellIndex": 0,
+            "text": "MEZEQ",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\" title=\"Tipo\" class=\"ant-table-cell\">\n                    <span _ngcontent-ng-c3782117578=\"\" data-translate=\"no\" translate=\"no\">MEZEQ</span>\n                  </td>"
+          },
+          {
+            "cellIndex": 1,
+            "text": "07/05/2026",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Sost. Il\" class=\"ant-table-cell\">\n                    07/05/2026\n                  </td>"
+          },
+          {
+            "cellIndex": 2,
+            "text": "EUR",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Valuta\" class=\"ant-table-cell\">\n                    EUR\n                  </td>"
+          },
+          {
+            "cellIndex": 3,
+            "text": "7,60 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Importo\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 4,
+            "text": "7,60 €",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Euro\" class=\"ant-table-cell\">\n                    7,60&nbsp;€\n                  </td>"
+          },
+          {
+            "cellIndex": 5,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Pagamento in contanti\" class=\"ant-table-cell ng-star-inserted\">\n                    \n                  </td>"
+          },
+          {
+            "cellIndex": 6,
+            "text": "1",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Allegati\" class=\"ant-table-cell\">\n                    1\n                    <i _ngcontent-ng-c3782117578=\"\" data-html=\"true\" nztooltipplacement=\"right\" nz-tooltip=\"\" nztooltipoverlayclassname=\"attachTooltips\" class=\"icon-list fa-info-color tuniningPositionIcon ng-star-inserted\"></i><!----><!---->\n                    <!---->\n                  </td>"
+          },
+          {
+            "cellIndex": 7,
+            "text": "Pisa-Pistoia Treno",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" title=\"Note\" class=\"ant-table-cell\">\n                    Pisa-Pistoia Treno\n                  </td>"
+          },
+          {
+            "cellIndex": 8,
+            "text": "",
+            "html": "<td _ngcontent-ng-c3782117578=\"\" class=\"right ant-table-cell\">\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Apri\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-eye\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class=\"ant-btn btn btn-sm btn-default\" title=\"Modifica\" tabindex=\"-1\" disabled=\"true\"><!----><span class=\"ng-star-inserted\">\n                      </span><i _ngcontent-ng-c3782117578=\"\" class=\"icon-edit\"> </i><span class=\"ng-star-inserted\">\n                    </span></button>\n                    <button _ngcontent-ng-c3782117578=\"\" nz-button=\"\" class="
+          }
+        ]
+      }
+    ]
+  }
+]

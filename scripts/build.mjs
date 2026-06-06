@@ -6,7 +6,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 const configPath = path.join(rootDir, "tampermonkey.config.json");
-const payloadPath = path.join(rootDir, "src", "payload.js");
 const distDir = path.join(rootDir, "dist");
 
 function assertStringArray(value, fieldName) {
@@ -60,15 +59,16 @@ function buildMetadata({
   ].join("\n");
 }
 
-function buildLoaderSource(config) {
+function buildLoaderSource(config, scriptConfig) {
   const devOrigin = getDevOrigin(config);
   const devUrl = new URL(devOrigin);
+  const payloadFilename = scriptConfig.dev.payloadFilename;
   const metadata = buildMetadata({
-    name: config.dev.name,
-    description: config.dev.description,
+    name: scriptConfig.dev.name,
+    description: scriptConfig.dev.description,
     namespace: config.namespace,
     version: config.version,
-    matches: config.matches,
+    matches: scriptConfig.matches,
     grants: [
       "GM_xmlhttpRequest",
       "GM_registerMenuCommand",
@@ -82,7 +82,7 @@ function buildLoaderSource(config) {
 (function () {
   "use strict";
 
-  const payloadUrl = "${devOrigin}/dev-payload.js";
+  const payloadUrl = "${devOrigin}/${payloadFilename}";
   let currentRuntime = null;
 
   function notify(text) {
@@ -137,7 +137,7 @@ function buildLoaderSource(config) {
   }
 
   if (typeof GM_registerMenuCommand === "function") {
-    GM_registerMenuCommand("Reload local dev script", function () {
+    GM_registerMenuCommand("Reload local dev script (${scriptConfig.id})", function () {
       loadPayload("menu");
     });
   }
@@ -147,14 +147,14 @@ function buildLoaderSource(config) {
 `;
 }
 
-function buildStandaloneSource(config, payloadSource) {
+function buildStandaloneSource(config, scriptConfig, payloadSource) {
   return [
     buildMetadata({
-      name: config.production.name,
-      description: config.production.description,
+      name: scriptConfig.production.name,
+      description: scriptConfig.production.description,
       namespace: config.namespace,
       version: config.version,
-      matches: config.matches,
+      matches: scriptConfig.matches,
       grants: ["none"]
     }),
     "",
@@ -167,77 +167,131 @@ function buildStandaloneSource(config, payloadSource) {
   ].join("\n");
 }
 
-export async function buildArtifacts() {
-  const [configRaw, payloadSource] = await Promise.all([
-    fs.readFile(configPath, "utf8"),
-    fs.readFile(payloadPath, "utf8")
-  ]);
+function normalizeScriptConfigs(config) {
+  if (Array.isArray(config.scripts) && config.scripts.length) {
+    return config.scripts;
+  }
 
+  return [
+    {
+      id: "main",
+      source: "src/payload.js",
+      matches: config.matches,
+      dev: {
+        ...config.dev,
+        filename: "tampermonkey-loader.user.js",
+        payloadFilename: "dev-payload.js"
+      },
+      production: config.production
+    }
+  ];
+}
+
+function assertScriptConfig(scriptConfig, index) {
+  const prefix = `scripts[${index}]`;
+  assertString(scriptConfig.id, `${prefix}.id`);
+  assertString(scriptConfig.source, `${prefix}.source`);
+  assertStringArray(scriptConfig.matches, `${prefix}.matches`);
+  if (!scriptConfig.dev || typeof scriptConfig.dev !== "object") {
+    throw new Error(`${prefix}.dev deve essere un oggetto`);
+  }
+  if (!scriptConfig.production || typeof scriptConfig.production !== "object") {
+    throw new Error(`${prefix}.production deve essere un oggetto`);
+  }
+  assertString(scriptConfig.dev.name, `${prefix}.dev.name`);
+  assertString(scriptConfig.dev.description, `${prefix}.dev.description`);
+  assertString(scriptConfig.dev.filename, `${prefix}.dev.filename`);
+  assertString(scriptConfig.dev.payloadFilename, `${prefix}.dev.payloadFilename`);
+  assertString(scriptConfig.production.name, `${prefix}.production.name`);
+  assertString(scriptConfig.production.description, `${prefix}.production.description`);
+  assertString(scriptConfig.production.filename, `${prefix}.production.filename`);
+}
+
+export async function buildArtifacts() {
+  const configRaw = await fs.readFile(configPath, "utf8");
   const config = JSON.parse(configRaw);
+  const scriptConfigs = normalizeScriptConfigs(config);
 
   assertString(config.namespace, "namespace");
   assertString(config.version, "version");
-  assertStringArray(config.matches, "matches");
   if (typeof config.port !== "number") {
     throw new Error("tampermonkey.config.json deve contenere port come numero");
   }
-  if (!config.dev || typeof config.dev !== "object") {
-    throw new Error("tampermonkey.config.json deve contenere dev come oggetto");
-  }
-  if (!config.production || typeof config.production !== "object") {
-    throw new Error("tampermonkey.config.json deve contenere production come oggetto");
-  }
-  assertString(config.dev.name, "dev.name");
-  assertString(config.dev.description, "dev.description");
-  assertString(config.production.name, "production.name");
-  assertString(config.production.description, "production.description");
-  assertString(config.production.filename, "production.filename");
+  scriptConfigs.forEach(assertScriptConfig);
 
   await fs.mkdir(distDir, { recursive: true });
 
-  const banner = [
-    "/*",
-    ` * Built at: ${new Date().toISOString()}`,
-    " * Edit src/payload.js and keep npm run dev active.",
-    " */",
-    ""
-  ].join("\n");
+  const builtAt = new Date().toISOString();
   const standaloneBanner = [
     "/*",
-    ` * Built at: ${new Date().toISOString()}`,
+    ` * Built at: ${builtAt}`,
     " * Standalone distribution build for Tampermonkey.",
     " */",
     ""
   ].join("\n");
 
-  const payloadOutput = `const { window, document, console } = context;\nconst SCRIPT_VERSION = ${JSON.stringify(config.version)};\n${banner}${payloadSource}\n`;
-  const loaderOutput = buildLoaderSource(config);
-  const standaloneOutput = buildStandaloneSource(
-    config,
-    `${standaloneBanner}const SCRIPT_VERSION = ${JSON.stringify(config.version)};\n${payloadSource}\n`
-  );
-  const standalonePath = path.join(distDir, config.production.filename);
+  const scripts = [];
+  const writeTasks = [];
 
-  await Promise.all([
-    fs.writeFile(path.join(distDir, "dev-payload.js"), payloadOutput, "utf8"),
-    fs.writeFile(path.join(distDir, "tampermonkey-loader.user.js"), loaderOutput, "utf8"),
-    fs.writeFile(standalonePath, standaloneOutput, "utf8")
-  ]);
+  for (const scriptConfig of scriptConfigs) {
+    const sourcePath = path.resolve(rootDir, scriptConfig.source);
+    const payloadSource = await fs.readFile(sourcePath, "utf8");
+    const banner = [
+      "/*",
+      ` * Built at: ${builtAt}`,
+      ` * Edit ${scriptConfig.source} and keep npm run dev active.`,
+      " */",
+      ""
+    ].join("\n");
+    const payloadOutput = `const { window, document, console } = context;\nconst SCRIPT_VERSION = ${JSON.stringify(config.version)};\n${banner}${payloadSource}\n`;
+    const loaderOutput = buildLoaderSource(config, scriptConfig);
+    const standaloneOutput = buildStandaloneSource(
+      config,
+      scriptConfig,
+      `${standaloneBanner}const SCRIPT_VERSION = ${JSON.stringify(config.version)};\n${payloadSource}\n`
+    );
+    const payloadPath = path.join(distDir, scriptConfig.dev.payloadFilename);
+    const loaderPath = path.join(distDir, scriptConfig.dev.filename);
+    const standalonePath = path.join(distDir, scriptConfig.production.filename);
+
+    writeTasks.push(
+      fs.writeFile(payloadPath, payloadOutput, "utf8"),
+      fs.writeFile(loaderPath, loaderOutput, "utf8"),
+      fs.writeFile(standalonePath, standaloneOutput, "utf8")
+    );
+
+    scripts.push({
+      id: scriptConfig.id,
+      name: scriptConfig.production.name,
+      loaderPath,
+      loaderFileName: scriptConfig.dev.filename,
+      payloadPath,
+      payloadFileName: scriptConfig.dev.payloadFilename,
+      standalonePath,
+      standaloneFileName: scriptConfig.production.filename
+    });
+  }
+
+  await Promise.all(writeTasks);
+  const primary = scripts[0];
 
   return {
-    loaderPath: path.join(distDir, "tampermonkey-loader.user.js"),
-    payloadPath: path.join(distDir, "dev-payload.js"),
-    standalonePath,
+    loaderPath: primary.loaderPath,
+    payloadPath: primary.payloadPath,
+    standalonePath: primary.standalonePath,
     port: config.port,
     version: config.version,
-    standaloneFileName: config.production.filename,
+    standaloneFileName: primary.standaloneFileName,
+    scripts,
     devOrigin: getDevOrigin(config)
   };
 }
 
 if (process.argv[1] === __filename) {
   const result = await buildArtifacts();
-  console.log(`Loader pronto: ${result.loaderPath}`);
-  console.log(`Payload pronto: ${result.payloadPath}`);
-  console.log(`Standalone pronto: ${result.standalonePath}`);
+  for (const script of result.scripts) {
+    console.log(`Loader pronto (${script.id}): ${script.loaderPath}`);
+    console.log(`Payload pronto (${script.id}): ${script.payloadPath}`);
+    console.log(`Standalone pronto (${script.id}): ${script.standalonePath}`);
+  }
 }

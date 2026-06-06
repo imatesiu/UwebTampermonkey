@@ -80,7 +80,23 @@ function contentTypeFor(filePath) {
 function renderIndex() {
   const origin = getPublicOrigin();
   const version = lastBuild?.version ?? "dev";
-  const standaloneFileName = lastBuild?.standaloneFileName ?? "uweb-export-missioni.user.js";
+  const scripts = lastBuild?.scripts?.length ? lastBuild.scripts : [
+    {
+      id: "export-missioni",
+      name: "U-Web Export Missioni",
+      loaderFileName: "tampermonkey-loader.user.js",
+      payloadFileName: "dev-payload.js",
+      standaloneFileName: "uweb-export-missioni.user.js"
+    }
+  ];
+  const installCards = scripts.map((script) => `
+      <div class="card">
+        <h2>${script.name}</h2>
+        <p><strong>Standalone:</strong> installazione consigliata per uso normale.</p>
+        <a class="button" href="/${script.standaloneFileName}">Installa standalone</a>
+        <p><strong>Sviluppo:</strong> loader che ricarica <code>${script.payloadFileName}</code> dal server.</p>
+        <a class="button secondary" href="/${script.loaderFileName}">Installa sviluppo</a>
+      </div>`).join("");
   return `<!doctype html>
 <html lang="it">
   <head>
@@ -163,30 +179,18 @@ function renderIndex() {
   <body>
     <main>
       <h1>Installazione Script U-Web Missioni <span class="badge">v${version}</span></h1>
-      <p class="lead">Questa pagina ti permette di installare lo script Tampermonkey per U-Web Missioni. Se vuoi usare semplicemente lo script, scegli la versione standalone. Se invece vuoi svilupparlo e aggiornarlo spesso, usa la versione sviluppo.</p>
+      <p class="lead">Questa pagina ti permette di installare gli script Tampermonkey per U-Web Missioni. Ogni script resta indipendente in Tampermonkey e puo essere attivato o disattivato separatamente.</p>
       <div class="card">
         <h2>Prima di iniziare</h2>
         <p><strong>Chrome:</strong> apri <code>chrome://extensions/</code>, entra nei dettagli di Tampermonkey e abilita <code>User Scripts</code>.</p>
         <p class="hint">Se questa opzione non e abilitata, lo script puo risultare installato ma non partire sulla pagina U-Web.</p>
       </div>
-      <div class="card">
-        <h2>Installazione consigliata</h2>
-        <p><strong>Versione standalone:</strong> tutto lo script viene installato direttamente in Tampermonkey e continua a funzionare anche senza server locale.</p>
-        <a class="button" href="/${standaloneFileName}">Installa versione standalone</a>
-        <p class="hint">Ideale per uso normale o per distribuirlo ad altri utenti.</p>
-      </div>
-      <div class="card">
-        <h2>Installazione sviluppo</h2>
-        <p><strong>Versione sviluppo:</strong> installa un loader leggero che scarica il codice aggiornato dal server, anche se il servizio e pubblicato su un dominio remoto in HTTPS.</p>
-        <a class="button secondary" href="/tampermonkey-loader.user.js">Installa versione sviluppo</a>
-        <p class="hint">Usala se vuoi aggiornare spesso <code>src/payload.js</code> e vedere subito i cambiamenti, sia in locale sia da un server remoto.</p>
-        <p><strong>Origin pubblico usato dal loader:</strong> <code>${origin}</code></p>
-        <p><strong>Payload servito da:</strong> <code>${origin}/dev-payload.js</code></p>
-      </div>
+      ${installCards}
       <div class="card">
         <h2>Differenza tra le due versioni</h2>
         <p><strong>Standalone:</strong> piu semplice, nessun server richiesto dopo l'installazione.</p>
         <p><strong>Sviluppo:</strong> richiede che questo servizio web resti attivo, ma ti permette di aggiornare il JavaScript molto velocemente anche da remoto.</p>
+        <p><strong>Origin pubblico usato dai loader:</strong> <code>${origin}</code></p>
       </div>
       <div class="card">
         <h2>Passi rapidi</h2>
@@ -248,7 +252,9 @@ const port = lastBuild?.port ?? 8123;
 
 server.listen(port, serverHost, () => {
   console.log(`[dev] server pronto su ${getPublicOrigin()}`);
-  console.log(`[dev] installa ${getPublicOrigin()}/tampermonkey-loader.user.js`);
+  for (const script of lastBuild?.scripts ?? []) {
+    console.log(`[dev] installa ${script.id}: ${getPublicOrigin()}/${script.loaderFileName}`);
+  }
   if (tlsEnabled) {
     const tlsPaths = getTlsPaths();
     console.log(`[dev] HTTPS attivo con certificati: ${tlsPaths.certPath}`);

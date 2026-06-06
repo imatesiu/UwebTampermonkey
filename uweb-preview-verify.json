@@ -1,0 +1,183 @@
+{
+  "versionPayloadPresent": false,
+  "panelCount": 0,
+  "previewButtons": [],
+  "rows": [
+    {
+      "index": 0,
+      "text": "VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 Stazione Pistoia sede Ditecfer big. urbano A/R",
+      "allegatiCell": "1",
+      "hasPreview": false,
+      "cells": [
+        {
+          "title": "Tipo",
+          "text": "VIAGG"
+        },
+        {
+          "title": "Sost. Il",
+          "text": "07/05/2026"
+        },
+        {
+          "title": "Valuta",
+          "text": "EUR"
+        },
+        {
+          "title": "Importo",
+          "text": "3,40 €"
+        },
+        {
+          "title": "Euro",
+          "text": "3,40 €"
+        },
+        {
+          "title": "Pagamento in contanti",
+          "text": ""
+        },
+        {
+          "title": "Allegati",
+          "text": "1"
+        },
+        {
+          "title": "Note",
+          "text": "Stazione Pistoia sede Ditecfer big. urbano A/R"
+        },
+        {
+          "title": "",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "text": "VIAGG 07/05/2026 EUR 3,40 € 3,40 € 1 CNR-Stazione Big. urbano A/R",
+      "allegatiCell": "1",
+      "hasPreview": false,
+      "cells": [
+        {
+          "title": "Tipo",
+          "text": "VIAGG"
+        },
+        {
+          "title": "Sost. Il",
+          "text": "07/05/2026"
+        },
+        {
+          "title": "Valuta",
+          "text": "EUR"
+        },
+        {
+          "title": "Importo",
+          "text": "3,40 €"
+        },
+        {
+          "title": "Euro",
+          "text": "3,40 €"
+        },
+        {
+          "title": "Pagamento in contanti",
+          "text": ""
+        },
+        {
+          "title": "Allegati",
+          "text": "1"
+        },
+        {
+          "title": "Note",
+          "text": "CNR-Stazione Big. urbano A/R"
+        },
+        {
+          "title": "",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "text": "MEZEQ 07/05/2026 EUR 10,80 € 10,80 € 1 Pistoia-Pisa Treno",
+      "allegatiCell": "1",
+      "hasPreview": false,
+      "cells": [
+        {
+          "title": "Tipo",
+          "text": "MEZEQ"
+        },
+        {
+          "title": "Sost. Il",
+          "text": "07/05/2026"
+        },
+        {
+          "title": "Valuta",
+          "text": "EUR"
+        },
+        {
+          "title": "Importo",
+          "text": "10,80 €"
+        },
+        {
+          "title": "Euro",
+          "text": "10,80 €"
+        },
+        {
+          "title": "Pagamento in contanti",
+          "text": ""
+        },
+        {
+          "title": "Allegati",
+          "text": "1"
+        },
+        {
+          "title": "Note",
+          "text": "Pistoia-Pisa Treno"
+        },
+        {
+          "title": "",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "text": "MEZEQ 07/05/2026 EUR 7,60 € 7,60 € 1 Pisa-Pistoia Treno",
+      "allegatiCell": "1",
+      "hasPreview": false,
+      "cells": [
+        {
+          "title": "Tipo",
+          "text": "MEZEQ"
+        },
+        {
+          "title": "Sost. Il",
+          "text": "07/05/2026"
+        },
+        {
+          "title": "Valuta",
+          "text": "EUR"
+        },
+        {
+          "title": "Importo",
+          "text": "7,60 €"
+        },
+        {
+          "title": "Euro",
+          "text": "7,60 €"
+        },
+        {
+          "title": "Pagamento in contanti",
+          "text": ""
+        },
+        {
+          "title": "Allegati",
+          "text": "1"
+        },
+        {
+          "title": "Note",
+          "text": "Pisa-Pistoia Treno"
+        },
+        {
+          "title": "",
+          "text": ""
+        }
+      ]
+    }
+  ]
+}
