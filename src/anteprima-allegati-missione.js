@@ -5,18 +5,15 @@ const STYLE_ID = "__tm-attachment-preview-style";
 const ENHANCED_ROW_ATTR = "data-tm-preview-enhanced";
 const ENHANCED_TARGET_ATTR = "data-tm-preview-target-enhanced";
 
-const routeMatch = window.location.pathname.match(DETAIL_PATH_PATTERN);
-if (!routeMatch) {
-  return {
-    dispose() {}
-  };
-}
-
-const missionId = routeMatch[1];
+let missionId = "";
 const objectUrls = new Set();
 let attachmentsCache = [];
 let expensesCache = [];
 let mutationObserver = null;
+let mountedMissionId = "";
+let routeCheckTimer = 0;
+let historyPatched = false;
+let bootNonce = 0;
 
 document.getElementById(STYLE_ID)?.remove();
 document.querySelectorAll(".tm-inline-preview").forEach((element) => element.remove());
@@ -169,6 +166,10 @@ document.documentElement.append(style);
 
 function log(message, ...rest) {
   console.log("[TM Anteprima Allegati]", message, ...rest);
+}
+
+function readMissionIdFromLocation() {
+  return window.location.pathname.match(DETAIL_PATH_PATTERN)?.[1] ?? "";
 }
 
 function getToken() {
@@ -614,11 +615,16 @@ function scheduleEnhance() {
 scheduleEnhance.timer = 0;
 
 async function boot() {
+  const activeMissionId = missionId;
+  const activeBootNonce = ++bootNonce;
   try {
     const [attachments, detail] = await Promise.all([
       fetchAttachments(),
       fetchMissionDetails()
     ]);
+    if (activeBootNonce !== bootNonce || activeMissionId !== mountedMissionId) {
+      return;
+    }
     attachmentsCache = attachments;
     expensesCache = resolveExpensesWithAttachments(detail, attachments);
     log(`Allegati trovati per missione ${missionId}: ${attachmentsCache.length}`);
@@ -631,7 +637,87 @@ async function boot() {
   }
 }
 
+function clearEnhancedUi() {
+  document.querySelectorAll(".tm-inline-preview").forEach((element) => element.remove());
+  document.querySelectorAll(".tm-preview-actions").forEach((element) => element.remove());
+  document.querySelectorAll(`[${ENHANCED_ROW_ATTR}]`).forEach((element) => {
+    element.removeAttribute(ENHANCED_ROW_ATTR);
+    element.classList.remove("tm-preview-row");
+  });
+  document.querySelectorAll(`[${ENHANCED_TARGET_ATTR}]`).forEach((element) => {
+    element.removeAttribute(ENHANCED_TARGET_ATTR);
+    element.classList.remove("tm-preview-target");
+  });
+}
+
+function unmountMissionPreview() {
+  bootNonce += 1;
+  missionId = "";
+  mountedMissionId = "";
+  attachmentsCache = [];
+  expensesCache = [];
+  mutationObserver?.disconnect();
+  mutationObserver = null;
+  clearEnhancedUi();
+  for (const url of objectUrls) {
+    window.URL.revokeObjectURL(url);
+  }
+  objectUrls.clear();
+}
+
+function syncRouteLifecycle() {
+  const nextMissionId = readMissionIdFromLocation();
+
+  if (!nextMissionId) {
+    if (mountedMissionId) {
+      log("Uscita dalla singola missione, pulizia anteprime.");
+      unmountMissionPreview();
+    }
+    return;
+  }
+
+  if (mountedMissionId === nextMissionId) {
+    return;
+  }
+
+  if (mountedMissionId && mountedMissionId !== nextMissionId) {
+    unmountMissionPreview();
+  }
+
+  missionId = nextMissionId;
+  mountedMissionId = nextMissionId;
+  log(`Aggancio anteprima alla missione ${missionId}.`);
+  void boot();
+}
+
+function scheduleRouteSync() {
+  window.clearTimeout(routeCheckTimer);
+  routeCheckTimer = window.setTimeout(syncRouteLifecycle, 80);
+}
+
+function patchHistoryForRouteChanges() {
+  if (historyPatched) {
+    return;
+  }
+
+  const wrapHistoryMethod = (methodName) => {
+    const original = window.history[methodName];
+    window.history[methodName] = function patchedHistoryMethod(...args) {
+      const result = original.apply(this, args);
+      scheduleRouteSync();
+      return result;
+    };
+  };
+
+  wrapHistoryMethod("pushState");
+  wrapHistoryMethod("replaceState");
+  historyPatched = true;
+}
+
 document.addEventListener("keydown", handleKeydown);
+window.addEventListener("popstate", scheduleRouteSync);
+window.addEventListener("hashchange", scheduleRouteSync);
+patchHistoryForRouteChanges();
 
 function handleKeydown(event) {
   if (event.key === "Escape") {
@@ -639,26 +725,15 @@ function handleKeydown(event) {
   }
 }
 
-boot();
+syncRouteLifecycle();
 
 return {
   dispose() {
     document.removeEventListener("keydown", handleKeydown);
-    mutationObserver?.disconnect();
+    window.removeEventListener("popstate", scheduleRouteSync);
+    window.removeEventListener("hashchange", scheduleRouteSync);
+    window.clearTimeout(routeCheckTimer);
+    unmountMissionPreview();
     style.remove();
-    document.querySelectorAll(".tm-inline-preview").forEach((element) => element.remove());
-    document.querySelectorAll(".tm-preview-actions").forEach((element) => element.remove());
-    document.querySelectorAll(`[${ENHANCED_ROW_ATTR}]`).forEach((element) => {
-      element.removeAttribute(ENHANCED_ROW_ATTR);
-      element.classList.remove("tm-preview-row");
-    });
-    document.querySelectorAll(`[${ENHANCED_TARGET_ATTR}]`).forEach((element) => {
-      element.removeAttribute(ENHANCED_TARGET_ATTR);
-      element.classList.remove("tm-preview-target");
-    });
-    for (const url of objectUrls) {
-      window.URL.revokeObjectURL(url);
-    }
-    objectUrls.clear();
   }
 };

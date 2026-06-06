@@ -1,6 +1,6 @@
 {
   "namespace": "codex/uweb-tampermonkey",
-  "version": "1.2.12",
+  "version": "1.2.14",
   "matches": [
     "https://cnr.u-web.cineca.it/appautmis/*"
   ],
@@ -28,7 +28,7 @@
       "id": "anteprima-allegati-missione",
       "source": "src/anteprima-allegati-missione.js",
       "matches": [
-        "https://cnr.u-web.cineca.it/appautmis/listaautmis/*"
+        "https://cnr.u-web.cineca.it/appautmis/*"
       ],
       "dev": {
         "name": "Uweb Anteprima Allegati Dev Loader",
