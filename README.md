@@ -120,6 +120,18 @@ Passi tipici:
 docker compose --env-file .env.server -f docker-compose.server.yml up --build -d
 ```
 
+Oppure usa lo script helper del progetto:
+
+```bash
+./rundocker.server.sh tm.example.com
+```
+
+Se vuoi separare il nome host pubblico dal sito Let's Encrypt:
+
+```bash
+./rundocker.server.sh tm.example.com certificati.example.com
+```
+
 Se vuoi avviare direttamente il server Node senza passare da Docker, puoi usare anche:
 
 ```bash
