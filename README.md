@@ -120,6 +120,14 @@ Passi tipici:
 docker compose --env-file .env.server -f docker-compose.server.yml up --build -d
 ```
 
+Se vuoi avviare direttamente il server Node senza passare da Docker, puoi usare anche:
+
+```bash
+PUBLIC_HOST=tm.example.com npm run dev:server
+```
+
+Il comando imposta automaticamente il loader in modalita server, quindi `payloadUrl` viene generato con `https://tm.example.com` senza modificare il codice.
+
 In questo scenario:
 
 - il container monta `/etc/letsencrypt` in sola lettura

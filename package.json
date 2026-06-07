@@ -8,6 +8,7 @@
     "build:dist": "node scripts/compile.mjs",
     "compile": "node scripts/compile.mjs",
     "dev": "node scripts/dev.mjs",
-    "dev:docker": "HOST=0.0.0.0 node scripts/dev.mjs"
+    "dev:docker": "HOST=0.0.0.0 node scripts/dev.mjs",
+    "dev:server": "node scripts/dev-server.mjs"
   }
 }

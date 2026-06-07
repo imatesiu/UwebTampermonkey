@@ -171,6 +171,16 @@ function renderIndex() {
         margin: 12px 0 0;
         padding-left: 20px;
       }
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 12px;
+      }
+      .alert {
+        border-left: 4px solid #dc2626;
+        padding-left: 12px;
+      }
       a {
         color: #0f766e;
       }
@@ -182,8 +192,8 @@ function renderIndex() {
       <p class="lead">Questa pagina ti permette di installare gli script Tampermonkey per U-Web Missioni. Ogni script resta indipendente in Tampermonkey e puo essere attivato o disattivato separatamente.</p>
       <div class="card">
         <h2>Prima di iniziare</h2>
-        <p><strong>Chrome:</strong> apri <code>chrome://extensions/</code>, entra nei dettagli di Tampermonkey e abilita <code>User Scripts</code>.</p>
-        <p class="hint">Se questa opzione non e abilitata, lo script puo risultare installato ma non partire sulla pagina U-Web.</p>
+        <p class="alert"><strong>Importante:</strong> in Chrome o Edge devi aprire <code>chrome://extensions/</code>, entrare nei dettagli di Tampermonkey e abilitare <code>User Scripts</code>, cioe gli script di terze parti.</p>
+        <p class="hint">Se questa opzione non e abilitata, lo script puo risultare installato ma non partire sulla pagina U-Web anche se Tampermonkey sembra configurato correttamente.</p>
       </div>
       ${installCards}
       <div class="card">
@@ -201,6 +211,96 @@ function renderIndex() {
           <li>Se usi la versione sviluppo, lascia attivo questo servizio web.</li>
         </ol>
       </div>
+      <div class="card">
+        <h2>Risorse utili</h2>
+        <p>Se devi ancora installare Tampermonkey o vuoi una guida passo passo per la prima configurazione, usa questi link.</p>
+        <div class="links">
+          <a class="button secondary" href="https://www.tampermonkey.net/" target="_blank" rel="noreferrer">Scarica Tampermonkey</a>
+          <a class="button" href="/guida-installazione.html">Guida installazione e prima configurazione</a>
+        </div>
+        <p class="hint">Nella guida trovi anche il promemoria per abilitare <code>User Scripts</code> o gli script di terze parti prima di usare U-Web.</p>
+      </div>
+    </main>
+  </body>
+</html>`;
+}
+
+function renderGuidePage() {
+  return `<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <title>Guida installazione Tampermonkey</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 32px;
+        font: 16px/1.6 ui-sans-serif, system-ui, sans-serif;
+        background: linear-gradient(180deg, #f8fafc 0%, #eef6ff 100%);
+        color: #0f172a;
+      }
+      main {
+        max-width: 860px;
+      }
+      h1, h2 {
+        margin-top: 0;
+      }
+      .card {
+        margin: 20px 0;
+        padding: 22px 24px;
+        border-radius: 16px;
+        background: white;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      }
+      .alert {
+        border-left: 4px solid #dc2626;
+        padding-left: 12px;
+      }
+      code {
+        background: #e2e8f0;
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      .button {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        background: #0f766e;
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+      }
+      .button.secondary {
+        background: #1d4ed8;
+      }
+      a {
+        color: #0f766e;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Guida installazione e prima configurazione</h1>
+      <div class="card">
+        <h2>1. Installa Tampermonkey</h2>
+        <p>Apri il sito ufficiale di Tampermonkey e installa l'estensione nel browser che usi per U-Web.</p>
+        <a class="button secondary" href="https://www.tampermonkey.net/" target="_blank" rel="noreferrer">Apri il sito ufficiale</a>
+      </div>
+      <div class="card">
+        <h2>2. Abilita gli script di terze parti</h2>
+        <p class="alert"><strong>Passaggio obbligatorio:</strong> in Chrome o Edge apri <code>chrome://extensions/</code>, entra nei dettagli di Tampermonkey e abilita <code>User Scripts</code>. Questa opzione consente l'esecuzione degli script di terze parti.</p>
+        <p>Se non abiliti questa opzione, lo script puo risultare installato ma non verra eseguito dentro U-Web.</p>
+      </div>
+      <div class="card">
+        <h2>3. Installa lo script</h2>
+        <p>Torna alla pagina principale di distribuzione e scegli la versione standalone oppure la versione sviluppo, a seconda di cosa ti serve.</p>
+        <a class="button" href="/">Torna alla pagina di installazione</a>
+      </div>
+      <div class="card">
+        <h2>4. Prima verifica</h2>
+        <p>Apri U-Web Missioni, entra nella pagina interessata e controlla che Tampermonkey mostri lo script come attivo.</p>
+      </div>
     </main>
   </body>
 </html>`;
@@ -214,6 +314,12 @@ const requestHandler = (request, response) => {
   if (route === "/index.html") {
     response.writeHead(200, { "content-type": "text/html; charset=utf-8" });
     response.end(renderIndex());
+    return;
+  }
+
+  if (route === "/guida-installazione.html") {
+    response.writeHead(200, { "content-type": "text/html; charset=utf-8" });
+    response.end(renderGuidePage());
     return;
   }
 
