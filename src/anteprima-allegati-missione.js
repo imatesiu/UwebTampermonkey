@@ -9,6 +9,7 @@ let missionId = "";
 const objectUrls = new Set();
 let attachmentsCache = [];
 let expensesCache = [];
+let generalAttachmentsCache = [];
 let mutationObserver = null;
 let mountedMissionId = "";
 let routeCheckTimer = 0;
@@ -356,6 +357,10 @@ function resolveExpensesWithAttachments(detail, attachments) {
     .filter((expense) => expense.attachments.length);
 }
 
+function resolveGeneralAttachments(attachments) {
+  return attachments.filter((attachment) => !String(attachment.raw?.cdAltKey ?? "").trim());
+}
+
 async function fetchAttachmentBlob(attachment) {
   const response = await apiFetch(
     `${API_BASE}/allegati/${encodeURIComponent(missionId)}/${encodeURIComponent(attachment.id)}`
@@ -485,6 +490,29 @@ function enhanceExpenseRows() {
   return enhancedCount;
 }
 
+function enhanceGeneralAttachmentsButton() {
+  if (!generalAttachmentsCache.length) {
+    return 0;
+  }
+
+  const toolbarButton = document.querySelector("#button-open-allegati");
+  if (!toolbarButton || toolbarButton.getAttribute(ENHANCED_ROW_ATTR) === "1") {
+    return 0;
+  }
+
+  const host = toolbarButton.parentElement || toolbarButton;
+  const actions = document.createElement("span");
+  actions.className = "tm-preview-actions";
+
+  for (const attachment of generalAttachmentsCache) {
+    actions.append(makePreviewButton(attachment, toolbarButton));
+  }
+
+  host.append(actions);
+  toolbarButton.setAttribute(ENHANCED_ROW_ATTR, "1");
+  return generalAttachmentsCache.length;
+}
+
 function renderUnsupportedPreview(previewBody, fileName, contentType) {
   const box = document.createElement("div");
   box.className = "tm-empty";
@@ -519,14 +547,15 @@ function removeExistingInlinePreview(row) {
 function createInlinePreview(row, attachment, url) {
   removeExistingInlinePreview(row);
 
-  const previewRow = document.createElement(row.tagName.toLowerCase() === "tr" ? "tr" : "div");
+  const isTableRow = row.tagName.toLowerCase() === "tr";
+  const previewRow = document.createElement(isTableRow ? "tr" : "div");
   previewRow.className = "tm-inline-preview";
   previewRow.dataset.attachmentId = String(attachment.id);
 
-  const cell = document.createElement(row.tagName.toLowerCase() === "tr" ? "td" : "div");
+  const cell = document.createElement(isTableRow ? "td" : "div");
   cell.className = "tm-inline-preview-cell";
 
-  if (row.tagName.toLowerCase() === "tr") {
+  if (isTableRow) {
     const columnCount = Math.max(1, row.querySelectorAll("td, th, [role='cell'], [role='columnheader']").length);
     cell.colSpan = columnCount;
   }
@@ -551,7 +580,11 @@ function createInlinePreview(row, attachment, url) {
   });
 
   previewRow.append(cell);
-  row.after(previewRow);
+  if (isTableRow) {
+    row.after(previewRow);
+  } else {
+    row.insertAdjacentElement("afterend", previewRow);
+  }
   return cell.querySelector(".tm-inline-preview-body");
 }
 
@@ -606,9 +639,9 @@ async function previewAttachment(attachment, row, button) {
 function scheduleEnhance() {
   window.clearTimeout(scheduleEnhance.timer);
   scheduleEnhance.timer = window.setTimeout(() => {
-    const enhancedCount = enhanceExpenseRows();
+    const enhancedCount = enhanceExpenseRows() + enhanceGeneralAttachmentsButton();
     if (enhancedCount) {
-      log(`Righe spesa con anteprima aggiornate: ${enhancedCount}`);
+      log(`Punti anteprima aggiornati: ${enhancedCount}`);
     }
   }, 150);
 }
@@ -627,8 +660,10 @@ async function boot() {
     }
     attachmentsCache = attachments;
     expensesCache = resolveExpensesWithAttachments(detail, attachments);
+    generalAttachmentsCache = resolveGeneralAttachments(attachments);
     log(`Allegati trovati per missione ${missionId}: ${attachmentsCache.length}`);
     log(`Spese con allegati associati: ${expensesCache.length}`);
+    log(`Allegati generali di missione: ${generalAttachmentsCache.length}`);
     scheduleEnhance();
     mutationObserver = new MutationObserver(scheduleEnhance);
     mutationObserver.observe(document.body, { childList: true, subtree: true });
@@ -656,6 +691,7 @@ function unmountMissionPreview() {
   mountedMissionId = "";
   attachmentsCache = [];
   expensesCache = [];
+  generalAttachmentsCache = [];
   mutationObserver?.disconnect();
   mutationObserver = null;
   clearEnhancedUi();
