@@ -1,6 +1,6 @@
 {
   "namespace": "codex/uweb-tampermonkey",
-  "version": "1.2.16",
+  "version": "1.2.18",
   "matches": [
     "https://cnr.u-web.cineca.it/appautmis/*"
   ],

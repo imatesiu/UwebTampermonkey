@@ -298,6 +298,14 @@ function getLatestListUrl() {
   return entries[entries.length - 1].name;
 }
 
+function getLatestListUrlSafe() {
+  try {
+    return getLatestListUrl();
+  } catch (_error) {
+    return null;
+  }
+}
+
 function delay(ms) {
   return new Promise((resolve) => {
     window.setTimeout(resolve, ms);
@@ -358,6 +366,47 @@ function getVisibleMissionIds() {
     .filter(Boolean);
 
   return [...new Set(ids)];
+}
+
+function parseMissionRow(row) {
+  const cells = Array.from(row.querySelectorAll("td"));
+  if (cells.length < 7) {
+    return null;
+  }
+
+  const readCell = (index) => (cells[index]?.innerText || "").replace(/\s+/g, " ").trim();
+  const idAutMiss = readCell(0).match(/\d+/)?.[0] ?? "";
+  if (!idAutMiss) {
+    return null;
+  }
+
+  const statoText = readCell(6);
+  const statoParts = statoText
+    .split(/:\s*/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  return {
+    idAutMiss,
+    dsAutMis: readCell(1),
+    dtIniMis: readCell(3),
+    dtFineMis: readCell(4),
+    costoPresunto: readCell(5) || null,
+    stato: statoParts[0] || statoText || null,
+    statoPagamento: statoParts.length > 1 ? statoParts.slice(1).join(": ") : null,
+    luoghi: readCell(2) ? [{ dsLuogo: readCell(2) }] : []
+  };
+}
+
+function getVisibleMissionRows() {
+  const table = findMissionListTable();
+  if (!table) {
+    throw new Error("Non trovo la tabella missioni visibile nella pagina.");
+  }
+
+  return Array.from(table.querySelectorAll("tbody tr"))
+    .map(parseMissionRow)
+    .filter(Boolean);
 }
 
 function findMissionPagination() {
@@ -462,7 +511,7 @@ function dedupeMissionsById(missions) {
   return [...map.values()];
 }
 
-async function collectAllMissionsAcrossPages() {
+async function collectAllVisibleMissionsAcrossPages() {
   const paginationInfo = getMissionPaginationInfo();
   const expectedTotal = paginationInfo?.totalCount ?? 0;
   let previousIds = getVisibleMissionIds();
@@ -473,13 +522,10 @@ async function collectAllMissionsAcrossPages() {
   const collected = new Map();
 
   while (true) {
-    const visibleMissionIds = getVisibleMissionIds();
-    const visibleMissionIdSet = new Set(visibleMissionIds);
-    const pageMissions = await fetchMissionList();
-    const matchingPageMissions = pageMissions.filter((mission) => visibleMissionIdSet.has(String(mission?.idAutMiss ?? "")));
-    const missionsToAdd = matchingPageMissions.length ? matchingPageMissions : pageMissions;
+    const visibleMissions = getVisibleMissionRows();
+    const visibleMissionIds = visibleMissions.map((mission) => mission.idAutMiss);
 
-    for (const mission of missionsToAdd) {
+    for (const mission of visibleMissions) {
       const id = String(mission?.idAutMiss ?? "").trim();
       if (id && !collected.has(id)) {
         collected.set(id, mission);
@@ -500,16 +546,16 @@ async function collectAllMissionsAcrossPages() {
 }
 
 async function resolveMissionsForExport(includeAllMissions) {
-  const visibleMissionIds = getVisibleMissionIds();
-  const missions = dedupeMissionsById(await fetchMissionList());
+  const visibleMissions = dedupeMissionsById(getVisibleMissionRows());
+  const visibleMissionIds = visibleMissions.map((mission) => mission.idAutMiss);
   const paginationInfo = getMissionPaginationInfo();
 
   if (includeAllMissions) {
-    const totalCount = paginationInfo?.totalCount ?? missions.length;
-    const needsPaginationTraversal = totalCount > visibleMissionIds.length && missions.length < totalCount;
+    const totalCount = paginationInfo?.totalCount ?? visibleMissions.length;
+    const needsPaginationTraversal = totalCount > visibleMissionIds.length;
     const allMissions = needsPaginationTraversal
-      ? dedupeMissionsById(await collectAllMissionsAcrossPages())
-      : missions;
+      ? dedupeMissionsById(await collectAllVisibleMissionsAcrossPages())
+      : visibleMissions;
 
     return {
       missions: allMissions,
@@ -524,10 +570,10 @@ async function resolveMissionsForExport(includeAllMissions) {
   }
 
   const visibleMissionIdSet = new Set(visibleMissionIds);
-  const filteredMissions = missions.filter((mission) => visibleMissionIdSet.has(String(mission.idAutMiss ?? "")));
+  const filteredMissions = visibleMissions.filter((mission) => visibleMissionIdSet.has(String(mission.idAutMiss ?? "")));
 
   if (!filteredMissions.length) {
-    throw new Error("Le missioni visibili nella tabella non coincidono con la lista API corrente.");
+    throw new Error("Non riesco a leggere le missioni visibili nella tabella corrente.");
   }
 
   return {
@@ -1149,7 +1195,7 @@ async function exportMissionZip() {
       exportedAt: new Date().toISOString(),
       scriptVersion: getScriptVersion(),
       sourceUrl: window.location.href,
-      listUrl: getLatestListUrl(),
+      listUrl: getLatestListUrlSafe(),
       includeAllMissions,
       includeRawDetailApiOriginale,
       totalVisibleMissions: visibleMissionIds.length,
@@ -1175,11 +1221,12 @@ async function exportMissionZip() {
 
 function refreshStatus() {
   try {
-    const listUrl = getLatestListUrl();
     const visibleMissionIds = getVisibleMissionIds();
     const paginationInfo = getMissionPaginationInfo();
     const totalLine = paginationInfo?.totalCount ? `\nMissioni totali nei filtri: ${paginationInfo.totalCount}` : "";
-    setStatus(`API lista pronta.\nMissioni visibili: ${visibleMissionIds.length}${totalLine}\n${listUrl}`);
+    const listUrl = getLatestListUrlSafe();
+    const listLine = listUrl ? `\n${listUrl}` : "";
+    setStatus(`API lista pronta.\nMissioni visibili: ${visibleMissionIds.length}${totalLine}${listLine}`);
   } catch (error) {
     setStatus(String(error.message || error));
   }
