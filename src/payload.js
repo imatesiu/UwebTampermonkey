@@ -298,6 +298,12 @@ function getLatestListUrl() {
   return entries[entries.length - 1].name;
 }
 
+function delay(ms) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
+}
+
 async function apiFetch(url, options = {}) {
   const token = getToken();
   const response = await window.fetch(url, {
@@ -354,18 +360,165 @@ function getVisibleMissionIds() {
   return [...new Set(ids)];
 }
 
+function findMissionPagination() {
+  return Array.from(document.querySelectorAll("ul, ol")).find((list) => {
+    const text = (list.innerText || "").replace(/\s+/g, " ").trim();
+    return /\bSchede\b/i.test(text) && /\/\s*pagina/i.test(text);
+  }) ?? null;
+}
+
+function getMissionPaginationInfo() {
+  const pagination = findMissionPagination();
+  if (!pagination) {
+    return null;
+  }
+
+  const text = (pagination.innerText || "").replace(/\s+/g, " ").trim();
+  const match = text.match(/(\d+)\s+di\s+(\d+)\s+Schede/i);
+  if (!match) {
+    return null;
+  }
+
+  return {
+    visibleCount: Number.parseInt(match[1], 10),
+    totalCount: Number.parseInt(match[2], 10)
+  };
+}
+
+function findPaginationButton(kind) {
+  const pagination = findMissionPagination();
+  if (!pagination) {
+    return null;
+  }
+
+  const titlePattern = kind === "next" ? /successiva/i : /precedente/i;
+  const ariaPattern = kind === "next" ? /^next$/i : /^previous$/i;
+
+  return Array.from(pagination.querySelectorAll("button, a, li, span, div")).find((element) => {
+    const title = element.getAttribute?.("title") ?? "";
+    const ariaLabel = element.getAttribute?.("aria-label") ?? "";
+    const text = (element.textContent || "").replace(/\s+/g, " ").trim();
+    return titlePattern.test(title) || ariaPattern.test(ariaLabel) || ariaPattern.test(text);
+  }) ?? null;
+}
+
+function isPaginationButtonDisabled(element) {
+  if (!element) {
+    return true;
+  }
+
+  if (element instanceof HTMLButtonElement && element.disabled) {
+    return true;
+  }
+
+  const host = element.closest?.("li, button, a, span, div") ?? element;
+  const className = typeof host.className === "string" ? host.className : "";
+  const ariaDisabled = host.getAttribute?.("aria-disabled");
+  return /\bdisabled\b/i.test(className) || ariaDisabled === "true";
+}
+
+async function waitForVisibleMissionIdsChange(previousIds, timeoutMs = 15000) {
+  const previousSignature = previousIds.join("|");
+  const startedAt = Date.now();
+
+  while ((Date.now() - startedAt) < timeoutMs) {
+    await delay(200);
+    try {
+      const currentIds = getVisibleMissionIds();
+      if (currentIds.length && currentIds.join("|") !== previousSignature) {
+        return currentIds;
+      }
+    } catch (_error) {
+      // Wait until the table becomes stable again.
+    }
+  }
+
+  throw new Error("La tabella missioni non si aggiorna dopo il cambio pagina.");
+}
+
+async function clickPaginationButton(kind, previousIds) {
+  const button = findPaginationButton(kind);
+  if (!button || isPaginationButtonDisabled(button)) {
+    return false;
+  }
+
+  button.click();
+  await waitForVisibleMissionIdsChange(previousIds);
+  await delay(250);
+  return true;
+}
+
+function dedupeMissionsById(missions) {
+  const map = new Map();
+  for (const mission of missions) {
+    const id = String(mission?.idAutMiss ?? "").trim();
+    if (!id) {
+      continue;
+    }
+    if (!map.has(id)) {
+      map.set(id, mission);
+    }
+  }
+  return [...map.values()];
+}
+
+async function collectAllMissionsAcrossPages() {
+  const paginationInfo = getMissionPaginationInfo();
+  const expectedTotal = paginationInfo?.totalCount ?? 0;
+  let previousIds = getVisibleMissionIds();
+  while (await clickPaginationButton("previous", previousIds)) {
+    previousIds = getVisibleMissionIds();
+  }
+
+  const collected = new Map();
+
+  while (true) {
+    const visibleMissionIds = getVisibleMissionIds();
+    const visibleMissionIdSet = new Set(visibleMissionIds);
+    const pageMissions = await fetchMissionList();
+    const matchingPageMissions = pageMissions.filter((mission) => visibleMissionIdSet.has(String(mission?.idAutMiss ?? "")));
+    const missionsToAdd = matchingPageMissions.length ? matchingPageMissions : pageMissions;
+
+    for (const mission of missionsToAdd) {
+      const id = String(mission?.idAutMiss ?? "").trim();
+      if (id && !collected.has(id)) {
+        collected.set(id, mission);
+      }
+    }
+
+    if (expectedTotal > 0 && collected.size >= expectedTotal) {
+      break;
+    }
+
+    const moved = await clickPaginationButton("next", visibleMissionIds);
+    if (!moved) {
+      break;
+    }
+  }
+
+  return [...collected.values()];
+}
+
 async function resolveMissionsForExport(includeAllMissions) {
-  const missions = await fetchMissionList();
+  const visibleMissionIds = getVisibleMissionIds();
+  const missions = dedupeMissionsById(await fetchMissionList());
+  const paginationInfo = getMissionPaginationInfo();
 
   if (includeAllMissions) {
+    const totalCount = paginationInfo?.totalCount ?? missions.length;
+    const needsPaginationTraversal = totalCount > visibleMissionIds.length && missions.length < totalCount;
+    const allMissions = needsPaginationTraversal
+      ? dedupeMissionsById(await collectAllMissionsAcrossPages())
+      : missions;
+
     return {
-      missions,
+      missions: allMissions,
       source: "all",
-      visibleMissionIds: getVisibleMissionIds()
+      visibleMissionIds,
+      totalMissionCount: totalCount
     };
   }
 
-  const visibleMissionIds = getVisibleMissionIds();
   if (!visibleMissionIds.length) {
     throw new Error("Non trovo missioni visibili nella tabella corrente.");
   }
@@ -380,7 +533,8 @@ async function resolveMissionsForExport(includeAllMissions) {
   return {
     missions: filteredMissions,
     source: "visible",
-    visibleMissionIds
+    visibleMissionIds,
+    totalMissionCount: paginationInfo?.totalCount ?? filteredMissions.length
   };
 }
 
@@ -917,14 +1071,14 @@ async function exportMissionZip() {
     setProgress(0, 1);
     setStatus("Recupero lista missioni dai filtri correnti...");
 
-    const { missions, source, visibleMissionIds } = await resolveMissionsForExport(includeAllMissions);
+    const { missions, source, visibleMissionIds, totalMissionCount } = await resolveMissionsForExport(includeAllMissions);
     if (!missions.length) {
       throw new Error("Nessuna missione trovata con i filtri correnti.");
     }
 
     setStatus(
       source === "all"
-        ? `Esporto tutte le missioni dei filtri: ${missions.length}.`
+        ? `Esporto tutte le missioni dei filtri: ${missions.length}${totalMissionCount ? ` su ${totalMissionCount}` : ""}.`
         : `Esporto solo le missioni visibili: ${missions.length} su ${visibleMissionIds.length} righe in tabella.`
     );
 
@@ -999,6 +1153,7 @@ async function exportMissionZip() {
       includeAllMissions,
       includeRawDetailApiOriginale,
       totalVisibleMissions: visibleMissionIds.length,
+      totalMissionsInFilters: totalMissionCount ?? missions.length,
       formatoExport: "zip-principale-con-zip-per-missione",
       totalMissions: missions.length
     }));
@@ -1022,7 +1177,9 @@ function refreshStatus() {
   try {
     const listUrl = getLatestListUrl();
     const visibleMissionIds = getVisibleMissionIds();
-    setStatus(`API lista pronta.\nMissioni visibili: ${visibleMissionIds.length}\n${listUrl}`);
+    const paginationInfo = getMissionPaginationInfo();
+    const totalLine = paginationInfo?.totalCount ? `\nMissioni totali nei filtri: ${paginationInfo.totalCount}` : "";
+    setStatus(`API lista pronta.\nMissioni visibili: ${visibleMissionIds.length}${totalLine}\n${listUrl}`);
   } catch (error) {
     setStatus(String(error.message || error));
   }

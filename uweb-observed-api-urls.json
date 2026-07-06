@@ -1,0 +1,22 @@
+[
+  "https://cnr.u-web.cineca.it/appautmis/api/customLogo",
+  "https://cnr.u-web.cineca.it/appautmis/api/v1/apps/min",
+  "https://cnr.u-web.cineca.it/appautmis/api/atenei",
+  "https://cnr.u-web.cineca.it/appautmis/api/manuals",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametrointegrazgestdresse3",
+  "https://cnr.u-web.cineca.it/appautmis/api/estrairuoliintegrazgestesse3",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametrosuperamlimitealloggio",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametrolistaruolirichiestastraordinari",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametrorichiestastraordinari",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametrolistaruoligestoreconsuntivo",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametroflmissgestoreconsuntivo",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametroflmisssolocedolino",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametrocambiomissdtsost",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiParametriConfMissioni?cdParametro=DATA_ATTIV_DEMAT_MISS",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametrolistauoprenotazioni",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametrotestodichsostattonotorieta",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametri?parametro=UWEB_SOSTITUTO_DIDATTICA",
+  "https://cnr.u-web.cineca.it/appautmis/api/estrailabeltipiautorizzazioni?cd=tipiAut",
+  "https://cnr.u-web.cineca.it/appautmis/api/estraiparametrodematerializgiustificativimiss",
+  "https://cnr.u-web.cineca.it/appautmis/api/estrailistaautmissionipercipienteconstatopagamento?dtIniMis=Wed,%2011%20Mar%202026%2020:30:15%20GMT&dtFinMis=Sat,%2002%20Feb%202222%2000:00:00%20GMT"
+]

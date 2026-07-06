@@ -1,0 +1,430 @@
+openapi: 3.1.0
+info:
+  title: U-Web Missioni API osservate
+  version: 0.1.0
+  summary: Endpoint osservati o usati nel progetto UwebTampermonkey
+  description: |
+    Questo file descrive soltanto le API `appautmis` effettivamente osservate
+    nel browser o usate dagli userscript del progetto.
+
+    Pagine di riferimento:
+    - lista missioni `/appautmis/listaautmis#!/listaautmis`
+    - dettaglio missione `/appautmis/listaautmis/{idAutMiss}`
+
+servers:
+  - url: https://cnr.u-web.cineca.it
+    description: Host osservato
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: bootstrap
+  - name: mission-list
+  - name: mission-detail
+  - name: attachments
+  - name: documents
+
+paths:
+  /appautmis/api/customLogo:
+    get:
+      tags: [bootstrap]
+      summary: Logo personalizzato applicazione
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/v1/apps/min:
+    get:
+      tags: [bootstrap]
+      summary: Catalogo applicazioni minimale
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/atenei:
+    get:
+      tags: [bootstrap]
+      summary: Lista atenei o contesto organizzativo
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/manuals:
+    get:
+      tags: [bootstrap]
+      summary: Manuali o riferimenti applicativi
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametrointegrazgestdresse3:
+    get:
+      tags: [bootstrap]
+      summary: Parametro integrazione esse3
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estrairuoliintegrazgestesse3:
+    get:
+      tags: [bootstrap]
+      summary: Ruoli integrazione esse3
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametrosuperamlimitealloggio:
+    get:
+      tags: [bootstrap]
+      summary: Parametro limite alloggio
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametrolistaruolirichiestastraordinari:
+    get:
+      tags: [bootstrap]
+      summary: Lista ruoli per richiesta straordinari
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametrorichiestastraordinari:
+    get:
+      tags: [bootstrap]
+      summary: Parametri richiesta straordinari
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametrolistaruoligestoreconsuntivo:
+    get:
+      tags: [bootstrap]
+      summary: Lista ruoli gestore consuntivo
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametroflmissgestoreconsuntivo:
+    get:
+      tags: [bootstrap]
+      summary: Flag missione gestore consuntivo
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametroflmisssolocedolino:
+    get:
+      tags: [bootstrap]
+      summary: Flag missione solo cedolino
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametrocambiomissdtsost:
+    get:
+      tags: [bootstrap]
+      summary: Parametro cambio missione data sostenimento
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiParametriConfMissioni:
+    get:
+      tags: [bootstrap]
+      summary: Parametri configurazione missioni
+      parameters:
+        - in: query
+          name: cdParametro
+          required: true
+          schema:
+            type: string
+          example: DATA_ATTIV_DEMAT_MISS
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametrolistauoprenotazioni:
+    get:
+      tags: [bootstrap]
+      summary: Parametro UO prenotazioni
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametrotestodichsostattonotorieta:
+    get:
+      tags: [bootstrap]
+      summary: Testo dichiarazione sostitutiva atto notorio
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametri:
+    get:
+      tags: [bootstrap]
+      summary: Parametri applicativi generici
+      parameters:
+        - in: query
+          name: parametro
+          required: true
+          schema:
+            type: string
+          example: UWEB_SOSTITUTO_DIDATTICA
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estrailabeltipiautorizzazioni:
+    get:
+      tags: [bootstrap]
+      summary: Label tipi autorizzazioni
+      parameters:
+        - in: query
+          name: cd
+          required: true
+          schema:
+            type: string
+          example: tipiAut
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estraiparametrodematerializgiustificativimiss:
+    get:
+      tags: [bootstrap]
+      summary: Parametro dematerializzazione giustificativi missione
+      responses:
+        "200":
+          description: Risposta osservata ma non modellata
+
+  /appautmis/api/estrailistaautmissionipercipienteconstatopagamento:
+    get:
+      tags: [mission-list]
+      summary: Lista missioni filtrata per percipiente e stato pagamento
+      description: Endpoint usato dalla pagina lista missioni e dallo script di export.
+      parameters:
+        - in: query
+          name: dtIniMis
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: dtFinMis
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Array di missioni
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MissionListItem"
+
+  /appautmis/api/listaautmis/{idAutMiss}:
+    get:
+      tags: [mission-detail]
+      summary: Dettaglio completo della missione
+      parameters:
+        - in: path
+          name: idAutMiss
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dettaglio missione
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MissionDetailEnvelope"
+
+  /appautmis/api/getmisfromautmis:
+    get:
+      tags: [mission-detail]
+      summary: Dettaglio missione collegata a missione pagata
+      parameters:
+        - in: query
+          name: idDg
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Struttura compatibile con dettaglio missione
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MissionDetailEnvelope"
+
+  /appautmis/api/stampaautorizzazionemissione:
+    get:
+      tags: [documents]
+      summary: PDF autorizzazione missione in base64
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Stringa base64 del PDF
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /appautmis/api/allegati/{idAutMiss}:
+    get:
+      tags: [attachments]
+      summary: Elenco allegati missione
+      parameters:
+        - in: path
+          name: idAutMiss
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Array di allegati
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Attachment"
+
+  /appautmis/api/allegati/{idAutMiss}/{idDgAllegato}:
+    get:
+      tags: [attachments]
+      summary: Download allegato singolo in base64
+      parameters:
+        - in: path
+          name: idAutMiss
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: idDgAllegato
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Contenuto file in base64
+          content:
+            text/plain:
+              schema:
+                type: string
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    MissionListItem:
+      type: object
+      additionalProperties: true
+      properties:
+        idAutMiss:
+          type: string
+        dsAutMis:
+          type: string
+        stato:
+          type: string
+        statoPagamento:
+          type: string
+        dtIniMis:
+          type: string
+        dtFineMis:
+          type: string
+        costoPresunto:
+          oneOf:
+            - type: string
+            - type: number
+        luoghi:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+
+    MissionDetailEnvelope:
+      type: object
+      additionalProperties: true
+      properties:
+        dg02Dg:
+          $ref: "#/components/schemas/MissionDetail"
+
+    MissionDetail:
+      type: object
+      additionalProperties: true
+      properties:
+        dg02DgAllegati:
+          type: array
+          items:
+            $ref: "#/components/schemas/Attachment"
+        dg16XSpesa:
+          type: array
+          items:
+            $ref: "#/components/schemas/Expense"
+        dg16XPrevSpesa:
+          type: array
+          items:
+            $ref: "#/components/schemas/Expense"
+        dg02DgDett:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+
+    Expense:
+      type: object
+      additionalProperties: true
+      properties:
+        nrRiga:
+          type: string
+        cdSpesa:
+          type: string
+        dsSpesa:
+          type: string
+        dtSostenimento:
+          type: string
+        importoEuro:
+          oneOf:
+            - type: string
+            - type: number
+        importoValuta:
+          oneOf:
+            - type: string
+            - type: number
+        cdAllegato:
+          type: string
+
+    Attachment:
+      type: object
+      additionalProperties: true
+      properties:
+        idDgAllegato:
+          type: string
+        idDgRef:
+          type: string
+        nomeFile:
+          type: string
+        cdAltKey:
+          type: string
+        cdTipoAllegato:
+          type: string
+        dsAllegato:
+          type: string
+        flPubblicabile:
+          oneOf:
+            - type: boolean
+            - type: string
