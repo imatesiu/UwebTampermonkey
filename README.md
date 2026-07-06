@@ -6,6 +6,7 @@ Script attuali:
 
 - `U-Web Export Missioni`: esporta le missioni in uno ZIP
 - `U-Web Anteprima Allegati Missione`: si attiva solo nella pagina della singola missione, ad esempio `/appautmis/listaautmis/773112`, e apre l'anteprima sotto la riga dell'allegato selezionato
+- `U-Web Report Rimborsi Missioni`: esporta un CSV che mette in relazione spese a consuntivo, spese rimborsate e `notaUfficioRimborso` per le missioni in stato `Emesso ordinativo` o `Pagato`
 
 ## Sviluppo locale
 
@@ -28,18 +29,25 @@ Per lo script di anteprima allegati:
 - sviluppo: [http://127.0.0.1:8123/tampermonkey-loader-anteprima-allegati.user.js](http://127.0.0.1:8123/tampermonkey-loader-anteprima-allegati.user.js)
 - standalone: [http://127.0.0.1:8123/uweb-anteprima-allegati-missione.user.js](http://127.0.0.1:8123/uweb-anteprima-allegati-missione.user.js)
 
+Per lo script report rimborsi:
+
+- sviluppo: [http://127.0.0.1:8123/tampermonkey-loader-report-rimborsi.user.js](http://127.0.0.1:8123/tampermonkey-loader-report-rimborsi.user.js)
+- standalone: [http://127.0.0.1:8123/uweb-report-rimborsi.user.js](http://127.0.0.1:8123/uweb-report-rimborsi.user.js)
+
 Differenza:
 
 - `tampermonkey-loader.user.js`: versione sviluppo export, ricarica il payload locale e richiede il dev server attivo
 - `tampermonkey-loader-anteprima-allegati.user.js`: versione sviluppo anteprima allegati
+- `tampermonkey-loader-report-rimborsi.user.js`: versione sviluppo report rimborsi
 - `uweb-export-missioni.user.js`: versione standalone, indipendente dal dev server dopo l'installazione
 - `uweb-anteprima-allegati-missione.user.js`: versione standalone anteprima allegati
+- `uweb-report-rimborsi.user.js`: versione standalone report rimborsi
 
 3. In Chrome apri `chrome://extensions/`, entra nei dettagli di Tampermonkey e abilita `User Scripts`.
 
 4. Lascia aperta la pagina su cui vuoi lavorare.
 
-5. Modifica il file [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js) per l'export missioni o [src/anteprima-allegati-missione.js](/Users/spagnolo/github/UwebTampermonkey/src/anteprima-allegati-missione.js) per l'anteprima allegati.
+5. Modifica il file [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js) per l'export missioni, [src/anteprima-allegati-missione.js](/Users/spagnolo/github/UwebTampermonkey/src/anteprima-allegati-missione.js) per l'anteprima allegati o [src/report-rimborsi.js](/Users/spagnolo/github/UwebTampermonkey/src/report-rimborsi.js) per il report rimborsi.
 
 6. Per ricaricare il codice:
 
@@ -68,7 +76,7 @@ docker compose up --build
 
 3. In Chrome apri `chrome://extensions/`, entra nei dettagli di Tampermonkey e abilita `User Scripts`.
 
-4. Modifica [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js) o [src/anteprima-allegati-missione.js](/Users/spagnolo/github/UwebTampermonkey/src/anteprima-allegati-missione.js) nel repo locale.
+4. Modifica [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js), [src/anteprima-allegati-missione.js](/Users/spagnolo/github/UwebTampermonkey/src/anteprima-allegati-missione.js) o [src/report-rimborsi.js](/Users/spagnolo/github/UwebTampermonkey/src/report-rimborsi.js) nel repo locale.
 
 5. Il container monta la cartella del progetto e il watcher ricompila automaticamente. Per vedere il nuovo codice:
 
@@ -183,20 +191,25 @@ Output principali in `dist/`:
 
 - `tampermonkey-loader.user.js`: loader per sviluppo locale
 - `tampermonkey-loader-anteprima-allegati.user.js`: loader per sviluppo locale dello script anteprima allegati
+- `tampermonkey-loader-report-rimborsi.user.js`: loader per sviluppo locale dello script report rimborsi
 - `dev-payload.js`: payload servito dal dev server
 - `dev-payload-anteprima-allegati.js`: payload anteprima allegati servito dal dev server
+- `dev-payload-report-rimborsi.js`: payload report rimborsi servito dal dev server
 - `uweb-export-missioni.user.js`: script standalone pronto per Tampermonkey
 - `uweb-anteprima-allegati-missione.user.js`: script standalone per anteprima allegati
+- `uweb-report-rimborsi.user.js`: script standalone per report rimborsi
 
 Per distribuire agli altri utenti, fai installare direttamente:
 
 - [`dist/uweb-export-missioni.user.js`](/Users/spagnolo/github/UwebTampermonkey/dist/uweb-export-missioni.user.js)
 - [`dist/uweb-anteprima-allegati-missione.user.js`](/Users/spagnolo/github/UwebTampermonkey/dist/uweb-anteprima-allegati-missione.user.js)
+- [`dist/uweb-report-rimborsi.user.js`](/Users/spagnolo/github/UwebTampermonkey/dist/uweb-report-rimborsi.user.js)
 
 ## File principali
 
 - [src/payload.js](/Users/spagnolo/github/UwebTampermonkey/src/payload.js): logica dello script che vuoi iterare
 - [src/anteprima-allegati-missione.js](/Users/spagnolo/github/UwebTampermonkey/src/anteprima-allegati-missione.js): logica dello script di anteprima allegati nella singola missione
+- [src/report-rimborsi.js](/Users/spagnolo/github/UwebTampermonkey/src/report-rimborsi.js): logica dello script che genera il report CSV dei rimborsi
 - [scripts/dev.mjs](/Users/spagnolo/github/UwebTampermonkey/scripts/dev.mjs): build + watch + server locale
 - [scripts/build.mjs](/Users/spagnolo/github/UwebTampermonkey/scripts/build.mjs): genera loader e payload serviti da `dist/`
 - [EXPORT-MISSIONI.md](/Users/spagnolo/github/UwebTampermonkey/docs/EXPORT-MISSIONI.md): guida completa per installare, usare e distribuire lo script di export missioni

@@ -1,6 +1,6 @@
 {
   "namespace": "codex/uweb-tampermonkey",
-  "version": "1.2.21",
+  "version": "1.2.26",
   "matches": [
     "https://cnr.u-web.cineca.it/appautmis/*"
   ],
@@ -40,6 +40,24 @@
         "name": "U-Web Anteprima Allegati Missione",
         "description": "Mostra anteprime dei file caricati nella pagina di dettaglio della singola missione",
         "filename": "uweb-anteprima-allegati-missione.user.js"
+      }
+    },
+    {
+      "id": "report-rimborsi-missioni",
+      "source": "src/report-rimborsi.js",
+      "matches": [
+        "https://cnr.u-web.cineca.it/appautmis/*"
+      ],
+      "dev": {
+        "name": "Uweb Report Rimborsi Dev Loader",
+        "description": "Loader locale per sviluppare lo script report rimborsi mentre la pagina lista missioni e aperta",
+        "filename": "tampermonkey-loader-report-rimborsi.user.js",
+        "payloadFilename": "dev-payload-report-rimborsi.js"
+      },
+      "production": {
+        "name": "U-Web Report Rimborsi Missioni",
+        "description": "Esporta un CSV che confronta spese a consuntivo e spese rimborsate delle missioni U-Web",
+        "filename": "uweb-report-rimborsi.user.js"
       }
     }
   ]
