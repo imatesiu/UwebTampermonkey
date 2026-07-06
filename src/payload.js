@@ -156,6 +156,7 @@ root.innerHTML = `
     <div class="tm-actions">
       <button class="tm-primary" type="button">Scarica ZIP missioni</button>
       <button class="tm-secondary" type="button">Aggiorna stato</button>
+      <button class="tm-stop" type="button" disabled>Stop</button>
     </div>
     <label class="tm-option">
       <input class="tm-export-all-missions" type="checkbox" />
@@ -182,6 +183,7 @@ document.documentElement.append(style, root);
 
 const downloadButton = root.querySelector(".tm-primary");
 const refreshButton = root.querySelector(".tm-secondary");
+const stopButton = root.querySelector(".tm-stop");
 const exportAllMissionsCheckbox = root.querySelector(".tm-export-all-missions");
 const includeRawDetailCheckbox = root.querySelector(".tm-include-raw-detail");
 const statusBox = root.querySelector(".tm-status");
@@ -189,6 +191,8 @@ const progressBar = root.querySelector(".tm-progress-bar");
 
 exportAllMissionsCheckbox.checked = false;
 includeRawDetailCheckbox.checked = false;
+
+let activeExportRun = null;
 
 function setStatus(message) {
   statusBox.textContent = message;
@@ -312,30 +316,84 @@ function delay(ms) {
   });
 }
 
-async function apiFetch(url, options = {}) {
-  const token = getToken();
-  const response = await window.fetch(url, {
-    credentials: "include",
-    ...options,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json, text/plain, */*",
-      "X-Requested-With": "XMLHttpRequest",
-      ...(options.headers ?? {})
-    }
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text().catch(() => "");
-    throw new Error(`HTTP ${response.status} su ${url}\n${errorText.slice(0, 200)}`);
-  }
-
-  return response;
+function createExportRun() {
+  return {
+    cancelled: false,
+    controllers: new Set()
+  };
 }
 
-async function fetchMissionList() {
+function beginAbortableRequest(run) {
+  if (!run || run.cancelled) {
+    throw new Error("Export interrotto dall'utente.");
+  }
+
+  const controller = new AbortController();
+  run.controllers.add(controller);
+  return controller;
+}
+
+function endAbortableRequest(run, controller) {
+  if (run && controller) {
+    run.controllers.delete(controller);
+  }
+}
+
+function cancelActiveExport() {
+  if (!activeExportRun) {
+    return false;
+  }
+
+  activeExportRun.cancelled = true;
+  for (const controller of activeExportRun.controllers) {
+    controller.abort();
+  }
+  activeExportRun.controllers.clear();
+  return true;
+}
+
+function ensureExportNotCancelled(run) {
+  if (run?.cancelled) {
+    throw new Error("Export interrotto dall'utente.");
+  }
+}
+
+async function apiFetch(url, options = {}) {
+  const exportRun = options.exportRun ?? null;
+  const requestController = beginAbortableRequest(exportRun);
+  const token = getToken();
+  try {
+    const response = await window.fetch(url, {
+      credentials: "include",
+      ...options,
+      signal: requestController.signal,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json, text/plain, */*",
+        "X-Requested-With": "XMLHttpRequest",
+        ...(options.headers ?? {})
+      }
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => "");
+      throw new Error(`HTTP ${response.status} su ${url}\n${errorText.slice(0, 200)}`);
+    }
+
+    return response;
+  } catch (error) {
+    if (requestController.signal.aborted || error?.name === "AbortError") {
+      throw new Error("Export interrotto dall'utente.");
+    }
+    throw error;
+  } finally {
+    endAbortableRequest(exportRun, requestController);
+  }
+}
+
+async function fetchMissionList(exportRun = null) {
   const url = getLatestListUrl();
-  const response = await apiFetch(url);
+  const response = await apiFetch(url, { exportRun });
   const data = await response.json();
 
   if (!Array.isArray(data)) {
@@ -365,9 +423,9 @@ function buildArchiveListUrl() {
   return archiveUrl.toString();
 }
 
-async function fetchMissionArchiveList() {
+async function fetchMissionArchiveList(exportRun = null) {
   const url = buildArchiveListUrl();
-  const response = await apiFetch(url);
+  const response = await apiFetch(url, { exportRun });
   const data = await response.json();
 
   if (!Array.isArray(data)) {
@@ -505,13 +563,13 @@ function dedupeMissionsById(missions) {
   return [...map.values()];
 }
 
-async function resolveMissionsForExport(includeAllMissions) {
+async function resolveMissionsForExport(includeAllMissions, exportRun) {
   const visibleMissionIds = getVisibleMissionIds();
-  const apiMissions = dedupeMissionsById(await fetchMissionList().catch(() => []));
+  const apiMissions = dedupeMissionsById(await fetchMissionList(exportRun).catch(() => []));
   const paginationInfo = getMissionPaginationInfo();
 
   if (includeAllMissions) {
-    const archiveResult = await fetchMissionArchiveList();
+    const archiveResult = await fetchMissionArchiveList(exportRun);
     const allMissions = dedupeMissionsById(archiveResult.missions);
 
     return {
@@ -543,13 +601,13 @@ async function resolveMissionsForExport(includeAllMissions) {
   };
 }
 
-async function fetchMissionRequestPdf(idAutMiss) {
-  const response = await apiFetch(`${API_BASE}/stampaautorizzazionemissione?id=${encodeURIComponent(idAutMiss)}`);
+async function fetchMissionRequestPdf(idAutMiss, exportRun = null) {
+  const response = await apiFetch(`${API_BASE}/stampaautorizzazionemissione?id=${encodeURIComponent(idAutMiss)}`, { exportRun });
   return base64ToBytes(await response.text());
 }
 
-async function fetchMissionAttachments(idAutMiss) {
-  const response = await apiFetch(`${API_BASE}/allegati/${encodeURIComponent(idAutMiss)}`);
+async function fetchMissionAttachments(idAutMiss, exportRun = null) {
+  const response = await apiFetch(`${API_BASE}/allegati/${encodeURIComponent(idAutMiss)}`, { exportRun });
   const data = await response.json();
   return Array.isArray(data) ? data : [];
 }
@@ -558,8 +616,8 @@ function buildMissionDetailUrl(idAutMiss) {
   return `${API_BASE}/listaautmis/${encodeURIComponent(idAutMiss)}`;
 }
 
-async function fetchMissionDetails(idAutMiss) {
-  const response = await apiFetch(buildMissionDetailUrl(idAutMiss));
+async function fetchMissionDetails(idAutMiss, exportRun = null) {
+  const response = await apiFetch(buildMissionDetailUrl(idAutMiss), { exportRun });
   return response.json();
 }
 
@@ -567,13 +625,13 @@ function buildPaidMissionDetailUrl(idAutMiss) {
   return `${API_BASE}/getmisfromautmis?idDg=${encodeURIComponent(idAutMiss)}`;
 }
 
-async function fetchPaidMissionDetails(idAutMiss) {
-  const response = await apiFetch(buildPaidMissionDetailUrl(idAutMiss));
+async function fetchPaidMissionDetails(idAutMiss, exportRun = null) {
+  const response = await apiFetch(buildPaidMissionDetailUrl(idAutMiss), { exportRun });
   return response.json();
 }
 
-async function fetchAttachmentBytes(idAutMiss, idDgAllegato) {
-  const response = await apiFetch(`${API_BASE}/allegati/${encodeURIComponent(idAutMiss)}/${encodeURIComponent(idDgAllegato)}`);
+async function fetchAttachmentBytes(idAutMiss, idDgAllegato, exportRun = null) {
+  const response = await apiFetch(`${API_BASE}/allegati/${encodeURIComponent(idAutMiss)}/${encodeURIComponent(idDgAllegato)}`, { exportRun });
   return base64ToBytes(await response.text());
 }
 
@@ -1067,8 +1125,11 @@ function buildMissionSummary(mission, attachments, detail, downloadedAttachments
 }
 
 async function exportMissionZip() {
+  const exportRun = createExportRun();
+  activeExportRun = exportRun;
   downloadButton.disabled = true;
   refreshButton.disabled = true;
+  stopButton.disabled = false;
 
   try {
     const includeAllMissions = exportAllMissionsCheckbox.checked;
@@ -1076,7 +1137,7 @@ async function exportMissionZip() {
     setProgress(0, 1);
     setStatus("Recupero lista missioni dai filtri correnti...");
 
-    const { missions, source, visibleMissionIds, totalMissionCount, listUrlUsed } = await resolveMissionsForExport(includeAllMissions);
+    const { missions, source, visibleMissionIds, totalMissionCount, listUrlUsed } = await resolveMissionsForExport(includeAllMissions, exportRun);
     if (!missions.length) {
       throw new Error("Nessuna missione trovata con i filtri correnti.");
     }
@@ -1093,33 +1154,37 @@ async function exportMissionZip() {
     let currentStep = 0;
 
     for (const mission of missions) {
+      ensureExportNotCancelled(exportRun);
       const folder = missionFolderName(mission);
       const missionZip = new ZipBuilder();
       const usedMissionNames = new Set();
 
       setStatus(`Scarico richiesta PDF per missione ${mission.idAutMiss}...`);
-      const requestBytes = await fetchMissionRequestPdf(mission.idAutMiss);
+      const requestBytes = await fetchMissionRequestPdf(mission.idAutMiss, exportRun);
       missionZip.addFile(`${folder}/Stampa_Richiesta_Missione_${sanitizeSegment(mission.idAutMiss, "missione")}.pdf`, requestBytes);
       currentStep += 1;
       setProgress(currentStep, totalSteps);
 
+      ensureExportNotCancelled(exportRun);
       setStatus(`Leggo allegati missione ${mission.idAutMiss}...`);
       const detailApiPath = buildMissionDetailUrl(mission.idAutMiss);
       const paidDetailApiPath = buildPaidMissionDetailUrl(mission.idAutMiss);
-      const missionDetail = await fetchMissionDetails(mission.idAutMiss);
+      const missionDetail = await fetchMissionDetails(mission.idAutMiss, exportRun);
       let paidMissionDetail = null;
       try {
-        paidMissionDetail = await fetchPaidMissionDetails(mission.idAutMiss);
-      } catch (_error) {
+        paidMissionDetail = await fetchPaidMissionDetails(mission.idAutMiss, exportRun);
+      } catch (error) {
+        ensureExportNotCancelled(exportRun);
         paidMissionDetail = null;
       }
-      const attachments = await fetchMissionAttachments(mission.idAutMiss);
+      const attachments = await fetchMissionAttachments(mission.idAutMiss, exportRun);
       const expensesByAttachmentKey = indexExpensesByAttachmentKey(missionDetail);
       const downloadedAttachments = [];
 
       for (const attachment of attachments) {
+        ensureExportNotCancelled(exportRun);
         const filePath = uniqueFilePath(folder, attachment.nomeFile, usedMissionNames);
-        const attachmentBytes = await fetchAttachmentBytes(mission.idAutMiss, attachment.idDgAllegato);
+        const attachmentBytes = await fetchAttachmentBytes(mission.idAutMiss, attachment.idDgAllegato, exportRun);
         missionZip.addFile(filePath, attachmentBytes);
         downloadedAttachments.push(
           summarizeAttachmentDownload(attachment, filePath, missionDetail, expensesByAttachmentKey)
@@ -1150,6 +1215,7 @@ async function exportMissionZip() {
       setStatus(`Missione ${mission.idAutMiss} completata: ${attachments.length} allegati in ${missionArchiveName}.`);
     }
 
+    ensureExportNotCancelled(exportRun);
     zip.addFile("export-info.json", jsonToBytes({
       exportedAt: new Date().toISOString(),
       scriptVersion: getScriptVersion(),
@@ -1167,14 +1233,19 @@ async function exportMissionZip() {
     setProgress(currentStep, totalSteps);
     setStatus("Genero il file ZIP...");
 
+    ensureExportNotCancelled(exportRun);
     const blob = zip.build();
     const fileName = `missioni-${formatStamp()}.zip`;
     triggerDownload(blob, fileName);
 
     setStatus(`ZIP pronto: ${fileName}`);
   } finally {
+    if (activeExportRun === exportRun) {
+      activeExportRun = null;
+    }
     downloadButton.disabled = false;
     refreshButton.disabled = false;
+    stopButton.disabled = true;
   }
 }
 
@@ -1199,6 +1270,12 @@ downloadButton.addEventListener("click", () => {
 });
 
 refreshButton.addEventListener("click", refreshStatus);
+stopButton.addEventListener("click", () => {
+  if (cancelActiveExport()) {
+    setStatus("Interruzione export in corso...");
+    stopButton.disabled = true;
+  }
+});
 refreshStatus();
 
 return {
