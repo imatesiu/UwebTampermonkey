@@ -160,8 +160,8 @@ root.innerHTML = `
     <label class="tm-option">
       <input class="tm-export-all-missions" type="checkbox" />
       <span>
-        <strong>Scarica tutte le missioni</strong>
-        Se disattivato, esporta solo le missioni visibili nella tabella corrente del browser.
+        <strong>Scarica tutto l'archivio missioni</strong>
+        Se attivato, ignora i filtri della pagina e scarica tutte le missioni accessibili all'utente.
       </span>
     </label>
     <label class="tm-option">
@@ -345,6 +345,41 @@ async function fetchMissionList() {
   return data;
 }
 
+function buildArchiveListUrl() {
+  const currentUrl = getLatestListUrlSafe();
+  const fallbackEndDate = "Sat, 02 Feb 2222 00:00:00 GMT";
+  let dtFinMis = fallbackEndDate;
+
+  if (currentUrl) {
+    try {
+      const parsed = new URL(currentUrl);
+      dtFinMis = parsed.searchParams.get("dtFinMis") || fallbackEndDate;
+    } catch (_error) {
+      dtFinMis = fallbackEndDate;
+    }
+  }
+
+  const archiveUrl = new URL(`${API_BASE}${LIST_ENDPOINT_FRAGMENT}`);
+  archiveUrl.searchParams.set("dtIniMis", new Date(Date.UTC(1970, 0, 1, 0, 0, 0)).toUTCString());
+  archiveUrl.searchParams.set("dtFinMis", dtFinMis);
+  return archiveUrl.toString();
+}
+
+async function fetchMissionArchiveList() {
+  const url = buildArchiveListUrl();
+  const response = await apiFetch(url);
+  const data = await response.json();
+
+  if (!Array.isArray(data)) {
+    throw new Error("La lista archivio missioni non e un array.");
+  }
+
+  return {
+    url,
+    missions: data
+  };
+}
+
 function findMissionListTable() {
   return Array.from(document.querySelectorAll("table[nz-table-content]")).find((table) => {
     const headerText = table.querySelector("thead")?.innerText ?? "";
@@ -366,47 +401,6 @@ function getVisibleMissionIds() {
     .filter(Boolean);
 
   return [...new Set(ids)];
-}
-
-function parseMissionRow(row) {
-  const cells = Array.from(row.querySelectorAll("td"));
-  if (cells.length < 7) {
-    return null;
-  }
-
-  const readCell = (index) => (cells[index]?.innerText || "").replace(/\s+/g, " ").trim();
-  const idAutMiss = readCell(0).match(/\d+/)?.[0] ?? "";
-  if (!idAutMiss) {
-    return null;
-  }
-
-  const statoText = readCell(6);
-  const statoParts = statoText
-    .split(/:\s*/)
-    .map((part) => part.trim())
-    .filter(Boolean);
-
-  return {
-    idAutMiss,
-    dsAutMis: readCell(1),
-    dtIniMis: readCell(3),
-    dtFineMis: readCell(4),
-    costoPresunto: readCell(5) || null,
-    stato: statoParts[0] || statoText || null,
-    statoPagamento: statoParts.length > 1 ? statoParts.slice(1).join(": ") : null,
-    luoghi: readCell(2) ? [{ dsLuogo: readCell(2) }] : []
-  };
-}
-
-function getVisibleMissionRows() {
-  const table = findMissionListTable();
-  if (!table) {
-    throw new Error("Non trovo la tabella missioni visibile nella pagina.");
-  }
-
-  return Array.from(table.querySelectorAll("tbody tr"))
-    .map(parseMissionRow)
-    .filter(Boolean);
 }
 
 function findMissionPagination() {
@@ -511,57 +505,21 @@ function dedupeMissionsById(missions) {
   return [...map.values()];
 }
 
-async function collectAllVisibleMissionsAcrossPages() {
-  const paginationInfo = getMissionPaginationInfo();
-  const expectedTotal = paginationInfo?.totalCount ?? 0;
-  let previousIds = getVisibleMissionIds();
-  while (await clickPaginationButton("previous", previousIds)) {
-    previousIds = getVisibleMissionIds();
-  }
-
-  const collected = new Map();
-
-  while (true) {
-    const visibleMissions = getVisibleMissionRows();
-    const visibleMissionIds = visibleMissions.map((mission) => mission.idAutMiss);
-
-    for (const mission of visibleMissions) {
-      const id = String(mission?.idAutMiss ?? "").trim();
-      if (id && !collected.has(id)) {
-        collected.set(id, mission);
-      }
-    }
-
-    if (expectedTotal > 0 && collected.size >= expectedTotal) {
-      break;
-    }
-
-    const moved = await clickPaginationButton("next", visibleMissionIds);
-    if (!moved) {
-      break;
-    }
-  }
-
-  return [...collected.values()];
-}
-
 async function resolveMissionsForExport(includeAllMissions) {
-  const visibleMissions = dedupeMissionsById(getVisibleMissionRows());
-  const visibleMissionIds = visibleMissions.map((mission) => mission.idAutMiss);
+  const visibleMissionIds = getVisibleMissionIds();
+  const apiMissions = dedupeMissionsById(await fetchMissionList().catch(() => []));
   const paginationInfo = getMissionPaginationInfo();
 
   if (includeAllMissions) {
-    const totalCount = paginationInfo?.totalCount ?? visibleMissions.length;
-    const needsPaginationTraversal = totalCount > visibleMissionIds.length;
-    const allMissions = needsPaginationTraversal
-      ? dedupeMissionsById(await collectAllVisibleMissionsAcrossPages())
-      : visibleMissions;
+    const archiveResult = await fetchMissionArchiveList();
+    const allMissions = dedupeMissionsById(archiveResult.missions);
 
     return {
       missions: allMissions,
-      source: "all",
+      source: "archive",
       visibleMissionIds,
-      totalMissionCount: totalCount
+      totalMissionCount: allMissions.length,
+      listUrlUsed: archiveResult.url
     };
   }
 
@@ -570,7 +528,7 @@ async function resolveMissionsForExport(includeAllMissions) {
   }
 
   const visibleMissionIdSet = new Set(visibleMissionIds);
-  const filteredMissions = visibleMissions.filter((mission) => visibleMissionIdSet.has(String(mission.idAutMiss ?? "")));
+  const filteredMissions = apiMissions.filter((mission) => visibleMissionIdSet.has(String(mission.idAutMiss ?? "")));
 
   if (!filteredMissions.length) {
     throw new Error("Non riesco a leggere le missioni visibili nella tabella corrente.");
@@ -580,7 +538,8 @@ async function resolveMissionsForExport(includeAllMissions) {
     missions: filteredMissions,
     source: "visible",
     visibleMissionIds,
-    totalMissionCount: paginationInfo?.totalCount ?? filteredMissions.length
+    totalMissionCount: paginationInfo?.totalCount ?? filteredMissions.length,
+    listUrlUsed: getLatestListUrlSafe()
   };
 }
 
@@ -1117,14 +1076,14 @@ async function exportMissionZip() {
     setProgress(0, 1);
     setStatus("Recupero lista missioni dai filtri correnti...");
 
-    const { missions, source, visibleMissionIds, totalMissionCount } = await resolveMissionsForExport(includeAllMissions);
+    const { missions, source, visibleMissionIds, totalMissionCount, listUrlUsed } = await resolveMissionsForExport(includeAllMissions);
     if (!missions.length) {
       throw new Error("Nessuna missione trovata con i filtri correnti.");
     }
 
     setStatus(
-      source === "all"
-        ? `Esporto tutte le missioni dei filtri: ${missions.length}${totalMissionCount ? ` su ${totalMissionCount}` : ""}.`
+      source === "archive"
+        ? `Esporto tutto l'archivio missioni: ${missions.length}.`
         : `Esporto solo le missioni visibili: ${missions.length} su ${visibleMissionIds.length} righe in tabella.`
     );
 
@@ -1195,7 +1154,7 @@ async function exportMissionZip() {
       exportedAt: new Date().toISOString(),
       scriptVersion: getScriptVersion(),
       sourceUrl: window.location.href,
-      listUrl: getLatestListUrlSafe(),
+      listUrl: listUrlUsed ?? getLatestListUrlSafe(),
       includeAllMissions,
       includeRawDetailApiOriginale,
       totalVisibleMissions: visibleMissionIds.length,
