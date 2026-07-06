@@ -153,12 +153,12 @@ const root = document.createElement("section");
 root.id = ROOT_ID;
 root.innerHTML = `
   <div class="tm-head">
-    <p class="tm-title">Report rimborsi CSV <span class="tm-version">v${getScriptVersion()}</span></p>
-    <p class="tm-subtitle">Confronta spese a consuntivo e spese rimborsate delle missioni in stato Emesso ordinativo o Pagato.</p>
+    <p class="tm-title">Report rimborsi CSV + PDF <span class="tm-version">v${getScriptVersion()}</span></p>
+    <p class="tm-subtitle">Confronta spese a consuntivo e spese rimborsate e genera anche un PDF leggibile per missione.</p>
   </div>
   <div class="tm-body">
     <div class="tm-actions">
-      <button class="tm-primary" type="button">Scarica report CSV</button>
+      <button class="tm-primary" type="button">Scarica report CSV + PDF</button>
       <button class="tm-secondary" type="button">Aggiorna stato</button>
       <button class="tm-stop" type="button" disabled>Stop</button>
     </div>
@@ -987,18 +987,24 @@ function buildExpenseKeys(expense, role) {
   const idSpesa = expense?.idSpesa != null ? String(expense.idSpesa) : "";
   const idDgRef = expense?.idDgRef != null ? String(expense.idDgRef) : "";
   const code = normalizeText(expense?.codiceSpesa);
+  const type = normalizeText(expense?.tipoSpesa);
   const date = normalizeText(expense?.dataSostenimento);
   const amount = formatAmount(expense?.importoEuro);
+  const note = normalizeText(expense?.notaSpesa);
 
   if (role === "requested") {
-    pushUnique(keys, nrRiga ? `nr:${nrRiga}` : "");
+    pushUnique(keys, (code && type && date && amount && note) ? `sig:${code}|${type}|${date}|${amount}|${note}` : "");
+    pushUnique(keys, (code && type && date && amount) ? `sig:${code}|${type}|${date}|${amount}` : "");
+    pushUnique(keys, (code && date && amount) ? `sig:${code}|${date}|${amount}` : "");
     pushUnique(keys, idSpesa ? `id:${idSpesa}` : "");
-    pushUnique(keys, (code && date && amount) ? `sig:${code}|${date}|${amount}` : "");
-  } else {
-    pushUnique(keys, nrRigaRef ? `nr:${nrRigaRef}` : "");
     pushUnique(keys, nrRiga ? `nr:${nrRiga}` : "");
-    pushUnique(keys, idDgRef ? `id:${idDgRef}` : "");
+  } else {
+    pushUnique(keys, (code && type && date && amount && note) ? `sig:${code}|${type}|${date}|${amount}|${note}` : "");
+    pushUnique(keys, (code && type && date && amount) ? `sig:${code}|${type}|${date}|${amount}` : "");
     pushUnique(keys, (code && date && amount) ? `sig:${code}|${date}|${amount}` : "");
+    pushUnique(keys, nrRigaRef ? `nr:${nrRigaRef}` : "");
+    pushUnique(keys, idDgRef ? `id:${idDgRef}` : "");
+    pushUnique(keys, nrRiga ? `nr:${nrRiga}` : "");
   }
 
   return keys;
@@ -1009,7 +1015,8 @@ function buildFallbackSignature(expense) {
     normalizeText(expense?.codiceSpesa),
     normalizeText(expense?.tipoSpesa),
     normalizeText(expense?.dataSostenimento),
-    formatAmount(expense?.importoEuro)
+    formatAmount(expense?.importoEuro),
+    normalizeText(expense?.notaSpesa)
   ].join("|");
 }
 
@@ -1124,6 +1131,10 @@ function buildCsv(rows) {
   return `\ufeff${lines.join("\r\n")}\r\n`;
 }
 
+function blobToBytes(blob) {
+  return blob.arrayBuffer().then((buffer) => new Uint8Array(buffer));
+}
+
 function triggerDownload(blob, fileName) {
   const url = window.URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -1131,6 +1142,501 @@ function triggerDownload(blob, fileName) {
   link.download = fileName;
   link.click();
   window.setTimeout(() => window.URL.revokeObjectURL(url), 2000);
+}
+
+function concatUint8Arrays(chunks) {
+  const totalLength = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+  const output = new Uint8Array(totalLength);
+  let offset = 0;
+
+  for (const chunk of chunks) {
+    output.set(chunk, offset);
+    offset += chunk.length;
+  }
+
+  return output;
+}
+
+function createCrcTable() {
+  const table = new Uint32Array(256);
+  for (let index = 0; index < 256; index += 1) {
+    let current = index;
+    for (let shift = 0; shift < 8; shift += 1) {
+      current = (current & 1) ? (0xedb88320 ^ (current >>> 1)) : (current >>> 1);
+    }
+    table[index] = current >>> 0;
+  }
+  return table;
+}
+
+let crcTable = null;
+
+function crc32(bytes) {
+  crcTable ??= createCrcTable();
+  let crc = 0xffffffff;
+  for (const byte of bytes) {
+    crc = crcTable[(crc ^ byte) & 0xff] ^ (crc >>> 8);
+  }
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
+function toDosDateTime(date = new Date()) {
+  const dosTime =
+    ((date.getHours() & 0x1f) << 11) |
+    ((date.getMinutes() & 0x3f) << 5) |
+    Math.floor(date.getSeconds() / 2);
+  const dosDate =
+    (((date.getFullYear() - 1980) & 0x7f) << 9) |
+    (((date.getMonth() + 1) & 0x0f) << 5) |
+    (date.getDate() & 0x1f);
+
+  return { dosDate, dosTime };
+}
+
+class ZipBuilder {
+  constructor() {
+    this.entries = [];
+    this.offset = 0;
+    this.date = new Date();
+  }
+
+  addFile(path, bytes) {
+    const nameBytes = encoder.encode(path);
+    const { dosDate, dosTime } = toDosDateTime(this.date);
+    const checksum = crc32(bytes);
+    const localHeader = new Uint8Array(30 + nameBytes.length);
+    const localView = new DataView(localHeader.buffer);
+
+    localView.setUint32(0, 0x04034b50, true);
+    localView.setUint16(4, 20, true);
+    localView.setUint16(6, 0x0800, true);
+    localView.setUint16(8, 0, true);
+    localView.setUint16(10, dosTime, true);
+    localView.setUint16(12, dosDate, true);
+    localView.setUint32(14, checksum, true);
+    localView.setUint32(18, bytes.length, true);
+    localView.setUint32(22, bytes.length, true);
+    localView.setUint16(26, nameBytes.length, true);
+    localView.setUint16(28, 0, true);
+    localHeader.set(nameBytes, 30);
+
+    const centralHeader = new Uint8Array(46 + nameBytes.length);
+    const centralView = new DataView(centralHeader.buffer);
+
+    centralView.setUint32(0, 0x02014b50, true);
+    centralView.setUint16(4, 20, true);
+    centralView.setUint16(6, 20, true);
+    centralView.setUint16(8, 0x0800, true);
+    centralView.setUint16(10, 0, true);
+    centralView.setUint16(12, dosTime, true);
+    centralView.setUint16(14, dosDate, true);
+    centralView.setUint32(16, checksum, true);
+    centralView.setUint32(20, bytes.length, true);
+    centralView.setUint32(24, bytes.length, true);
+    centralView.setUint16(28, nameBytes.length, true);
+    centralView.setUint16(30, 0, true);
+    centralView.setUint16(32, 0, true);
+    centralView.setUint16(34, 0, true);
+    centralView.setUint16(36, 0, true);
+    centralView.setUint32(38, 0, true);
+    centralView.setUint32(42, this.offset, true);
+    centralHeader.set(nameBytes, 46);
+
+    this.entries.push({ localHeader, bytes, centralHeader });
+    this.offset += localHeader.length + bytes.length;
+  }
+
+  build() {
+    const localChunks = [];
+    const centralChunks = [];
+
+    for (const entry of this.entries) {
+      localChunks.push(entry.localHeader, entry.bytes);
+      centralChunks.push(entry.centralHeader);
+    }
+
+    const locals = concatUint8Arrays(localChunks);
+    const centrals = concatUint8Arrays(centralChunks);
+    const end = new Uint8Array(22);
+    const endView = new DataView(end.buffer);
+
+    endView.setUint32(0, 0x06054b50, true);
+    endView.setUint16(4, 0, true);
+    endView.setUint16(6, 0, true);
+    endView.setUint16(8, this.entries.length, true);
+    endView.setUint16(10, this.entries.length, true);
+    endView.setUint32(12, centrals.length, true);
+    endView.setUint32(16, locals.length, true);
+    endView.setUint16(20, 0, true);
+
+    return new Blob([locals, centrals, end], { type: "application/zip" });
+  }
+}
+
+function formatCurrencyDisplay(value) {
+  const parsed = parseAmount(value);
+  return parsed == null ? "-" : `${parsed.toFixed(2)} EUR`;
+}
+
+function formatDateDisplay(value) {
+  if (!value) {
+    return "-";
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return String(value).replace(/\s+/g, " ").trim() || "-";
+  }
+
+  return new Intl.DateTimeFormat("it-IT", {
+    timeZone: "Europe/Rome",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  }).format(date);
+}
+
+function formatDateOnlyDisplay(value) {
+  if (!value) {
+    return "-";
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return String(value).replace(/\s+/g, " ").trim() || "-";
+  }
+
+  return new Intl.DateTimeFormat("it-IT", {
+    timeZone: "Europe/Rome",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  }).format(date);
+}
+
+function computeExpenseOutcome(row) {
+  const requestedAmount = parseAmount(row.consultivo_rimborsoEffettivo) ?? parseAmount(row.consultivo_importoEuro);
+  const reimbursedAmount = parseAmount(row.rimborsato_rimborsoEffettivo) ?? parseAmount(row.rimborsato_importoEuro);
+  const note = row.rimborsato_notaUfficioRimborso || row.consultivo_notaUfficioRimborso || "-";
+
+  if (requestedAmount == null && reimbursedAmount != null) {
+    return {
+      label: "Rimborsata senza riga consultivo",
+      fillColor: [0.86, 0.95, 1.0],
+      textColor: [0.04, 0.29, 0.44],
+      note
+    };
+  }
+
+  if (reimbursedAmount == null || reimbursedAmount <= 0) {
+    return {
+      label: "Rifiutata o non rimborsata",
+      fillColor: [1.0, 0.91, 0.91],
+      textColor: [0.56, 0.11, 0.11],
+      note
+    };
+  }
+
+  if (requestedAmount != null && reimbursedAmount + 0.009 >= requestedAmount) {
+    return {
+      label: "Completamente pagata",
+      fillColor: [0.89, 0.98, 0.91],
+      textColor: [0.09, 0.39, 0.16],
+      note
+    };
+  }
+
+  return {
+    label: "Parzialmente pagata",
+    fillColor: [1.0, 0.96, 0.84],
+    textColor: [0.56, 0.34, 0.03],
+    note
+  };
+}
+
+function groupRowsByMission(rows) {
+  const groups = new Map();
+
+  for (const row of rows) {
+    const missionId = String(row.idMissione ?? "");
+    if (!groups.has(missionId)) {
+      groups.set(missionId, {
+        missionId,
+        titoloMissione: row.titoloMissione,
+        statoPagamento: row.statoPagamento,
+        percipiente: row.percipiente,
+        progetto: row.progetto,
+        destinazione: row.destinazione,
+        dataInizioMissione: row.dataInizioMissione,
+        dataFineMissione: row.dataFineMissione,
+        totaleConsuntivoImportoEuro: row.totaleConsuntivoImportoEuro,
+        totaleRimborsatoImportoEuro: row.totaleRimborsatoImportoEuro,
+        rows: []
+      });
+    }
+
+    groups.get(missionId).rows.push({
+      ...row,
+      outcome: computeExpenseOutcome(row)
+    });
+  }
+
+  return [...groups.values()];
+}
+
+function escapePdfText(value) {
+  return String(value ?? "")
+    .replace(/\\/g, "\\\\")
+    .replace(/\(/g, "\\(")
+    .replace(/\)/g, "\\)");
+}
+
+function wrapPdfText(text, maxWidth, fontSize) {
+  const words = String(text ?? "").split(/\s+/).filter(Boolean);
+  if (!words.length) {
+    return [""];
+  }
+
+  const lines = [];
+  const averageCharWidth = fontSize * 0.48;
+  let currentLine = words[0];
+
+  for (const word of words.slice(1)) {
+    const nextLine = `${currentLine} ${word}`;
+    if ((nextLine.length * averageCharWidth) <= maxWidth) {
+      currentLine = nextLine;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+
+  lines.push(currentLine);
+  return lines;
+}
+
+function measureWrappedTextHeight(text, maxWidth, fontSize = 10, lineGap = 4) {
+  const lines = wrapPdfText(text, maxWidth, fontSize);
+  return lines.length ? (lines.length * (fontSize + lineGap)) - lineGap : fontSize;
+}
+
+class SimplePdfBuilder {
+  constructor() {
+    this.pageWidth = 595;
+    this.pageHeight = 842;
+    this.margin = 42;
+    this.pages = [];
+    this.addPage();
+  }
+
+  addPage() {
+    const page = {
+      ops: [],
+      cursorY: this.margin
+    };
+    this.pages.push(page);
+    this.currentPage = page;
+
+    this.drawRect(0, 0, this.pageWidth, 42, [0.08, 0.18, 0.32]);
+    this.drawText("Report rimborsi missioni", this.margin, 10, 18, true, [1, 1, 1]);
+    this.currentPage.cursorY = 56;
+  }
+
+  ensureSpace(heightNeeded) {
+    if ((this.currentPage.cursorY + heightNeeded) > (this.pageHeight - this.margin)) {
+      this.addPage();
+    }
+  }
+
+  yFromTop(topY) {
+    return this.pageHeight - topY;
+  }
+
+  push(op) {
+    this.currentPage.ops.push(op);
+  }
+
+  drawRect(x, topY, width, height, rgb) {
+    const bottomY = this.pageHeight - topY - height;
+    this.push(`${rgb[0].toFixed(3)} ${rgb[1].toFixed(3)} ${rgb[2].toFixed(3)} rg ${x.toFixed(2)} ${bottomY.toFixed(2)} ${width.toFixed(2)} ${height.toFixed(2)} re f`);
+  }
+
+  drawText(text, x, topY, fontSize = 10, bold = false, rgb = [0.1, 0.16, 0.26]) {
+    const y = this.pageHeight - topY - fontSize;
+    const font = bold ? "F2" : "F1";
+    this.push(`BT /${font} ${fontSize} Tf ${rgb[0].toFixed(3)} ${rgb[1].toFixed(3)} ${rgb[2].toFixed(3)} rg 1 0 0 1 ${x.toFixed(2)} ${y.toFixed(2)} Tm (${escapePdfText(text)}) Tj ET`);
+  }
+
+  drawWrappedText(text, x, topY, maxWidth, fontSize = 10, bold = false, rgb = [0.1, 0.16, 0.26], lineGap = 4) {
+    const lines = wrapPdfText(text, maxWidth, fontSize);
+    let y = topY;
+    for (const line of lines) {
+      this.drawText(line, x, y, fontSize, bold, rgb);
+      y += fontSize + lineGap;
+    }
+    return lines.length ? (lines.length * (fontSize + lineGap)) - lineGap : fontSize;
+  }
+
+  build() {
+    const objects = [];
+    const addObject = (value) => {
+      objects.push(value);
+      return objects.length;
+    };
+
+    const fontRegularRef = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+    const fontBoldRef = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>");
+
+    const pageRefs = [];
+    for (const page of this.pages) {
+      const content = `${page.ops.join("\n")}\n`;
+      const contentRef = addObject(`<< /Length ${encoder.encode(content).length} >>\nstream\n${content}endstream`);
+      const pageRef = addObject(`<< /Type /Page /Parent PAGES_REF 0 R /MediaBox [0 0 ${this.pageWidth} ${this.pageHeight}] /Resources << /Font << /F1 ${fontRegularRef} 0 R /F2 ${fontBoldRef} 0 R >> >> /Contents ${contentRef} 0 R >>`);
+      pageRefs.push(pageRef);
+    }
+
+    const pagesRef = addObject(`<< /Type /Pages /Count ${pageRefs.length} /Kids [${pageRefs.map((ref) => `${ref} 0 R`).join(" ")}] >>`);
+    const catalogRef = addObject(`<< /Type /Catalog /Pages ${pagesRef} 0 R >>`);
+
+    objects.forEach((object, index) => {
+      if ((index + 1) === pagesRef) {
+        return;
+      }
+      objects[index] = object.replace("PAGES_REF", String(pagesRef));
+    });
+
+    const chunks = ["%PDF-1.4\n"];
+    const offsets = [0];
+    let runningLength = chunks[0].length;
+
+    for (let index = 0; index < objects.length; index += 1) {
+      offsets.push(runningLength);
+      const objectChunk = `${index + 1} 0 obj\n${objects[index]}\nendobj\n`;
+      chunks.push(objectChunk);
+      runningLength += objectChunk.length;
+    }
+
+    const xrefOffset = runningLength;
+    const xref = [
+      `xref\n0 ${objects.length + 1}\n`,
+      "0000000000 65535 f \n",
+      ...offsets.slice(1).map((offset) => `${String(offset).padStart(10, "0")} 00000 n \n`)
+    ].join("");
+    const trailer = `trailer\n<< /Size ${objects.length + 1} /Root ${catalogRef} 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+
+    return encoder.encode(`${chunks.join("")}${xref}${trailer}`);
+  }
+}
+
+function buildMissionPdfBytes(rows) {
+  const pdf = new SimplePdfBuilder();
+  const groups = groupRowsByMission(rows);
+
+  pdf.drawWrappedText(
+    "Sintesi visuale delle missioni con confronto tra richiesto e rimborsato. Verde = completa, giallo = parziale, rosso = rifiutata/non rimborsata.",
+    pdf.margin,
+    42,
+    pdf.pageWidth - (pdf.margin * 2),
+    10,
+    false,
+    [0.23, 0.31, 0.4]
+  );
+  pdf.currentPage.cursorY = 104;
+
+  for (const group of groups) {
+    const boxWidth = pdf.pageWidth - (pdf.margin * 2);
+    const leftX = pdf.margin + 12;
+    const gutter = 20;
+    const leftWidth = 300;
+    const rightX = leftX + leftWidth + gutter;
+    const rightWidth = boxWidth - (rightX - pdf.margin) - 12;
+    const titleText = group.titoloMissione || "-";
+    const titleWidth = boxWidth - 24;
+    const titleHeight = measureWrappedTextHeight(titleText, titleWidth, 11, 2);
+    const percipienteText = `Percipiente: ${group.percipiente || "-"}`;
+    const periodoText = `Periodo: ${formatDateDisplay(group.dataInizioMissione)} -> ${formatDateDisplay(group.dataFineMissione)}`;
+    const destinazioneText = `Destinazione: ${group.destinazione || "-"}`;
+    const statoText = `Stato: ${group.statoPagamento || "-"}`;
+    const percipienteHeight = measureWrappedTextHeight(percipienteText, leftWidth, 9, 2);
+    const periodoHeight = measureWrappedTextHeight(periodoText, leftWidth, 9, 2);
+    const destinazioneHeight = measureWrappedTextHeight(destinazioneText, rightWidth, 9, 2);
+    const statoHeight = measureWrappedTextHeight(statoText, rightWidth, 9, 2);
+    const bodyTopOffset = 32 + titleHeight + 10;
+    const leftColumnHeight = percipienteHeight + 6 + periodoHeight;
+    const rightColumnHeight = destinazioneHeight + 6 + statoHeight;
+    const totalsTopOffset = bodyTopOffset + Math.max(leftColumnHeight, rightColumnHeight) + 10;
+    const headerHeight = totalsTopOffset + 16;
+    const missionBlockHeight = headerHeight + 18 + (group.rows.length * 78);
+
+    pdf.ensureSpace(missionBlockHeight);
+
+    const top = pdf.currentPage.cursorY;
+    pdf.drawRect(pdf.margin, top, boxWidth, headerHeight, [0.94, 0.97, 1.0]);
+    pdf.drawText(`Missione ${group.missionId}`, leftX, top + 12, 12, true, [0.05, 0.16, 0.29]);
+    pdf.drawWrappedText(titleText, leftX, top + 29, titleWidth, 11, true, [0.05, 0.16, 0.29], 2);
+
+    const bodyTop = top + bodyTopOffset;
+    const leftBodyHeight = pdf.drawWrappedText(percipienteText, leftX, bodyTop, leftWidth, 9, false, [0.23, 0.31, 0.4], 2);
+    pdf.drawWrappedText(periodoText, leftX, bodyTop + leftBodyHeight + 6, leftWidth, 9, false, [0.23, 0.31, 0.4], 2);
+    const rightBodyHeight = pdf.drawWrappedText(destinazioneText, rightX, bodyTop, rightWidth, 9, false, [0.23, 0.31, 0.4], 2);
+    pdf.drawWrappedText(statoText, rightX, bodyTop + rightBodyHeight + 6, rightWidth, 9, true, [0.05, 0.16, 0.29], 2);
+    pdf.drawText(`Richiesto: ${formatCurrencyDisplay(group.totaleConsuntivoImportoEuro)} | Rimborsato: ${formatCurrencyDisplay(group.totaleRimborsatoImportoEuro)}`, leftX, top + totalsTopOffset, 9, true, [0.05, 0.16, 0.29]);
+
+    pdf.currentPage.cursorY += headerHeight + 12;
+
+    for (const row of group.rows) {
+      pdf.ensureSpace(72);
+      const expenseTop = pdf.currentPage.cursorY;
+      const outcome = row.outcome;
+      pdf.drawRect(pdf.margin, expenseTop, pdf.pageWidth - (pdf.margin * 2), 66, outcome.fillColor);
+      pdf.drawRect(pdf.pageWidth - pdf.margin - 140, expenseTop + 10, 120, 18, outcome.textColor);
+      pdf.drawText(outcome.label, pdf.pageWidth - pdf.margin - 132, expenseTop + 14, 8, true, [1, 1, 1]);
+      pdf.drawText(
+        `${row.consultivo_tipoSpesa || row.rimborsato_tipoSpesa || "Spesa"} - ${formatDateOnlyDisplay(row.consultivo_dataSostenimento || row.rimborsato_dataSostenimento || "-")}`,
+        pdf.margin + 12,
+        expenseTop + 12,
+        9,
+        true,
+        [0.05, 0.16, 0.29]
+      );
+      pdf.drawText(
+        `Richiesto: ${formatCurrencyDisplay(row.consultivo_rimborsoEffettivo || row.consultivo_importoEuro)} | Rimborsato: ${formatCurrencyDisplay(row.rimborsato_rimborsoEffettivo || row.rimborsato_importoEuro)}`,
+        pdf.margin + 12,
+        expenseTop + 26,
+        9,
+        false,
+        [0.18, 0.24, 0.33]
+      );
+      pdf.drawWrappedText(
+        `Nota spesa: ${row.consultivo_notaSpesa || row.rimborsato_notaSpesa || "-"}`,
+        pdf.margin + 12,
+        expenseTop + 39,
+        pdf.pageWidth - (pdf.margin * 2) - 24,
+        8,
+        false,
+        [0.18, 0.24, 0.33],
+        2
+      );
+      pdf.drawWrappedText(
+        `Nota ufficio: ${outcome.note}`,
+        pdf.margin + 12,
+        expenseTop + 51,
+        pdf.pageWidth - (pdf.margin * 2) - 24,
+        8,
+        true,
+        outcome.textColor,
+        2
+      );
+      pdf.currentPage.cursorY += 74;
+    }
+
+    pdf.currentPage.cursorY += 10;
+  }
+
+  return pdf.build();
 }
 
 function buildMissionRows(mission, sourceLabel, missionDetail, paidMissionDetail) {
@@ -1278,16 +1784,23 @@ async function exportRefundReport() {
       throw new Error("Nessuna riga di report prodotta per le missioni selezionate.");
     }
 
+    const stamp = formatStamp();
     const csv = buildCsv(rows);
-    const blob = new Blob([encoder.encode(csv)], { type: "text/csv;charset=utf-8" });
-    const fileName = `report-rimborsi-missioni-${formatStamp()}.csv`;
-    triggerDownload(blob, fileName);
+    const csvBytes = encoder.encode(csv);
+    const pdfBytes = buildMissionPdfBytes(rows);
+    const zip = new ZipBuilder();
+    zip.addFile(`report-rimborsi-missioni-${stamp}.csv`, csvBytes);
+    zip.addFile(`report-rimborsi-missioni-${stamp}.pdf`, pdfBytes);
+    const zipBlob = zip.build();
+    const fileName = `report-rimborsi-missioni-${stamp}.zip`;
+    triggerDownload(zipBlob, fileName);
 
     setStatus(
-      `CSV pronto: ${fileName}\n` +
+      `ZIP pronto: ${fileName}\n` +
       `Missioni visibili: ${visibleMissionIds.length}\n` +
       `Missioni considerate: ${eligibleMissions.length} su ${totalMissionCount ?? missions.length}\n` +
-      `Righe esportate: ${rows.length}`
+      `Righe esportate: ${rows.length}\n` +
+      `Contenuto: CSV dati + PDF sintetico`
     );
   } finally {
     if (activeExportRun === exportRun) {
